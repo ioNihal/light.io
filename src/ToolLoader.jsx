@@ -9,11 +9,20 @@ export default function ToolLoader() {
 
     switch (toolName) {
         case 'screen-light': Component = ScreenLight; break;
-        default: return <h1>Tool: "{toolName}" not found!</h1>
+        default: return <div style={{
+            display: 'grid',
+            placeItems: 'center',
+            flex: '1 1 100%',
+            color: 'red'
+        }}>Tool: "{toolName}" not found!</div>
     }
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div style={{
+            display: 'grid',
+            placeItems: 'center',
+            flex: '1 1 100%',
+        }}>Loading...</div>}>
             <Component />
         </Suspense>
     )
