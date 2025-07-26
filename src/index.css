@@ -1,0 +1,66 @@
+:root {
+  --color-page-bg: #e2e6f5;
+  --color-surface: #FFFFFF;
+  --color-primary: #4F46E5;
+  --color-primary-text: #f3f3f3;
+  --color-primary-light: #EEF2FF;
+  --color-btn-text: #ececec;
+  --color-text-high: #111827;
+  --color-text-med: #4B5563;
+  --color-text-low: #9CA3AF;
+  --color-icon: #6B7280;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --color-border: rgb(214, 214, 214);
+  --color-accent: rgb(223, 223, 223);
+
+  --tiktok-sans: "TikTok Sans", sans-serif;
+}
+
+[data-theme="dark"] {
+  --color-page-bg: #1F1F2E;
+  --color-surface: #2A2A3D;
+  --color-primary: #8B82E2;
+  --color-primary-light: #5D55CC;
+  --color-btn-text: #111111;
+  --color-text-high: #F9FAFB;
+  --color-text-med: #D1D5DB;
+  --color-text-low: #6B7280;
+  --color-icon: #9CA3AF;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 5px 15px rgba(0, 0, 0, 0.315);
+  --color-border: rgb(76, 74, 97);
+  --color-accent: rgb(29, 29, 29);
+}
+
+body {
+  font-family: var(--tiktok-sans);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-optical-sizing: none;
+  line-height: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-page-bg);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-page-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 4px;
+  border: 2px solid var(--color-border);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
+*:focus-visible::-webkit-scrollbar-thumb {
+  outline: 2px solid var(--color-primary-light);
+}

@@ -1,0 +1,47 @@
+.topbar {
+  flex-shrink: 0;
+  padding: 1.5rem 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 0.5em;
+}
+
+.themeBtn,
+.githubRepoBtn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  color: var(--color-text-high);
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--tiktok-sans);
+  font-weight: 500;
+  outline: none;
+}
+
+.themeBtn:hover,
+.themeBtn:focus {
+  background-color: var(--color-primary-light);
+  background-color: color-mix(in srgb, var(--color-primary-light) 90%, black);
+}
+
+.githubRepoBtn:hover,
+.githubRepoBtn:focus {
+  background-color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 90%, black);
+}
+
+
+.themeBtn {
+  background-color: var(--color-primary-light);
+}
+
+.githubRepoBtn {
+  background-color: var(--color-accent);
+}
