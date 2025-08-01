@@ -7,11 +7,13 @@ import { HiOutlineHome } from 'react-icons/hi';
 import { BiLibrary } from 'react-icons/bi';
 import { IoIosArrowDown } from 'react-icons/io';
 import { RiInformationLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
     const [showDropdown, setShowDropdown] = useState(false);
     const [activeButton, setActiveButton] = useState('home');
     const [showSidebar, setShowSidebar] = useState(false);
+    const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setShowSidebar(prev => !prev);
@@ -48,7 +50,10 @@ export default function Sidebar() {
                         <button
                             className={`${styles.navSecondBtn} ${activeButton === id.toString() ? styles.active : ''}`}
                             key={id}
-                            onClick={() => setActiveButton(id.toString())}
+                            onClick={() => {
+                                navigate(`/${title.split(" ").join("-").toLowerCase()}`);
+                                setActiveButton(id.toString())
+                            }}
                             title={title}>
                             <i className={styles.icon}>
                                 <Icon />

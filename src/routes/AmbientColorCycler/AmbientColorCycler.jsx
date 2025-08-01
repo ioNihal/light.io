@@ -17,7 +17,7 @@ const ambientColors = [
 export default function AmbientColorCycler() {
 
     const [colorIndex, setColorIndex] = useState(0);
-    const [speed, setSpeed] = useState(4000);
+    const [speed, setSpeed] = useState(3000);
     const navigate = useNavigate();
 
     useEffect(() => {
