@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './AmbientColorCycler.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const ambientColors = [
     '#FFADAD', // soft red
@@ -16,6 +17,7 @@ export default function AmbientColorCycler() {
 
     const [colorIndex, setColorIndex] = useState(0);
     const [speed, setSpeed] = useState(4000);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -40,6 +42,7 @@ export default function AmbientColorCycler() {
                 className={styles.slider}
                 onChange={handleSpeed} />
                 <p style={{ color: '#222' }}>{speed} ms</p>
+                <button onClick={() => navigate(-1)}>Back</button>
         </div>
     )
 }
