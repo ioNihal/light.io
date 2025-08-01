@@ -1,7 +1,9 @@
 import { lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
 
+
 const ScreenLight = lazy(() => import('./routes/ScreenLight/ScreenLight'));
+const AmbientColorCycler = lazy(() => import('./routes/AmbientColorCycler/AmbientColorCycler'));
 
 export default function ToolLoader() {
     const { toolName } = useParams();
@@ -9,6 +11,7 @@ export default function ToolLoader() {
 
     switch (toolName) {
         case 'screen-light': Component = ScreenLight; break;
+        case 'ambient-color-cycler' : Component = AmbientColorCycler; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',

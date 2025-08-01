@@ -29,7 +29,7 @@ export default function ToolsGrid() {
     setCurrentPage(0);
   }
 
-  const filteredTools = tools.filter(tool => (tool.title.toLowerCase().includes(searchTerm.toLowerCase()) || tool.desc.toLowerCase().includes(searchTerm.toLowerCase())))
+  const filteredTools = [...tools].sort((a,b) => a.title.localeCompare(b.title)).filter(tool => (tool.title.toLowerCase().includes(searchTerm.toLowerCase()) || tool.desc.toLowerCase().includes(searchTerm.toLowerCase())))
 
   const totalPages = Math.ceil(tools.length / itemsPerPage);
   const pageItems = filteredTools.slice(startIdx, startIdx + itemsPerPage);

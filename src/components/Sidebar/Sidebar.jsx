@@ -2,7 +2,7 @@ import styles from './Sidebar.module.css';
 
 import { tools } from '../../data/tools';
 import { GoSidebarExpand } from 'react-icons/go';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { HiOutlineHome } from 'react-icons/hi';
 import { BiLibrary } from 'react-icons/bi';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -17,10 +17,12 @@ export default function Sidebar() {
         setShowSidebar(prev => !prev);
     }
 
+    const sorted = [...tools].sort((a,b) => a.title.localeCompare(b.title));
+    
     return (
         <aside className={`${styles.sidebar} ${!showSidebar ? styles.hide : ''}`}>
             <div className={styles.logo}>
-                <h1>Light.io</h1>
+                <h1>Toolight</h1>
                 <i className={styles.collapseBtn} onClick={toggleSidebar} title={showSidebar ? 'Close' : 'Open'}><GoSidebarExpand size={24} /></i>
             </div>
             <nav className={styles.nav}>
@@ -42,7 +44,7 @@ export default function Sidebar() {
                     }}><IoIosArrowDown /></i>
                 </button>
                 <div className={`${styles.dropDownMenu} ${!showDropdown ? styles.hide : ''}`}>
-                    {tools.map(({ id, title, icon: Icon }) => (
+                    {sorted.map(({ id, title, icon: Icon }) => (
                         <button
                             className={`${styles.navSecondBtn} ${activeButton === id.toString() ? styles.active : ''}`}
                             key={id}

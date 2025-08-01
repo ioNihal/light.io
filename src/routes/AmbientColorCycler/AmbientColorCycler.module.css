@@ -1,0 +1,8 @@
+.container {
+    transition: background-color ease-in-out;
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
