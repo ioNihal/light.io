@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './AmbientColorCycler.module.css';
 import { useNavigate } from 'react-router-dom';
+import RangeSlider from '../../components/RangeSlider/RangeSlider';
 
 const ambientColors = [
-    '#FFADAD', // soft red
+    '#ff8383ff', // soft red
     '#FFD6A5', // peach
     '#FDFFB6', // light yellow
     '#CAFFBF', // mint green
@@ -32,17 +33,18 @@ export default function AmbientColorCycler() {
 
     return (
         <div className={styles.container} style={{ backgroundColor: ambientColors[colorIndex], transitionDuration: `${speed}ms` }}>
-            <input
-                type='range'
-                name='slider'
-                id='slider'
-                min='0'
-                max='10000'
-                step="500"
-                className={styles.slider}
-                onChange={handleSpeed} />
-                <p style={{ color: '#222' }}>{speed} ms</p>
-                <button onClick={() => navigate(-1)}>Back</button>
+            <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
+            <div className={styles.sliderWrapper}>
+                <p className={styles.indicator}>Slide to change speed</p>
+                <RangeSlider
+                    label='speed_slider'
+                    min={0}
+                    max={6000}
+                    step={500}
+                    value={speed}
+                    onChange={handleSpeed} />
+                <p className={styles.indicator}>{speed} ms</p>
+            </div>
         </div>
     )
 }

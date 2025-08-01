@@ -5,4 +5,44 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
+    position: relative;
+}
+
+.backBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    font-family: var(--tiktok-sans);
+    font-weight: 500;
+}
+
+.backBtn:hover,
+.backBtn:focus {
+    background-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+}
+
+.sliderWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+.indicator {
+    color: var(--color-text-high);
+    transition: all 0.3s ease;
+    font-family: var(--tiktok-sans);
+}
+
+.indicator.hide {
+    display: none;
 }

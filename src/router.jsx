@@ -12,10 +12,10 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <ToolsGrid />
             },
-            {
-                path: '/:toolName',
-                element: <ToolLoader />,
-            },
         ]
+    },
+    {
+        path: '/:toolName',
+        element: <ToolLoader />,
     },
 ])
