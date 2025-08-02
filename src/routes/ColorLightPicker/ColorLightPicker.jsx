@@ -63,12 +63,13 @@ export default function ColorLightPicker() {
                                 trackHeight={20}
                                 thumbSize={20} />
                         </label>
+                        <button className={styles.saveBtn} onClick={() => setIsEditing(prev => !prev)}>Save & Close</button>
                     </>
                 ) : (
                     <>
                         <h4>Type: {colorVals.type.toUpperCase()}</h4>
                         <p>Hue: {colorVals.hue} Saturation: {colorVals.sat}% {colorVals.type === 'hsl' ? 'Lightness' : 'Brightness'}: {colorVals.lightnessOrValue}%</p>
-                        <button className={styles.editBtn}>Edit</button>
+                        <button className={styles.editBtn} onClick={() => setIsEditing(prev => !prev)}>Edit</button>
                     </>
                 )
                 }
