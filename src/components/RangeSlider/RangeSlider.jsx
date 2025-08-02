@@ -8,7 +8,17 @@ function RangeSlider({
     onChange,
     disabled = false,
     label = "RangeSlider",
+
+    trackHeight = 16,
+    thumbSize = 16,
 }) {
+
+    const cssVars = {
+        "--track-height": `${trackHeight}px`,
+        "--thumb-size": `${thumbSize}px`,
+    };
+
+
     return (
         <input
             type="range"
@@ -20,6 +30,7 @@ function RangeSlider({
             disabled={disabled}
             onChange={onChange}
             className={`${styles.slider} ${disabled ? styles.hide : ""}`}
+            style={cssVars}
         />
     );
 }

@@ -26,7 +26,7 @@
 }
 
 .slider::-webkit-slider-runnable-track {
-    height: 50px;
+    height: var(--track-height, 8px);
     background-color: var(--color-page-bg);
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -35,8 +35,8 @@
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 50px;
-    height: 50px;
+    width:  var(--thumb-size, 16px);
+    height:  var(--thumb-size, 16px);
     background-color: var(--color-primary);
     border-radius: 7px;
     cursor: pointer;
@@ -45,14 +45,14 @@
 }
 
 .slider::-moz-range-track {
-    height: 4px;
+    height: var(--track-height, 8px);
     background-color: var(--color-surface);
     border-radius: 8px;
 }
 
 .slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    width: var(--thumb-size, 16px);
+    height: var(--thumb-size, 16px);
     background: var(--color-text-low);
     border-radius: 7px;
     cursor: pointer;

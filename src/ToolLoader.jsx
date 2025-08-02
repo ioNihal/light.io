@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 const ScreenLight = lazy(() => import('./routes/ScreenLight/ScreenLight'));
 const AmbientColorCycler = lazy(() => import('./routes/AmbientColorCycler/AmbientColorCycler'));
+const ColorLightPicker = lazy(() => import('./routes/ColorLightPicker/ColorLightPicker'));
 
 export default function ToolLoader() {
     const { toolName } = useParams();
@@ -11,7 +12,8 @@ export default function ToolLoader() {
 
     switch (toolName) {
         case 'screen-light': Component = ScreenLight; break;
-        case 'ambient-color-cycler' : Component = AmbientColorCycler; break;
+        case 'ambient-color-cycler': Component = AmbientColorCycler; break;
+        case 'color-light-picker': Component = ColorLightPicker; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',

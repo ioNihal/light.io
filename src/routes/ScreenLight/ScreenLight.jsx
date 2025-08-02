@@ -57,6 +57,8 @@ function ScreenLight() {
                     disabled={!screenLightOn}
                     onChange={(e) => setBrightness(Number(e.target.value))}
                     label="brightness_slider"
+                    trackHeight={50}
+                    thumbSize={50}
                 />
                 <span className={`${styles.indicator} ${!screenLightOn ? styles.hide : ''}`}>Brightness: {brightness}</span>
             </div>

@@ -42,7 +42,9 @@ export default function AmbientColorCycler() {
                     max={6000}
                     step={500}
                     value={speed}
-                    onChange={handleSpeed} />
+                    onChange={handleSpeed}
+                    trackHeight={35}
+                    thumbSize={35} />
                 <p className={styles.indicator}>{speed} ms</p>
             </div>
         </div>
