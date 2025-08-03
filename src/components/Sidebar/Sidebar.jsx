@@ -30,7 +30,10 @@ export default function Sidebar() {
             <nav className={styles.nav}>
                 <button
                     className={`${styles.navBtn} ${activeButton === 'home' ? styles.active : ''}`}
-                    onClick={() => setActiveButton('home')}
+                    onClick={() => {
+                        setActiveButton('home');
+                        navigate('/');
+                    }}
                     title='Home'>
                     <i className={styles.menuIcon}><HiOutlineHome /></i>
                     <span className={styles.label}>Home</span>
