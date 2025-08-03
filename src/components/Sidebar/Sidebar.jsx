@@ -65,6 +65,7 @@ export default function Sidebar() {
                 <button className={`${styles.navBtn} ${activeButton === 'about' ? styles.active : ''}`}
                  onClick={() => {
                     setActiveButton('about');
+                    navigate('/about')
                 }}
                 title='About'>
                     <i className={styles.menuIcon}><RiInformationLine /></i>

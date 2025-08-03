@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from './App'
 import ToolsGrid from "./components/ToolsGrid/ToolsGrid";
 import ToolLoader from "./ToolLoader";
+import About from "./routes/About/About";
 
 export const router = createBrowserRouter([
     {
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <ToolsGrid />
+            },
+            {
+                path: '/about',
+                element: <About />
             },
         ]
     },
