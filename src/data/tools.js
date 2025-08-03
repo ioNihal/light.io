@@ -34,7 +34,7 @@ export const tools = [
     {
         id: 2,
         title: "Color Light Picker",
-        desc: "Choose any HSL/HSV color to fill the screen.",
+        desc: "Choose any HSL color to generate fill the screen.",
         icon: MdPalette
     },
     {

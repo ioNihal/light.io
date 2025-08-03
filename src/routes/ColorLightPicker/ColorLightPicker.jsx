@@ -5,16 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function ColorLightPicker() {
-    const [colorVals, setColorVals] = useState({ type: 'hsl', hue: 180, sat: 100, lightnessOrValue: 50 });
+    const [colorVals, setColorVals] = useState({ hue: 180, sat: 100, light: 50 });
     const [isEditing, setIsEditing] = useState(true);
     const [selectBoxOpen, setSelectBoxOpen] = useState(false);
     const [copied, setCopied] = useState(false);
 
     const navigate = useNavigate();
 
-    const handleTypeChange = (type) => {
-        setColorVals(prev => ({ ...prev, type: type }))
-    };
 
     const handleSlider = (key, e) => {
         setColorVals(prev => ({ ...prev, [key]: Number(e.target.value) }))
@@ -22,8 +19,7 @@ export default function ColorLightPicker() {
 
 
     const handleCopy = async () => {
-        const textToCopy = colorVals.type === 'hsl' ?
-            `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)` : `hsv(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)`;
+        const textToCopy = `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.light}%)`;
 
         try {
             await navigator.clipboard.writeText(textToCopy)
@@ -55,24 +51,13 @@ export default function ColorLightPicker() {
 
     return (
         <div className={styles.container} style={{
-            backgroundColor: colorVals.type === 'hsl' ?
-                `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)` : `hsv(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)`
+            backgroundColor: `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.light}%)`
         }}>
             <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
             <div className={styles.box}>
+                <h4>HSL Color Generator</h4>
                 {isEditing ? (
                     <>
-                        <label className={styles.label} htmlFor="type">
-                            Type:&nbsp;<ul className={styles.selectBox} onClick={() => setSelectBoxOpen(prev => !prev)}>
-                                <li className={`${styles.trigger} ${selectBoxOpen ? styles.open : ''} `}>{colorVals.type}</li>
-                                <li className={`${styles.options} ${selectBoxOpen ? styles.open : ''}`}>
-                                    <ul>
-                                        <li onClick={() => handleTypeChange('hsl')}>hsl</li>
-                                        <li onClick={() => handleTypeChange('hsv')}>hsv</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </label>
                         <label className={styles.label} htmlFor="hue">
                             Hue:&nbsp;{colorVals.hue} deg
                             <RangeSlider
@@ -93,13 +78,13 @@ export default function ColorLightPicker() {
                                 trackHeight={20}
                                 thumbSize={20} />
                         </label>
-                        <label className={styles.label} htmlFor="lightnessOrValue">
-                            {colorVals.type === 'hsl' ? 'Lightness' : 'Value'}:&nbsp;{colorVals.lightnessOrValue}%
+                        <label className={styles.label} htmlFor="light">
+                            Lightness:&nbsp;{colorVals.light}%
                             <RangeSlider
-                                label='lightnessOrValue'
+                                label='light'
                                 min={0} max={100}
-                                value={colorVals.lightnessOrValue}
-                                onChange={(e) => handleSlider('lightnessOrValue', e)}
+                                value={colorVals.light}
+                                onChange={(e) => handleSlider('light', e)}
                                 trackHeight={20}
                                 thumbSize={20} />
                         </label>
@@ -107,8 +92,7 @@ export default function ColorLightPicker() {
                     </>
                 ) : (
                     <>
-                        <h4>Type: {colorVals.type.toUpperCase()}</h4>
-                        <p>Hue: {colorVals.hue}<br />Saturation: {colorVals.sat}%<br />{colorVals.type === 'hsl' ? 'Lightness' : 'Brightness'}: {colorVals.lightnessOrValue}%</p>
+                        <p>Hue:&nbsp;{colorVals.hue}<br />Saturation:&nbsp;{colorVals.sat}%<br />Lightness:&nbsp;{colorVals.light}%</p>
                         <button className={styles.copyBtn} onClick={handleCopy}>{copied ? 'Copied!' : 'Copy'}</button>
                         <button className={styles.editBtn} onClick={() => {
                             setSelectBoxOpen(false);
