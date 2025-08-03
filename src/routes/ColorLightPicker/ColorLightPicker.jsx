@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import styles from './ColorLightPicker.module.css';
 import RangeSlider from '../../components/RangeSlider/RangeSlider';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ColorLightPicker() {
-    const [colorVals, setColorVals] = useState({ type: 'hsl', hue: 0, sat: 0, lightnessOrValue: 100 });
+    const [colorVals, setColorVals] = useState({ type: 'hsl', hue: 180, sat: 100, lightnessOrValue: 50 });
     const [isEditing, setIsEditing] = useState(true);
     const [selectBoxOpen, setSelectBoxOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleTypeChange = (type) => {
         setColorVals(prev => ({ ...prev, type: type }))
@@ -18,13 +21,17 @@ export default function ColorLightPicker() {
 
 
     return (
-        <div className={styles.container} style={{ backgroundColor: '' }}>
+        <div className={styles.container} style={{
+            backgroundColor: colorVals.type === 'hsl' ?
+                `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)` : `hsv(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)`
+        }}>
+             <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
             <div className={styles.box}>
                 {isEditing ? (
                     <>
                         <label className={styles.label} htmlFor="type">
                             Type:&nbsp;<ul className={styles.selectBox} onClick={() => setSelectBoxOpen(prev => !prev)}>
-                                <li className={styles.trigger}>{colorVals.type}</li>
+                                <li className={`${styles.trigger} ${selectBoxOpen ? styles.open : ''} `}>{colorVals.type}</li>
                                 <li className={`${styles.options} ${selectBoxOpen ? styles.open : ''}`}>
                                     <ul>
                                         <li onClick={() => handleTypeChange('hsl')}>hsl</li>
@@ -54,7 +61,7 @@ export default function ColorLightPicker() {
                                 thumbSize={20} />
                         </label>
                         <label className={styles.label} htmlFor="lightnessOrValue">
-                            {colorVals.type === 'hsl' ? 'Lightness' : 'Value' }:&nbsp;{colorVals.lightnessOrValue}%
+                            {colorVals.type === 'hsl' ? 'Lightness' : 'Value'}:&nbsp;{colorVals.lightnessOrValue}%
                             <RangeSlider
                                 label='lightnessOrValue'
                                 min={0} max={100}
@@ -68,8 +75,11 @@ export default function ColorLightPicker() {
                 ) : (
                     <>
                         <h4>Type: {colorVals.type.toUpperCase()}</h4>
-                        <p>Hue: {colorVals.hue} Saturation: {colorVals.sat}% {colorVals.type === 'hsl' ? 'Lightness' : 'Brightness'}: {colorVals.lightnessOrValue}%</p>
-                        <button className={styles.editBtn} onClick={() => setIsEditing(prev => !prev)}>Edit</button>
+                        <p>Hue: {colorVals.hue}<br />Saturation: {colorVals.sat}%<br />{colorVals.type === 'hsl' ? 'Lightness' : 'Brightness'}: {colorVals.lightnessOrValue}%</p>
+                        <button className={styles.editBtn} onClick={() => {
+                            setSelectBoxOpen(false);
+                            setIsEditing(prev => !prev);
+                        }}>Edit</button>
                     </>
                 )
                 }
