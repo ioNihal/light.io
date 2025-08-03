@@ -132,7 +132,8 @@
 }
 
 .saveBtn,
-.editBtn {
+.editBtn,
+.copyBtn {
     border: none;
     padding: 8px 12px;
     background-color: var(--color-primary);
@@ -145,4 +146,8 @@
 .editBtn:hover {
     background-color: var(--color-primary);
     background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+}
+
+.copyBtn {
+    background-color: var(--color-secondary);
 }

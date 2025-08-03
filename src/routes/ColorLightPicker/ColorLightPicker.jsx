@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ColorLightPicker.module.css';
 import RangeSlider from '../../components/RangeSlider/RangeSlider';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ export default function ColorLightPicker() {
     const [colorVals, setColorVals] = useState({ type: 'hsl', hue: 180, sat: 100, lightnessOrValue: 50 });
     const [isEditing, setIsEditing] = useState(true);
     const [selectBoxOpen, setSelectBoxOpen] = useState(false);
+    const [copied, setCopied] = useState(false);
 
     const navigate = useNavigate();
 
@@ -20,12 +21,44 @@ export default function ColorLightPicker() {
     }
 
 
+    const handleCopy = async () => {
+        const textToCopy = colorVals.type === 'hsl' ?
+            `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)` : `hsv(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)`;
+
+        try {
+            await navigator.clipboard.writeText(textToCopy)
+            setCopied(true);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    }
+
+    useEffect(() => {
+        if (copied) {
+            const timeout = setTimeout(() => {
+                setCopied(false);
+            }, 3000);
+            return () => clearTimeout(timeout);
+        }
+    }, [copied])
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (!e.target.closest(`.${styles.selectBox}`)) {
+                setSelectBoxOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+
     return (
         <div className={styles.container} style={{
             backgroundColor: colorVals.type === 'hsl' ?
                 `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)` : `hsv(${colorVals.hue},${colorVals.sat}%,${colorVals.lightnessOrValue}%)`
         }}>
-             <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
+            <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
             <div className={styles.box}>
                 {isEditing ? (
                     <>
@@ -76,6 +109,7 @@ export default function ColorLightPicker() {
                     <>
                         <h4>Type: {colorVals.type.toUpperCase()}</h4>
                         <p>Hue: {colorVals.hue}<br />Saturation: {colorVals.sat}%<br />{colorVals.type === 'hsl' ? 'Lightness' : 'Brightness'}: {colorVals.lightnessOrValue}%</p>
+                        <button className={styles.copyBtn} onClick={handleCopy}>{copied ? 'Copied!' : 'Copy'}</button>
                         <button className={styles.editBtn} onClick={() => {
                             setSelectBoxOpen(false);
                             setIsEditing(prev => !prev);

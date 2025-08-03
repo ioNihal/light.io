@@ -2,6 +2,7 @@
   --color-page-bg: #e2e6f5;
   --color-surface: #FFFFFF;
   --color-primary: #4F46E5;
+  --color-secondary: rgb(165, 207, 51);
   --color-primary-text: #f3f3f3;
   --color-primary-light: #EEF2FF;
   --color-btn-text: #ececec;
@@ -21,6 +22,7 @@
   --color-page-bg: #1F1F2E;
   --color-surface: #2A2A3D;
   --color-primary: #8B82E2;
+  --color-secondary: #28a853;
   --color-primary-light: #5D55CC;
   --color-btn-text: #111111;
   --color-text-high: #F9FAFB;
