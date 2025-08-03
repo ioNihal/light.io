@@ -203,3 +203,10 @@ h1 {
 .navSecondBtn.active .icon {
     color: var(--color-primary);
 }
+
+@media screen and (max-width: 768px) {
+    .sidebar.hide {
+        width: 60px;
+        padding: 1.5rem 0.5rem;
+    }
+}

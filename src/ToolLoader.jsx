@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const ScreenLight = lazy(() => import('./routes/ScreenLight/ScreenLight'));
@@ -8,6 +8,7 @@ const ColorLightPicker = lazy(() => import('./routes/ColorLightPicker/ColorLight
 
 export default function ToolLoader() {
     const { toolName } = useParams();
+    const navigate = useNavigate();
     let Component = null;
 
     switch (toolName) {
@@ -19,7 +20,7 @@ export default function ToolLoader() {
             placeItems: 'center',
             flex: '1 1 100%',
             color: 'red'
-        }}>Tool: "{toolName}" not found!</div>
+        }}>Tool: "{toolName}" not found! <button onClick={() => navigate('/')}>Return</button></div>
     }
 
     return (
@@ -27,6 +28,7 @@ export default function ToolLoader() {
             display: 'grid',
             placeItems: 'center',
             flex: '1 1 100%',
+            color: 'var(--color-text-high'
         }}>Loading...</div>}>
             <Component />
         </Suspense>

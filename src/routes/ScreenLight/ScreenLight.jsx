@@ -37,7 +37,7 @@ function ScreenLight() {
         <div className={styles.container} style={{ backgroundColor: bgColor }}>
             <button className={styles.backBtn} onClick={() => {
                 if (theme !== userTheme.current) toggle();
-                navigate(-1)
+                navigate('/')
             }}>BACK</button>
             <div className={styles.controls}>
                 <div className={styles.toggles}>
@@ -57,6 +57,7 @@ function ScreenLight() {
                     disabled={!screenLightOn}
                     onChange={(e) => setBrightness(Number(e.target.value))}
                     label="brightness_slider"
+                    id="brightnessSlider"
                     trackHeight={50}
                     thumbSize={50}
                 />

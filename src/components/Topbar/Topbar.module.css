@@ -45,3 +45,9 @@
 .githubRepoBtn {
   background-color: var(--color-accent);
 }
+
+@media screen and (max-width: 768px) {
+  .topbar {
+    padding: 0.8rem;
+  }
+}

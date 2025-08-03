@@ -33,11 +33,12 @@ export default function AmbientColorCycler() {
 
     return (
         <div className={styles.container} style={{ backgroundColor: ambientColors[colorIndex], transitionDuration: `${speed}ms` }}>
-            <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
+            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
             <div className={styles.sliderWrapper}>
                 <p className={styles.indicator}>Slide to change speed</p>
                 <RangeSlider
                     label='speed_slider'
+                    id='speedSlider'
                     min={0}
                     max={6000}
                     step={500}

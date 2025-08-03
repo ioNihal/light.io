@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 export default function ColorLightPicker() {
     const [colorVals, setColorVals] = useState({ hue: 180, sat: 100, light: 50 });
     const [isEditing, setIsEditing] = useState(true);
-    const [selectBoxOpen, setSelectBoxOpen] = useState(false);
     const [copied, setCopied] = useState(false);
 
     const navigate = useNavigate();
@@ -40,8 +39,8 @@ export default function ColorLightPicker() {
 
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if (!e.target.closest(`.${styles.selectBox}`)) {
-                setSelectBoxOpen(false);
+            if (!e.target.closest(`.${styles.box}`)) {
+                setIsEditing(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
@@ -53,7 +52,7 @@ export default function ColorLightPicker() {
         <div className={styles.container} style={{
             backgroundColor: `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.light}%)`
         }}>
-            <button className={styles.backBtn} onClick={() => navigate(-1)}>Back</button>
+            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
             <div className={styles.box}>
                 <h4>HSL Color Generator</h4>
                 {isEditing ? (
@@ -62,6 +61,7 @@ export default function ColorLightPicker() {
                             Hue:&nbsp;{colorVals.hue} deg
                             <RangeSlider
                                 label='hue'
+                                id='hue'
                                 min={0} max={360}
                                 value={colorVals.hue}
                                 onChange={(e) => handleSlider('hue', e)}
@@ -72,6 +72,7 @@ export default function ColorLightPicker() {
                             Saturation:&nbsp;{colorVals.sat}%
                             <RangeSlider
                                 label='sat'
+                                id='sat'
                                 min={0} max={100}
                                 value={colorVals.sat}
                                 onChange={(e) => handleSlider('sat', e)}
@@ -82,6 +83,7 @@ export default function ColorLightPicker() {
                             Lightness:&nbsp;{colorVals.light}%
                             <RangeSlider
                                 label='light'
+                                id='light'
                                 min={0} max={100}
                                 value={colorVals.light}
                                 onChange={(e) => handleSlider('light', e)}
@@ -94,10 +96,7 @@ export default function ColorLightPicker() {
                     <>
                         <p>Hue:&nbsp;{colorVals.hue}<br />Saturation:&nbsp;{colorVals.sat}%<br />Lightness:&nbsp;{colorVals.light}%</p>
                         <button className={styles.copyBtn} onClick={handleCopy}>{copied ? 'Copied!' : 'Copy'}</button>
-                        <button className={styles.editBtn} onClick={() => {
-                            setSelectBoxOpen(false);
-                            setIsEditing(prev => !prev);
-                        }}>Edit</button>
+                        <button className={styles.editBtn} onClick={() => setIsEditing(prev => !prev)}>Edit</button>
                     </>
                 )
                 }

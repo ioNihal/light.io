@@ -1,6 +1,7 @@
 import styles from "./RangeSlider.module.css";
 
 function RangeSlider({
+    id = 'customRangeSlider',
     min = 0,
     max = 100,
     step = 1,
@@ -21,6 +22,7 @@ function RangeSlider({
 
     return (
         <input
+            id={id}
             type="range"
             name={label}
             min={min}
