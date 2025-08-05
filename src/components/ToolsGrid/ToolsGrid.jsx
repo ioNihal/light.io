@@ -65,7 +65,7 @@ export default function ToolsGrid() {
       <div className={styles.grid}>
         {pageItems.map((tool, i) => (
           <div className={styles.card} key={startIdx + i} onClick={() => navigate(`/${tool.title.split(" ").join("-").toLowerCase()}`)}>
-            <img className={styles.img} alt={tool.title} src={tools.img || 'thumbnail.png'} width={250} loading='lazy' />
+            <img className={styles.img} alt={tool.title} src={tools.img || 'thumbnail.png'} width={250} height={100} loading='lazy' />
             <div className={styles.title}>{tool.title}</div>
             <div className={styles.desc}>{tool.desc}</div>
           </div>
