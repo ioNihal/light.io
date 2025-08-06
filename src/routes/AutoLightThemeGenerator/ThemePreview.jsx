@@ -1,12 +1,15 @@
 import { BiCopy } from 'react-icons/bi';
 import styles from './ThemePreview.module.css';
+import { useEffect, useState } from 'react';
+import { TiTick } from 'react-icons/ti';
+import { FaCheck } from 'react-icons/fa';
 
 /**
  * @param {string} label 
  * @param {Array<{label, color, onColor}>} palette 
  * @param {(name:string, color:string)=>void} onCopyToken
  */
-export default function ThemePreview({ label, palette, onCopyToken }) {
+export default function ThemePreview({ label, palette, onCopyToken, copiedToken, type }) {
     const [
         { color: primary, onColor: onPrimary = '#000' },
         { color: accent, onColor: onAccent = '#000' },
@@ -78,13 +81,56 @@ export default function ThemePreview({ label, palette, onCopyToken }) {
                 )}
             </div>
 
+
             <ul className={styles.paletteWrapper}>
-                <li>{capitalize(palette[0]?.label)}: {primary.toUpperCase()} <BiCopy size={16} onClick={() => onCopyToken(palette[0].label, primary)} /></li>
-                <li>on{capitalize(palette[0]?.label)}: {onPrimary.toUpperCase()} <BiCopy size={16} onClick={() => onCopyToken(`on${palette[0].label}`, onPrimary)} /></li>
-                <li>{capitalize(palette[2]?.label)}: {surface.toUpperCase()} <BiCopy size={16} onClick={() => onCopyToken(palette[2].label, surface)} /></li>
-                <li>on{capitalize(palette[2]?.label)}: {onSurface.toUpperCase()} <BiCopy size={16} onClick={() => onCopyToken(`on${palette[2].label}`, onSurface)} /></li>
-                <li>{capitalize(palette[2]?.label)}: {accent.toUpperCase()} <BiCopy size={16} onClick={() => onCopyToken(palette[1].label, accent)} /></li>
-                <li>on{capitalize(palette[2]?.label)}: {onAccent.toUpperCase()} <BiCopy size={16} onClick={() => onCopyToken(`on${palette[1].label}`, onAccent)} /></li>
+                <li style={{
+                    background: primary,
+                    color: onPrimary
+                }}>{capitalize(palette[0]?.label)}:&nbsp;{primary.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'primaryLight' : 'primaryDark'}` ? <FaCheck style={{ color: onPrimary }} size={16} /> :
+                    <BiCopy
+                        title='copy'
+                        style={{ color: onPrimary }}
+                        size={16}
+                        onClick={() => onCopyToken(palette[0]?.label, primary, `${type === 'light' ? 'primaryLight' : 'primaryDark'}`)} />}
+                </li>
+                <li style={{
+                    background: surface,
+                    color: onSurface
+                }}>{capitalize(palette[2]?.label)}:&nbsp;{surface.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'surfaceLight' : 'surfaceDark'}` ? <FaCheck style={{ color: onSurface }} size={16} /> :
+                    <BiCopy style={{ color: onSurface }} size={16} onClick={() => onCopyToken(palette[2]?.label, surface, `${type === 'light' ? 'surfaceLight' : 'surfaceDark'}`)} />}
+                </li>
+                <li style={{
+                    background: accent,
+                    color: onAccent
+                }}>{capitalize(palette[2]?.label)}:&nbsp;{accent.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'accentLight' : 'accentDark'}` ? <FaCheck style={{ color: onAccent }} size={16} /> :
+                    <BiCopy style={{ color: onAccent }} size={16} onClick={() => onCopyToken(palette[1]?.label, accent, `${type === 'light' ? 'accentLight' : 'accentDark'}`)} />}
+                </li>
+                {extra1.color && (
+                    <>
+                        <li style={{
+                            background: extra1.color,
+                            color: extra1.onColor
+                        }}>{capitalize(palette[3]?.label)}:&nbsp;{extra1?.color?.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'extra1Light' : 'extra1Dark'}` ? <FaCheck style={{ color: extra1.onColor }} size={16} /> :
+                            <BiCopy style={{ color: extra1.onColor }} size={16} onClick={() => onCopyToken(palette[3]?.label, extra1.onColor, `${type === 'light' ? 'extra1Light' : 'extra1Dark'}`)} />}
+                        </li>
+                    </>
+                )}
+                {extra2.color && (
+                    <>
+                        <li style={{
+                            background: extra2.color,
+                            color: extra2.onColor
+                        }}>{capitalize(palette[4]?.label)}:&nbsp;{extra2?.color?.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'extra2Light' : 'extra2Dark'}` ? <FaCheck style={{ color: extra2.onColor }} size={16} /> :
+                            <BiCopy style={{ color: extra2.onColor }} size={16} onClick={() => onCopyToken(palette[4]?.label, extra2.color, `${type === 'light' ? 'extra2Light' : 'extra2Dark'}`)} />}
+                        </li>
+                    </>
+                )}
+                <li style={{
+                    background: onPrimary,
+                    color: primary
+                }}>onColor:&nbsp;{onPrimary.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'onColorLight' : 'onColorDark'}` ? <FaCheck style={{ color: primary }} size={16} /> :
+                    <BiCopy style={{ color: primary }} size={16} onClick={() => onCopyToken('onColor', onPrimary, `${type === 'light' ? 'onColorLight' : 'onColorDark'}`)} />}
+                </li>
             </ul>
         </div>
     );
