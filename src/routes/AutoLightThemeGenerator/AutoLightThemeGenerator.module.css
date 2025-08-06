@@ -9,6 +9,8 @@
   position: relative;
   background-color: var(--color-primary-bg);
   color: var(--color-text-high);
+
+  overflow-y: auto;
 }
 
 .backBtn {

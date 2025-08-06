@@ -2,6 +2,7 @@ import styles from './ToolsGrid.module.css'
 import { tools } from '../../data/tools'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
 export default function ToolsGrid() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -9,7 +10,7 @@ export default function ToolsGrid() {
 
   const navigate = useNavigate();
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
   const startIdx = currentPage * itemsPerPage;
 
   const goPrev = () => {
@@ -46,7 +47,7 @@ export default function ToolsGrid() {
           onChange={handleSearchTerm} />
         <div className={styles.pagination}>
           <button onClick={goPrev} disabled={currentPage === 0}>
-            Prev
+            <GrFormPrevious />
           </button>
           {Array.from({ length: totalPages }).map((_, idx) => (
             <button
@@ -58,7 +59,7 @@ export default function ToolsGrid() {
             </button>
           ))}
           <button onClick={goNext} disabled={currentPage === totalPages - 1}>
-            Next
+            <GrFormNext />
           </button>
         </div>
       </div>
