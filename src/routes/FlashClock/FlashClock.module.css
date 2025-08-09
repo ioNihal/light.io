@@ -42,7 +42,7 @@
     text-align: center;
     font-family: var(--tiktok-sans);
     color: var(--color-text-high);
-    transition: transform 120ms ease, box-shadow 120ms ease, background-color 160ms;
+    transition: height 0.3s ease, transform 120ms ease, box-shadow 120ms ease, background-color 160ms;
 }
 
 .title {

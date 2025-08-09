@@ -125,7 +125,10 @@ export default function FlashClock() {
     <div className={styles.container}>
       <button className={styles.backBtn} onClick={() => navigate('/')}>BACK</button>
 
-      <div className={`${styles.card} ${flashPulse ? styles.flash : ''}`}>
+      <div className={`${styles.card} ${flashPulse ? styles.flash : ''}`}
+      style={{
+        opacity: flashPulse ? 0.1 : 1
+      }}>
         <h1 className={styles.title}>DIGITAL CLOCK</h1>
         <p className={styles.subtitle}>with Flash Alerts</p>
 
@@ -133,14 +136,16 @@ export default function FlashClock() {
 
         <div className={styles.setting}>
           <label>
-            <span>Flash every</span>
-            <input
-              type="number"
-              value={flashInterval}
-              min={1}
-              max={60}
-              onChange={(e) => setFlashInterval(Math.max(1, Number(e.target.value || 1)))}
-            />
+            <span>{flashEnabled ? 'Flashing every' : "Flash every"}</span>
+            {flashEnabled ? flashInterval : (
+              <input
+                type="number"
+                value={flashInterval}
+                min={1}
+                max={60}
+                onChange={(e) => setFlashInterval(Math.max(1, Number(e.target.value || 1)))}
+              />
+            )}
           </label>
           <span>minutes</span>
         </div>
