@@ -69,78 +69,72 @@
 }
 
 .setting {
-    margin-bottom: 1rem;
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
 }
 
 .setting label {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    color: var(--color-text-low);
+    gap: 1em;
+    flex: 1 1 auto;
 }
 
-.setting input[type="number"],
-.setting input[type="time"] {
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.9rem;
-    margin: 0 0.5rem;
-    flex: 1;
-    outline-color: transparent;
-    outline-width: 0.5px;
-}
-
-.timePicker {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.icon {
+.setting label input {
+    padding: 5px 10px;
+    flex: 1 0 auto;
     font-size: 1rem;
-    padding: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+    outline: none;
+    font-family: var(--clockFace);
+    border: 1px solid var(--color-border);
 }
 
-.buttons {
-    display: flex;
-    gap: 0.5rem;
-    margin: 1rem 0;
-    font-family: inherit;
+input:focus {
+    border: 1px solid var(--color-primary);
 }
-
-.primary {
-    flex: 1;
-    padding: 0.5rem 0;
-    background-color: var(--color-primary);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: var(--color-primary-text);
-}
-
-.secondary {
-    width: 100%;
-    padding: 0.5rem 0;
-    background-color: var(--color-secondary);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: var(--color-primary-text);
-}
-
-
 
 .flash {
     animation: flashBG 360ms ease;
+}
+
+.icon {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.primary,
+.secondary {
+    flex: 1 1 100%;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.secondary {
+    background-color: red;
+}
+
+.primary:hover,
+.secondary:hover {
+    opacity: 0.9;
 }
 
 @keyframes flashBG {

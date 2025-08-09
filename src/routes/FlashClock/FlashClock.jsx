@@ -138,39 +138,40 @@ export default function FlashClock() {
               type="number"
               value={flashInterval}
               min={1}
+              max={60}
               onChange={(e) => setFlashInterval(Math.max(1, Number(e.target.value || 1)))}
             />
-            <span>minutes</span>
           </label>
+          <span>minutes</span>
         </div>
 
         <div className={styles.setting}>
           <label>
             <span>Set alarm for</span>
-            <div className={styles.timePicker}>
-              <input type="time" defaultValue="08:30" onChange={handleAlarmSet} />
-              <span className={styles.icon} onClick={() => setIsAlarm(prev => !prev)}>
-                {isAlarm ? <CiBellOn size={24} /> : <CiBellOff size={24} />}
-              </span>
-            </div>
+            <input type="time" defaultValue="08:30" onChange={handleAlarmSet} />
           </label>
+          <span className={styles.icon} onClick={() => setIsAlarm(prev => !prev)}>
+            {isAlarm ? <CiBellOn size={24} /> : <CiBellOff size={24} />}
+          </span>
         </div>
 
         <div className={styles.buttons}>
           <button
             className={styles.primary}
             onClick={() => setFlashEnabled(prev => !prev)}
+            style={{
+              backgroundColor: flashEnabled ? 'purple' : ''
+            }}
           >
             {flashEnabled ? 'Stop' : 'Start'} Flash
           </button>
+          <button
+            className={styles.secondary}
+            onClick={handleResetClick}
+          >
+            {resetLabel}
+          </button>
         </div>
-
-        <button
-          className={styles.secondary}
-          onClick={handleResetClick}
-        >
-          {resetLabel}
-        </button>
       </div>
     </div>
   );
