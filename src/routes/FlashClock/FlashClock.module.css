@@ -1,0 +1,161 @@
+.container {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+    position: relative;
+    background-color: var(--color-page-bg);
+    user-select: none;
+}
+
+
+.backBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    font-family: var(--tiktok-sans);
+    font-weight: 500;
+}
+
+.backBtn:hover,
+.backBtn:focus {
+    background-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+}
+
+
+
+.card {
+    background: var(--color-surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    font-family: var(--tiktok-sans);
+    color: var(--color-text-high);
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 160ms;
+}
+
+.title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    color: var(--color-text-low);
+    margin: 0 0 1rem 0;
+}
+
+.time {
+    width: 100%;
+
+
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-family: var(--clockFace);
+}
+
+.setting {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.setting label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-low);
+}
+
+.setting input[type="number"],
+.setting input[type="time"] {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    margin: 0 0.5rem;
+    flex: 1;
+    outline-color: transparent;
+    outline-width: 0.5px;
+}
+
+.timePicker {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.icon {
+    font-size: 1rem;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    font-family: inherit;
+}
+
+.primary {
+    flex: 1;
+    padding: 0.5rem 0;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--color-primary-text);
+}
+
+.secondary {
+    width: 100%;
+    padding: 0.5rem 0;
+    background-color: var(--color-secondary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--color-primary-text);
+}
+
+
+
+.flash {
+    animation: flashBG 360ms ease;
+}
+
+@keyframes flashBG {
+    0% {
+        box-shadow: 0 0 0 rgba(79, 70, 229, 0);
+        transform: translateY(0);
+    }
+
+    40% {
+        box-shadow: 0 12px 30px rgba(79, 70, 229, 0.12);
+        transform: translateY(-2px);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(79, 70, 229, 0);
+        transform: translateY(0);
+    }
+}

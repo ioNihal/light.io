@@ -16,6 +16,7 @@
   --color-accent: rgb(223, 223, 223);
 
   --tiktok-sans: "TikTok Sans", sans-serif;
+  --clockFace:  "JetBrains Mono", monospace;
 }
 
 [data-theme="dark"] {
