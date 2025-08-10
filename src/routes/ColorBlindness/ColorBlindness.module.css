@@ -1,0 +1,303 @@
+.page {
+    min-height: 100vh;
+    padding: 40px;
+    background-color: var(--color-page-bg);
+    box-sizing: border-box;
+    font-family: var(--tiktok-sans);
+    color: var(--color-text-high);
+    display: grid;
+    place-items: center;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+.backBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    font-family: var(--tiktok-sans);
+}
+
+.backBtn:hover {
+    filter: brightness(0.95);
+    box-shadow: var(--shadow-lg);
+}
+
+
+.card {
+    max-width: 1100px;
+    margin: 56px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    background: transparent;
+}
+
+
+.left,
+.right {
+    background: var(--color-surface);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Dropzone */
+.dropzone {
+    border: 2px dashed var(--color-border);
+    border-radius: 10px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 18px;
+    text-align: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.dropzone:hover {
+    border-color: var(--color-primary);
+}
+
+.dragOver {
+    background-color: rgba(79, 70, 229, 0.03);
+    border-color: var(--color-primary);
+}
+
+.dropIcon {
+    font-size: 28px;
+    color: var(--color-icon);
+}
+
+.dropTitle {
+    font-size: 16px;
+    color: var(--color-text-high);
+    font-weight: 600;
+}
+
+.dropSub {
+    font-size: 13px;
+    color: var(--color-text-med);
+}
+
+
+.thumb {
+    max-width: 100%;
+    max-height: 240px;
+    border-radius: 8px;
+    object-fit: contain;
+    box-shadow: var(--shadow-sm);
+}
+
+
+.browseBtn {
+    background-color: var(--color-primary);
+    color: var(--color-btn-text);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--tiktok-sans);
+    box-shadow: var(--shadow-sm);
+}
+
+.clearBtn {
+    background: transparent;
+    color: var(--color-text-med);
+    border: 1px solid var(--color-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+
+.changeRow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+/* hidden input */
+.hiddenInput {
+    display: none;
+}
+
+.selectBox {
+    list-style: none;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 6px;
+}
+
+.selectBox>.trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    color: var(--color-text-med);
+    font-family: var(--tiktok-sans);
+}
+
+.selectBox>.trigger:focus {
+    outline: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.selectBox>.trigger.open {
+    border-color: var(--color-primary);
+}
+
+.triggerArrow {
+    opacity: 0.7;
+    transform: scale(1.05);
+    margin-left: 8px;
+}
+
+
+.options {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.22s ease;
+    z-index: 30;
+}
+
+.options.open {
+    max-height: 220px;
+}
+
+.options ul {
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.options ul li {
+    padding: 10px 12px;
+    cursor: pointer;
+    color: var(--color-text-med);
+    font-family: var(--tiktok-sans);
+}
+
+.options ul li:hover,
+.options ul li:focus {
+    background-color: var(--color-accent);
+    outline: none;
+}
+
+.optionActive {
+    background-color: rgba(79, 70, 229, 0.06);
+    color: var(--color-text-high);
+    font-weight: 600;
+}
+
+
+.previewTitle {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: var(--color-text-high);
+}
+
+.previewBox {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 14px;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.previewPlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-med);
+}
+
+.placeholderIcon {
+    font-size: 36px;
+}
+
+.placeholderText {
+    font-size: 14px;
+}
+
+
+.previewImg,
+.previewCanvas {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    box-shadow: var(--shadow-sm);
+    max-height: 560px;
+}
+
+.warning {
+    color: rgb(73, 34, 34);
+    font-size: 0.64rem;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+
+@media (max-width: 900px) {
+    .page {
+        padding: 1rem;
+    }
+    .card {
+        grid-template-columns: 1fr;
+    }
+
+    .backBtn {
+        top: 10px;
+        left: 10px;
+    }
+
+    .dropzone {
+        height: 300px;
+    }
+
+    .previewBox {
+        min-height: 260px;
+    }
+
+    .pageTitle {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+    }
+}
