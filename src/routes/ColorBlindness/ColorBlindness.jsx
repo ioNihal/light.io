@@ -123,7 +123,7 @@ export default function ColorBlindness() {
             <h1 className={styles.pageTitle}>Color Blindness Simulator</h1>
             <div className={styles.card}>
                 <div className={styles.left}>
-                    <p className={styles.warning}>This function is CPU-bound and iterates every pixel (4 bytes per pixel)!</p>
+                    <p className={styles.warning}>This function is CPU-bound! Please upload small file</p>
                     <div
                         className={styles.dropzone}
                         ref={dropRef}
