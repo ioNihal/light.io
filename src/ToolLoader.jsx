@@ -8,6 +8,7 @@ const ColorLightPicker = lazy(() => import('./routes/ColorLightPicker/ColorLight
 const AutoLightThemeGenerator = lazy(() => import('./routes/AutoLightThemeGenerator/AutoLightThemeGenerator'));
 const FlashClock = lazy(() => import('./routes/FlashClock/FlashClock'));
 const ColorBlindness = lazy(() => import('./routes/ColorBlindness/ColorBlindness'));
+const ContrastRatio = lazy(() => import('./routes//ContrastRatio/ContrastRatio'));
 
 export default function ToolLoader() {
     const { toolName } = useParams();
@@ -21,6 +22,7 @@ export default function ToolLoader() {
         case 'auto-light-theme-generator': Component = AutoLightThemeGenerator; break;
         case 'clock-with-flash-alerts': Component = FlashClock; break;
         case 'color-blindness-simulator': Component = ColorBlindness; break;
+        case 'contrast-ratio-checker': Component = ContrastRatio; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',
