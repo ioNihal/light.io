@@ -1,7 +1,7 @@
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ContrastRatio.module.css';
-import { getContrast, normalize } from 'polished';
-import { isValidHex, normalizeHex, wcagResults } from './contrastHelpers';
+import { isValidHex, normalizeHex, wcagResults, getContrast } from './contrastHelpers';
+import { useNavigate } from 'react-router-dom';
 
 export default function ContrastRatio() {
     const [textColor, setTextColor] = useState("#000000");
@@ -11,6 +11,8 @@ export default function ContrastRatio() {
 
     const [ratio, setRatio] = useState(null);
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         try {
@@ -26,12 +28,12 @@ export default function ContrastRatio() {
 
     function onTextHexChange(e) {
         const v = e.target.value.trim();
-        setTextColor(v.startsWith('#' ? v : `#${v}`));
+        setTextColor(v.startsWith('#') ? v : `#${v}`);
     }
 
     function onBgHexChange(e) {
         const v = e.target.value.trim();
-        setBgColor(v.startsWith('#' ? v : `#${v}`));
+        setBgColor(v.startsWith('#') ? v : `#${v}`);
     }
 
     const presets = [
@@ -65,7 +67,7 @@ export default function ContrastRatio() {
 
                 <div className={styles.controls}>
                     <div className={styles.picker}>
-                        <label className={styles.label}>Text&nbsp;sColor:</label>
+                        <label className={styles.label}>Text&nbsp;Color:</label>
                         <input
                             aria-label="Text color"
                             type="color"

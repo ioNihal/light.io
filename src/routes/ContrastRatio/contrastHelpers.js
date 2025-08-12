@@ -1,6 +1,6 @@
 export function isValidHex(hex) {
     if (typeof hex !== "string") return false;
-    return /^#?([0-9a-f]{3}[0-9a-f]{6})$/i.test(hex.trim());
+    return /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.test(hex.trim());
 }
 
 
@@ -34,15 +34,15 @@ function luminanceFromRGB(rgb) {
 }
 
 export function getContrast(hex1, hex2) {
-    if (!isValidHex(hex1) || isValidHex(hex2)) {
+    if (!isValidHex(hex1) || !isValidHex(hex2)) {
         throw new Error("One or both colors are invalid hex values!")
     }
 
-    const rbg1 = hexToRGB(hex1);
+    const rgb1 = hexToRGB(hex1);
     const rgb2 = hexToRGB(hex2);
 
     const L1 = luminanceFromRGB(rgb1);
-    const L2 = luminanceFromRGB(rbg2);
+    const L2 = luminanceFromRGB(rgb2);
 
     const brightest = Math.max(L1, L2);
     const darkest = Math.min(L1, L2);
