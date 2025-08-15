@@ -1,0 +1,221 @@
+.container {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+    position: relative;
+    background-color: var(--color-page-bg);
+    user-select: none;
+    font-family: var(--tiktok-sans);
+}
+
+.backBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    font-family: var(--tiktok-sans);
+    font-weight: 500;
+}
+
+.backBtn:hover,
+.backBtn:focus {
+    background-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.header {
+    color: var(--color-text-high);
+}
+
+.header p {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+.statsRow {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text-high);
+    gap: 0.5em;
+    justify-content: space-between;
+}
+
+.badges {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    font-family: var(--clockFace);
+}
+
+.badges span {
+    background-color: var(--color-page-bg);
+    padding: 6px 8px;
+    border-radius: 5px;
+}
+
+.strict {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 1em;
+}
+
+.tile {
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.tile:disabled {
+    cursor: not-allowed;
+}
+
+.green {
+    background: #118c4f;
+}
+
+.red {
+    background: #c22f2f;
+}
+
+.yellow {
+    background: #cba400;
+}
+
+.blue {
+    background: #1d62d6;
+}
+
+.greenGlow {
+    filter: brightness(1.4);
+    box-shadow: 0 0 18px rgba(27, 226, 120, 0.6);
+    transform: scale(1.03);
+}
+
+.redGlow {
+    filter: brightness(1.4);
+    box-shadow: 0 0 18px rgba(255, 75, 75, 0.6);
+    transform: scale(1.03);
+}
+
+.yellowGlow {
+    filter: brightness(1.4);
+    box-shadow: 0 0 18px rgba(255, 232, 74, 0.6);
+    transform: scale(1.03);
+}
+
+.blueGlow {
+    filter: brightness(1.4);
+    box-shadow: 0 0 18px rgba(77, 178, 255, 0.6);
+    transform: scale(1.03);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.primary {
+    padding: 8px 12px;
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--clockFace);
+}
+
+.primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.message {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    min-height: 1.25rem;
+    color: var(--color-text-high);
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0;
+        padding-top: 70px;
+    }
+
+    .wrapper {
+        width: 100%;
+        height: 100%;
+        gap: 2.5em;
+    }
+
+    .statsRow {
+        gap: 2em;
+    }
+
+    .badges span {
+        font-size: 1rem;
+        padding: 8px 12px;
+        gap: 0.5em;
+    }
+
+    .strict {
+        font-size: 1.2rem;
+        gap: 0.5em;
+    }
+
+    .strict input {
+        height: 24px;
+        width: 24px;
+    }
+
+    .controls {
+        flex-direction: column-reverse;
+        gap: 2em;
+    }
+
+    .primary {
+        padding: 10px 15px;
+    }
+
+    .message {
+        font-size: 1.1rem;
+    }
+
+}
