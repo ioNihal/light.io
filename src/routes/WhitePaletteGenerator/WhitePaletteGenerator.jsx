@@ -52,7 +52,7 @@ export default function WhitePaletteGenerator() {
                         Create  subtle off-whites (tinted) up to pure white. Great for surfaces, cards, borders, and gentle contrasts.
                     </p>
                     <p className={styles.info}>
-                        Near white colors are duplicates thus its removed automatically
+                        Duplicate shades close to pure white are automatically removed.
                     </p>
                 </header>
 
