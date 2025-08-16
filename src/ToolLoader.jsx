@@ -10,7 +10,7 @@ const FlashClock = lazy(() => import('./routes/FlashClock/FlashClock'));
 const ColorBlindness = lazy(() => import('./routes/ColorBlindness/ColorBlindness'));
 const ContrastRatio = lazy(() => import('./routes//ContrastRatio/ContrastRatio'));
 const FlashMemoryTest = lazy(() => import('./routes/FlashMemoryTest/FlashMemoryTest'));
-
+const WhitePaletteGenerator = lazy(() => import('./routes/WhitePaletteGenerator/WhitePaletteGenerator'));
 
 
 
@@ -31,6 +31,7 @@ export default function ToolLoader() {
         case 'color-blindness-simulator': Component = ColorBlindness; break;
         case 'contrast-ratio-checker': Component = ContrastRatio; break;
         case 'flash-memory-test': Component = FlashMemoryTest; break;
+        case 'white-palette-generator': Component = WhitePaletteGenerator; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',

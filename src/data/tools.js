@@ -111,7 +111,7 @@ export const tools = [
     },
     {
         id: 15,
-        title: "Generate Whites Palette",
+        title: "White Palette Generator",
         desc: "Create a spectrum of off-whites to pure white shades.",
         icon: MdGradient
     },
