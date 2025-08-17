@@ -11,7 +11,7 @@ const ColorBlindness = lazy(() => import('./routes/ColorBlindness/ColorBlindness
 const ContrastRatio = lazy(() => import('./routes//ContrastRatio/ContrastRatio'));
 const FlashMemoryTest = lazy(() => import('./routes/FlashMemoryTest/FlashMemoryTest'));
 const WhitePaletteGenerator = lazy(() => import('./routes/WhitePaletteGenerator/WhitePaletteGenerator'));
-
+const ColorFormatConverter = lazy(() => import('./routes/ColorFormatConverter/ColorFormatConverter'));
 
 
 
@@ -32,6 +32,7 @@ export default function ToolLoader() {
         case 'contrast-ratio-checker': Component = ContrastRatio; break;
         case 'flash-memory-test': Component = FlashMemoryTest; break;
         case 'white-palette-generator': Component = WhitePaletteGenerator; break;
+        case 'hex-hsl-rgb-converter': Component = ColorFormatConverter; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',
