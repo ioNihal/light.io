@@ -226,6 +226,7 @@
     .note {
         width: 90%;
         margin: auto;
+        font-size: 0.6rem;
     }
 
 
@@ -289,13 +290,8 @@
         gap: 0.5rem;
         font-size: 0.5rem;
         flex-wrap: wrap;
-    }
 
-    .backBtn {
-        top: 12px;
-        left: 12px;
-        padding: 6px 8px;
-        font-size: 0.95rem;
+        margin-bottom: 80px;
     }
 }
 

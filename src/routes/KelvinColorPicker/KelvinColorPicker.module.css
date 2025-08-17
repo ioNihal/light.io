@@ -259,6 +259,15 @@
         width: 100%;
     }
 
+    .infoRow {
+        font-size: 0.9rem;
+    }
+
+    .smallBtn {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+
     .gradientPreview {
         flex-wrap: wrap;
     }
