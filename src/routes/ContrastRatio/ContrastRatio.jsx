@@ -63,6 +63,10 @@ export default function ContrastRatio() {
         <div className={styles.container}>
             <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
             <h2 className={styles.title}>Contrast Ratio Checker</h2>
+            <p className={styles.note}>
+                Tips: white vs black yields the maximum contrast of 21:1.
+                Try it: <code>#000000</code>&nbsp;on&nbsp;<code>#ffffff</code>.
+            </p>
             <div className={styles.card}>
 
                 <div className={styles.controls}>
@@ -159,10 +163,6 @@ export default function ContrastRatio() {
             </div>
             {error && <div className={styles.error}>Error: {error}</div>}
 
-            <div className={styles.note}>
-                Tips: white vs black yields the maximum contrast of 21:1.
-                Try it: <code>#000000</code>&nbsp;on&nbsp;<code>#ffffff</code>.
-            </div>
         </div>
     );
 }

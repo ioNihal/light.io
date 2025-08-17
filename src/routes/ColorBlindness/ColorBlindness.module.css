@@ -148,7 +148,7 @@
     width: 100%;
     max-width: 320px;
     margin-top: 6px;
-    
+
 }
 
 .selectBox>.trigger {
@@ -282,9 +282,15 @@
     .page {
         padding: 1rem;
     }
+
+    .page>h1 {
+        margin-top: 55px;
+    }
+
     .card {
         grid-template-columns: 1fr;
         margin-top: 2rem;
+        width: 100%;
     }
 
     .backBtn {
