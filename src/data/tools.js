@@ -81,7 +81,7 @@ export const tools = [
     },
     {
         id: 10,
-        title: "Hex HSL RGB Converter",
+        title: "Color Format Convertor",
         desc: "Quickly convert between hex, HSL, and RGB formats.",
         icon: MdColorize
     },

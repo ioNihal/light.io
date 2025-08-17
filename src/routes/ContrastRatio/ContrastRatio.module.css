@@ -82,6 +82,8 @@
     transition: border 0.3s ease;
     border: 1px solid var(--color-border);
     outline: none;
+    background-color: var(--color-surface);
+    color: inherit;
 }
 
 .hexInput:focus,
@@ -175,7 +177,7 @@
 }
 
 .badgePass {
-    background-color: rgba(16, 185, 129, 0.12);
+    background-color: rgba(16, 83, 185, 0.12);
     color: #065f46;
     padding: 6px 10px;
     border-radius: 999px;

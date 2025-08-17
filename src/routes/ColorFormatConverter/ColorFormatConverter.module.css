@@ -71,7 +71,7 @@
 
 .label {
     font-size: 0.8rem;
-    color: #444;
+    color: inherit;
     margin-bottom: 0.25rem;
 }
 
