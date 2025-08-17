@@ -5,7 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 export default function WhitePaletteGenerator() {
     const [tint, setTint] = useState("#FFF6E8");
+    const [rawTint, setRawTint] = useState("#FFF6E8");
+
     const [count, setCount] = useState(5);
+    const [rawCount, setRawCount] = useState("5");
+
+    const [tintError, setTintError] = useState(null);
+    const [countError, setCountError] = useState(null);
+
     const [copied, setCopied] = useState(null);
     const navigate = useNavigate();
 
@@ -14,12 +21,13 @@ export default function WhitePaletteGenerator() {
     const handleColorPicker = (e) => {
         const value = e.target.value;
 
-        if(debounceRef.current) {
+        if (debounceRef.current) {
             clearTimeout(debounceRef.current)
         }
 
         debounceRef.current = setTimeout(() => {
             setTint(value)
+            setRawTint(value)
         }, 300);
     };
 
@@ -69,11 +77,18 @@ export default function WhitePaletteGenerator() {
                             />
                             <input
                                 type="text"
-                                value={tint}
-                                onChange={(e) => {
-                                    const v = e.target.value.trim();
-                                    if (v === "" || /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(v)) {
+                                value={rawTint}
+                                onChange={(e) => setRawTint(e.target.value)}
+
+                                onBlur={() => {
+                                    const v = rawTint.trim();
+                                    if (/^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(v)) {
                                         setTint(v.toUpperCase());
+                                        setRawTint(v.toUpperCase());
+                                        setTintError(null);
+                                    } else {
+                                        setRawTint(tint);
+                                        setTintError("*Please enter a valid hex color (e.g., #FFF or #FFFFFF).");
                                     }
                                 }}
                                 className={styles.textInput}
@@ -88,15 +103,28 @@ export default function WhitePaletteGenerator() {
                                 Random Tint
                             </button>
                         </div>
+                        {tintError && <p className={styles.error}>{tintError}</p>}
                     </div>
 
                     <div className={styles.controlGroup}>
                         <label className={styles.label}>Number of Shades</label>
                         <input type="number"
-                            min={2} max={50}
-                            value={count}
-                            onChange={(e) => setCount(clamp(parseInt(e.target.value || "0", 10), 2, 50))}
+                            min={0} max={50}
+                            value={rawCount}
+                            onChange={(e) => setRawCount(e.target.value)}
+                            onBlur={() => {
+                                const num = parseInt(rawCount || "0", 10);
+                                if (!isNaN(num) && num >= 2 && num <= 50) {
+                                    setCount(num);
+                                    setRawCount(String(num));
+                                    setCountError(null);
+                                } else {
+                                    setRawCount(String(count));
+                                    setCountError("*Shades must be a number between 2 and 50.");
+                                }
+                            }}
                             className={styles.numberInput} />
+                        {countError && <p className={styles.error}>{countError}</p>}
                     </div>
                 </section>
 
