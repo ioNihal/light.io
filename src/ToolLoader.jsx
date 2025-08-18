@@ -34,7 +34,7 @@ export default function ToolLoader() {
         case 'white-palette-generator': Component = WhitePaletteGenerator; break;
         case 'color-format-convertor': Component = ColorFormatConverter; break;
         case 'kelvin-color-temperature-picker': Component = KelvinColorPicker; break;
-        case 'lumen--lux-calculator': Component = LumenLuxCalculator; break;
+        case 'lumen-lux-calculator': Component = LumenLuxCalculator; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',

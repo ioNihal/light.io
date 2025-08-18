@@ -87,7 +87,7 @@ export const tools = [
     },
     {
         id: 11,
-        title: "Lumen  Lux Calculator",
+        title: "Lumen Lux Calculator",
         desc: "Convert lumens, lux, and area for lighting setups.",
         icon: MdCalculate
     },
