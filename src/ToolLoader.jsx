@@ -13,7 +13,7 @@ const FlashMemoryTest = lazy(() => import('./routes/FlashMemoryTest/FlashMemoryT
 const WhitePaletteGenerator = lazy(() => import('./routes/WhitePaletteGenerator/WhitePaletteGenerator'));
 const ColorFormatConverter = lazy(() => import('./routes/ColorFormatConverter/ColorFormatConverter'));
 const KelvinColorPicker = lazy(() => import('./routes/KelvinColorPicker/KelvinColorPicker'));
-
+const LumenLuxCalculator = lazy(() => import('./routes/LumenLuxCalculator/LumenLuxCalculator'));
 
 
 
@@ -34,6 +34,7 @@ export default function ToolLoader() {
         case 'white-palette-generator': Component = WhitePaletteGenerator; break;
         case 'color-format-convertor': Component = ColorFormatConverter; break;
         case 'kelvin-color-temperature-picker': Component = KelvinColorPicker; break;
+        case 'lumen--lux-calculator': Component = LumenLuxCalculator; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',

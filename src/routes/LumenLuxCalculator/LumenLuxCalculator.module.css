@@ -1,0 +1,148 @@
+.container {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+    position: relative;
+    background-color: var(--color-page-bg);
+    user-select: none;
+    font-family: var(--tiktok-sans);
+    color: var(--color-text-high);
+    overflow: hidden;
+}
+
+.backBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-primary-text);
+    background-color: var(--color-primary);
+    font-family: var(--tiktok-sans);
+    font-weight: 500;
+}
+
+.backBtn:hover,
+.backBtn:focus {
+    background-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 10px;
+    overflow-y: auto;
+    height: auto;
+}
+
+.header {
+    margin-bottom: 12px;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.subtitle {
+    opacity: 0.9;
+    font-size: 0.9rem;
+    margin: 6px 0 0;
+}
+
+.inputsWrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 1em;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+}
+
+input {
+    outline: none;
+    transition: border 0.3s ease;
+    border: 1px solid var(--color-border);
+    padding: 8px 10px;
+    border-radius: 5px;
+    background-color: var(--color-surface);
+    color: var(--color-text-high);
+    font-family: var(--clockFace);
+}
+
+input:focus {
+    border-color: var(--color-primary);
+}
+
+
+
+.error {
+    color: #c92a2a;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.tips ul {
+    list-style: none;
+    margin-top: 1em;
+}
+
+.tips ul li {
+    margin-top: 0.5em;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.tips ul li strong {
+    display: inline-block;
+    padding: 6px 8px;
+    background-color: var(--color-secondary);
+    opacity: 0.9;
+    border-radius: 6px;
+    margin-right: 0.5em;
+    font-size: 0.8rem;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0;
+        padding-top: 70px;
+    }
+
+    .wrapper {
+        height: 100%;
+        width: 100%;
+    }
+
+    .subtitle {
+        line-height: normal;
+    }
+
+    .inputsWrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .inputGroup {
+        width: 100%;
+    }
+}
