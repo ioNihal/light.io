@@ -123,24 +123,18 @@ export const tools = [
     },
     {
         id: 17,
-        title: "Mood Lighting Presets",
-        desc: "One-click presets: candle, sunset, disco, and more.",
-        icon: MdEmojiObjects
-    },
-    {
-        id: 18,
         title: "Vibe Meter",
         desc: "Interactive lights and sounds respond to your tap speed.",
         icon: MdTouchApp
     },
     {
-        id: 19,
+        id: 18,
         title: "Ambient Color Cycler",
         desc: "Slowly transition through a loop of ambient hues.",
         icon: MdDonutLarge
     },
     {
-        id: 20,
+        id: 19,
         title: "Clock with Flash Alerts",
         desc: "Digital clock that flashes at set intervals or alarms.",
         icon: MdSchedule

@@ -14,7 +14,7 @@ const WhitePaletteGenerator = lazy(() => import('./routes/WhitePaletteGenerator/
 const ColorFormatConverter = lazy(() => import('./routes/ColorFormatConverter/ColorFormatConverter'));
 const KelvinColorPicker = lazy(() => import('./routes/KelvinColorPicker/KelvinColorPicker'));
 const LumenLuxCalculator = lazy(() => import('./routes/LumenLuxCalculator/LumenLuxCalculator'));
-
+const MorseCode = lazy(() => import('./routes/MorseCode/MorseCode'));
 
 
 export default function ToolLoader() {
@@ -35,6 +35,7 @@ export default function ToolLoader() {
         case 'color-format-convertor': Component = ColorFormatConverter; break;
         case 'kelvin-color-temperature-picker': Component = KelvinColorPicker; break;
         case 'lumen-lux-calculator': Component = LumenLuxCalculator; break;
+        case 'morse-code-flasher' : Component = MorseCode; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',
