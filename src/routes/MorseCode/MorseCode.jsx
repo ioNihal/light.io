@@ -2,8 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './MorseCode.module.css';
 import { buildTimelineFromText, MORSE_MAP, unitMsFromWPM } from './helpers';
 import { useNavigate } from 'react-router-dom';
-import { IoChevronBack, IoPlay, IoPause, IoStop } from "react-icons/io5";
-import { HiSpeakerWave } from "react-icons/hi2";
 import RangeSlider from '../../components/RangeSlider/RangeSlider';
 
 
