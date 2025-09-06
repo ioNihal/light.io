@@ -16,6 +16,8 @@ const KelvinColorPicker = lazy(() => import('./routes/KelvinColorPicker/KelvinCo
 const LumenLuxCalculator = lazy(() => import('./routes/LumenLuxCalculator/LumenLuxCalculator'));
 const MorseCode = lazy(() => import('./routes/MorseCode/MorseCode'));
 const NeonTextGenerator = lazy(() => import('./routes/NeonTextGenerator/NeonTextGenerator'));
+const SeizureRiskChecker = lazy(() => import('./routes/SeizureRiskChecker/SeizureRiskChecker'));
+const WhiteBalance = lazy(() => import('./routes/WhiteBalance/WhiteBalance'));
 
 
 
@@ -39,8 +41,10 @@ export default function ToolLoader() {
         case 'color-format-convertor': Component = ColorFormatConverter; break;
         case 'kelvin-color-temperature-picker': Component = KelvinColorPicker; break;
         case 'lumen-lux-calculator': Component = LumenLuxCalculator; break;
-        case 'morse-code-flasher' : Component = MorseCode; break;
+        case 'morse-code-flasher': Component = MorseCode; break;
         case 'neon-text-generator': Component = NeonTextGenerator; break;
+        case 'seizure-risk-checker': Component = SeizureRiskChecker; break;
+        case 'white-balance-visualizer': Component = WhiteBalance; break;
         default: return <div style={{
             display: 'grid',
             placeItems: 'center',

@@ -1,11 +1,7 @@
 
 import {
-    MdLightMode,
-    MdBrightness6,
     MdPalette,
-    MdFlashOn,
     MdWifiTethering,
-    MdVolumeUp,
     MdVisibility,
     MdTextFields,
     MdTune,
@@ -17,52 +13,30 @@ import {
     MdHealthAndSafety,
     MdGradient,
     MdInvertColors,
-    MdWarning,
-    MdEmojiObjects,
-    MdTouchApp,
-    MdDonutLarge,
-    MdSchedule
 } from 'react-icons/md';
 
 export const tools = [
+    
     {
         id: 1,
-        title: "Screen Light",
-        desc: "Full-screen white light with adjustable brightness slider.",
-        icon: MdLightMode
-    },
-    {
-        id: 2,
         title: "Color Light Picker",
         desc: "Choose any HSL color to generate fill the screen.",
         icon: MdPalette
     },
     {
-        id: 3,
-        title: "Strobe Light",
-        desc: "Flash screen at adjustable intervals.",
-        icon: MdFlashOn
-    },
-    {
-        id: 4,
+        id: 2,
         title: "Morse Code Flasher",
         desc: "Convert text to blinking Morse code signals.",
         icon: MdWifiTethering
     },
     {
-        id: 5,
-        title: "White Noise Generator",
-        desc: "Play soothing white, pink, or brown noise.",
-        icon: MdVolumeUp
-    },
-    {
-        id: 6,
+        id: 3,
         title: "Contrast Ratio Checker",
         desc: "Analyze text/background pairs for WCAG compliance.",
         icon: MdVisibility
     },
     {
-        id: 7,
+        id: 4,
         title: "Neon Text Generator",
         desc: "Create glowing, neon-style text effects.",
         icon: MdTextFields
@@ -74,69 +48,52 @@ export const tools = [
         icon: MdTune
     },
     {
-        id: 9,
+        id: 5,
         title: "Kelvin Color Temperature Picker",
         desc: "Slide through candlelight to daylight color temps.",
         icon: MdThermostat
     },
     {
-        id: 10,
+        id: 6,
         title: "Color Format Convertor",
         desc: "Quickly convert between hex, HSL, and RGB formats.",
         icon: MdColorize
     },
     {
-        id: 11,
+        id: 7,
         title: "Lumen Lux Calculator",
         desc: "Convert lumens, lux, and area for lighting setups.",
         icon: MdCalculate
     },
     {
-        id: 12,
+        id: 8,
         title: "Color Blindness Simulator",
         desc: "Preview your designs under various color-vision deficiencies.",
         icon: MdVisibilityOff
     },
     {
-        id: 13,
+        id: 9,
         title: "Flash Memory Test",
         desc: "Challenge your memory with flashing color sequences.",
         icon: MdPsychology
     },
     {
-        id: 14,
+        id: 10,
         title: "Seizure Risk Checker",
         desc: "Analyze flashing patterns for potential seizure triggers.",
         icon: MdHealthAndSafety
     },
     {
-        id: 15,
+        id: 11,
         title: "White Palette Generator",
         desc: "Create a spectrum of off-whites to pure white shades.",
         icon: MdGradient
     },
     {
-        id: 16,
+        id: 12,
         title: "Auto Light Theme Generator",
         desc: "Build light/dark themes based on brightness inputs.",
         icon: MdInvertColors
     },
-    {
-        id: 17,
-        title: "Vibe Meter",
-        desc: "Interactive lights and sounds respond to your tap speed.",
-        icon: MdTouchApp
-    },
-    {
-        id: 18,
-        title: "Ambient Color Cycler",
-        desc: "Slowly transition through a loop of ambient hues.",
-        icon: MdDonutLarge
-    },
-    {
-        id: 19,
-        title: "Clock with Flash Alerts",
-        desc: "Digital clock that flashes at set intervals or alarms.",
-        icon: MdSchedule
-    }
+    
 ];

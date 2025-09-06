@@ -1,0 +1,248 @@
+:root{
+  --bg: #0b1220;
+  --panel: rgba(255,255,255,0.04);
+  --muted: #9aa4b2;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --card-radius: 12px;
+  --shadow: 0 6px 18px rgba(2,6,23,0.6);
+  --gap: 1rem;
+}
+
+/* Container */
+.container {
+  padding: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #e6eef8;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* header row: title + mobile toggle */
+.headerRow {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.75rem;
+}
+
+.header {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* layout */
+.layout {
+  display: flex;
+  gap: var(--gap);
+  flex-direction: column;
+  margin-top: .75rem;
+}
+
+/* controls panel */
+.controls {
+  width: 100%;
+  background: var(--panel);
+  padding: 1rem;
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+  min-width: 220px;
+  box-sizing: border-box;
+  transition: all .18s ease;
+}
+
+/* collapsed state used on small screens */
+.collapsed {
+  display: block; /* default block for large; will be hidden on small screens via media below */
+}
+
+/* form elements */
+.field {
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.fileInput {
+  width: 100%;
+}
+
+/* range row */
+.rangeRow {
+  display:flex;
+  align-items:center;
+  gap: .5rem;
+}
+
+.range {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 28px;
+}
+
+.rangeValue {
+  width: 5.5rem;
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+/* hints & small text */
+.hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+/* presets */
+.presets {
+  display:flex;
+  gap: .5rem;
+  flex-wrap:wrap;
+  margin-bottom:.5rem;
+}
+
+.presetBtn {
+  padding: .35rem .6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  font-size: .85rem;
+  cursor: pointer;
+}
+.presetBtn:hover { background: rgba(255,255,255,0.03); }
+
+/* buttons */
+.btnRow {
+  display:flex;
+  gap:.5rem;
+  margin-top:.25rem;
+  flex-wrap:wrap;
+}
+
+.btn {
+  padding:.45rem .6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.btnPrimary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+}
+.btn:active { transform: translateY(1px); }
+
+/* preview */
+.preview {
+  flex: 1 1 auto;
+}
+
+.previewHeader {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:.5rem;
+}
+
+.previewCard {
+  background: rgba(0,0,0,0.75);
+  border-radius: 10px;
+  padding: .75rem;
+  min-height: 220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: var(--shadow);
+}
+
+.canvasWrapper {
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.5rem;
+}
+
+.canvasEl {
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+  background: #000;
+  max-width:100%;
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* status text below canvas */
+.status {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+/* footer tip/note */
+.tip {
+  margin-top: .75rem;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+/* small utilities */
+.smallMuted {
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+/* inline checkbox label */
+.smallMutedInline {
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  color:var(--muted);
+  font-size:.85rem;
+}
+.showOriginalText { font-size: .85rem; }
+
+/* mobile toggle button (visible on narrow viewports) */
+.mobileToggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: .35rem .6rem;
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+/* larger screens: side-by-side layout */
+@media (min-width: 1024px) {
+  .layout { flex-direction: row; align-items:flex-start; }
+  .controls { max-width: 360px; }
+  .collapsed { display: block; } /* ensure visible on desktops */
+}
+
+/* small screens: stack and enable collapse */
+@media (max-width: 768px) {
+  .layout { flex-direction: column-reverse; } /* preview first on small screens */
+  .controls { width: 100%; padding: .75rem; }
+  .mobileToggle { display: inline-block; }
+  /* when collapsed class is removed/added, hide controls */
+  .controls.collapsed { display: none; }
+  .previewCard { min-height: 180px; }
+  .range { height: 26px; }
+  .btnRow { justify-content: stretch; }
+  .btn { flex: 1 1 auto; text-align: center; }
+}

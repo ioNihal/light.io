@@ -1,0 +1,225 @@
+/* SeizureRiskChecker.module.css */
+/* Re-use your utils style vocabulary: container, wrapper, mainSection, controls, stage, readout, etc. */
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--color-page-bg);
+    font-family: var(--tiktok-sans);
+    color: var(--color-text-high);
+    position: relative;
+}
+
+.wrapper {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.header {
+    text-align: center;
+}
+
+.title {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.subtitle {
+    opacity: 0.85;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.mainSection {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+/* Controls (left column) */
+.controls {
+    width: 340px;
+    flex-shrink: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.9rem;
+    color: var(--color-text-med);
+}
+
+.value {
+    font-weight: 600;
+    color: var(--color-text-high);
+}
+
+.hint {
+    font-size: 0.85rem;
+    color: var(--color-text-low);
+}
+
+/* sliders & inputs */
+.slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    outline: none;
+}
+
+.colorPicker {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+    border: none;
+    font-weight: 600;
+}
+
+.btnGhost {
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+}
+
+/* Stage (preview + readout) */
+.stage {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1rem;
+    align-items: start;
+}
+
+.previewContainer {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 260px;
+}
+
+.sampleText {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-align: center;
+    color: #fff;
+    transition: text-shadow 160ms linear, opacity 160ms linear;
+    text-shadow:
+        0 0 6px currentColor,
+        0 0 12px currentColor,
+        0 0 24px currentColor;
+}
+
+/* When preview is active, the JS adds .flashActive class to restart animation */
+.flashActive {
+    animation: flash-animation linear infinite;
+    /* the 'animation-duration' is set dynamically by frequency via inline style if needed;
+     but we will let JS simply toggle and rely on keyframes that mimic one flash cycle (use JS to set animation-duration via element.style.animationDuration) */
+}
+
+/* Keyframes: a single flash cycle (0..1) -- the animation-duration will be controlled from JS to match frequency */
+@keyframes flash-animation {
+    0% {
+        opacity: 1;
+        filter: brightness(1);
+        text-shadow: 0 0 6px currentColor, 0 0 12px currentColor, 0 0 24px currentColor;
+    }
+
+    45% {
+        opacity: 0.05;
+        filter: brightness(0.2);
+        text-shadow: none;
+    }
+
+    100% {
+        opacity: 1;
+        filter: brightness(1);
+        text-shadow: 0 0 6px currentColor, 0 0 12px currentColor, 0 0 24px currentColor;
+    }
+}
+
+/* Readout column */
+.readout {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.readoutTitle {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* small footer */
+.footer {
+    margin-top: 1rem;
+}
+
+.small {
+    font-size: 0.85rem;
+    color: var(--color-text-low);
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .flashActive {
+        animation: none !important;
+    }
+
+    .sampleText {
+        transition: none !important;
+    }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .stage {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        width: 100%;
+    }
+}
