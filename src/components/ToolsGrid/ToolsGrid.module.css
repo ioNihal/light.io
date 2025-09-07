@@ -74,6 +74,9 @@
 .pagination>* {
   flex: 1;
   padding: 6px;
+  display: grid;
+  place-items: center;
+  font-family: var(--clockFace);
   cursor: pointer;
   background-color: transparent;
   border: 1px solid #6295f3;
@@ -99,6 +102,7 @@
 
 
 .grid {
+  margin-bottom: 3rem;
   width: 70%;
   height: 350px;
   display: grid;
@@ -121,6 +125,7 @@
 
 .card:hover {
   transform: scale(1.03);
+  box-shadow: 0 2px 3px rgb(98, 149, 243, 0.3);
 }
 
 .toolIcon {
