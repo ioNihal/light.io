@@ -10,7 +10,7 @@ export default function ToolsGrid() {
 
   const navigate = useNavigate();
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 9;
   const startIdx = currentPage * itemsPerPage;
 
   const goPrev = () => {
@@ -30,7 +30,7 @@ export default function ToolsGrid() {
     setCurrentPage(0);
   }
 
-  const filteredTools = [...tools].sort((a,b) => a.title.localeCompare(b.title)).filter(tool => (tool.title.toLowerCase().includes(searchTerm.toLowerCase()) || tool.desc.toLowerCase().includes(searchTerm.toLowerCase())))
+  const filteredTools = [...tools].sort((a, b) => a.title.localeCompare(b.title)).filter(tool => (tool.title.toLowerCase().includes(searchTerm.toLowerCase()) || tool.desc.toLowerCase().includes(searchTerm.toLowerCase())))
 
   const totalPages = Math.ceil(tools.length / itemsPerPage);
   const pageItems = filteredTools.slice(startIdx, startIdx + itemsPerPage);
@@ -39,36 +39,49 @@ export default function ToolsGrid() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.actions}>
-        <input type="text"
-          className={styles.searchInput}
-          placeholder="Search projects..."
-          value={searchTerm}
-          onChange={handleSearchTerm} />
-        <div className={styles.pagination}>
-          <button onClick={goPrev} disabled={currentPage === 0}>
-            <GrFormPrevious />
-          </button>
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => jumpTo(idx)}
-              className={currentPage === idx ? styles.activePage : ''}
-            >
-              {idx + 1}
-            </button>
-          ))}
-          <button onClick={goNext} disabled={currentPage === totalPages - 1}>
-            <GrFormNext />
-          </button>
+      <section className={styles.header}>
+        <div className={styles.left}>
+          <h3>TooLight</h3>
+          <div className={styles.btnGroup}>
+            <button className={styles.themeBtn}>Theme</button>
+            <button className={styles.themeBtn}>Github</button>
+            <button className={styles.themeBtn}>About</button>
+            <button className={styles.themeBtn}>Home</button>
+          </div>
         </div>
-      </div>
+        <div className={styles.actions}>
+          <input type="text"
+            className={styles.searchInput}
+            placeholder="Search projects..."
+            value={searchTerm}
+            onChange={handleSearchTerm} />
+          <div className={styles.pagination}>
+            <button onClick={goPrev} disabled={currentPage === 0}>
+              <GrFormPrevious />
+            </button>
+            {Array.from({ length: totalPages }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => jumpTo(idx)}
+                className={currentPage === idx ? styles.activePage : ''}
+              >
+                {idx + 1}
+              </button>
+            ))}
+            <button onClick={goNext} disabled={currentPage === totalPages - 1}>
+              <GrFormNext />
+            </button>
+          </div>
+        </div>
+      </section>
       <div className={styles.grid}>
         {pageItems.map((tool, i) => (
           <div className={styles.card} key={startIdx + i} onClick={() => navigate(`/${tool.title.split(" ").join("-").toLowerCase()}`)}>
-            <img className={styles.img} alt={tool.title} src={tools.img || 'thumbnail.png'} width={250} height={100} loading='lazy' />
-            <div className={styles.title}>{tool.title}</div>
-            <div className={styles.desc}>{tool.desc}</div>
+            <i className={styles.toolIcon}><tool.icon /></i>
+            <div className={styles.cardInfo}>
+              <div className={styles.title}>{tool.title}</div>
+              <div className={styles.desc}>{tool.desc}</div>
+            </div>
           </div>
         ))}
       </div>
