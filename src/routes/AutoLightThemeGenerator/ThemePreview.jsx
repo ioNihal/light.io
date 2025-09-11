@@ -1,14 +1,7 @@
 import { BiCopy } from 'react-icons/bi';
 import styles from './ThemePreview.module.css';
-import { useEffect, useState } from 'react';
-import { TiTick } from 'react-icons/ti';
 import { FaCheck } from 'react-icons/fa';
 
-/**
- * @param {string} label 
- * @param {Array<{label, color, onColor}>} palette 
- * @param {(name:string, color:string)=>void} onCopyToken
- */
 export default function ThemePreview({ label, palette, onCopyToken, copiedToken, type }) {
     const [
         { color: primary, onColor: onPrimary = '#000' },

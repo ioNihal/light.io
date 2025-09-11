@@ -1,0 +1,31 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5em;
+    background-image: linear-gradient(to top, #5d90ee28, #ffffff);
+    backdrop-filter: blur(20px);
+    color: var(--primary);
+}
+
+
+.btnGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+}
+
+.btnGroup button {
+    all: unset;
+    background-color: var(--primary);
+    color: white;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btnGroup button:hover {
+    opacity: 0.8;
+}

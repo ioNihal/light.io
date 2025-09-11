@@ -3,12 +3,16 @@ import { tools } from '../../data/tools'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { useTheme } from '../../contexts/ThemeProvider';
+import { capitalizeFirstLetter } from '../../utils/formatHelpers.js';
 
 export default function ToolsGrid() {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
+
+  const { theme, toggle } = useTheme();
 
   const itemsPerPage = 9;
   const startIdx = currentPage * itemsPerPage;
@@ -43,7 +47,7 @@ export default function ToolsGrid() {
         <div className={styles.left}>
           <h3>TooLight</h3>
           <div className={styles.btnGroup}>
-            <button className={styles.themeBtn}>Theme</button>
+            <button className={styles.themeBtn} onClick={toggle}>{capitalizeFirstLetter(theme)}</button>
             <button className={styles.themeBtn}>Github</button>
             <button className={styles.themeBtn}>About</button>
             <button className={styles.themeBtn}>Home</button>
