@@ -91,7 +91,7 @@ export const tools = [
     },
     {
         id: 12,
-        title: "Auto Light Theme Generator",
+        title: "Light Theme Generator",
         desc: "Build light/dark themes based on brightness inputs.",
         icon: MdInvertColors
     },

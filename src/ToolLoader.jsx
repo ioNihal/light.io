@@ -32,7 +32,7 @@ export default function ToolLoader() {
         case 'screen-light': Component = ScreenLight; break;
         case 'ambient-color-cycler': Component = AmbientColorCycler; break;
         case 'color-light-picker': Component = ColorLightPicker; break;
-        case 'auto-light-theme-generator': Component = AutoLightThemeGenerator; break;
+        case 'light-theme-generator': Component = AutoLightThemeGenerator; break;
         case 'clock-with-flash-alerts': Component = FlashClock; break;
         case 'color-blindness-simulator': Component = ColorBlindness; break;
         case 'contrast-ratio-checker': Component = ContrastRatio; break;

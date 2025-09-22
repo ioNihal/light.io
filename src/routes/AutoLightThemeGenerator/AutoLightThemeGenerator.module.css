@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 2em;
   user-select: none;
+  overflow-x: hidden;
 }
 
 .controls {
@@ -52,10 +53,41 @@ label {
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative;
 }
 
 .saveBtn:hover {
   transform: scale(1.05);
+}
+
+.toolTip {
+  position: absolute;
+  width: max-content;
+  top: -40px;
+  left: calc(100% - 25px);
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0px 0px 5px rgba(128, 128, 128, 0.486);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.toolTip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  border-width: 7px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.301));
+}
+
+.saveBtn:hover .toolTip {
+  opacity: 1;
+  visibility: visible;
+
 }
 
 .inputBox {
@@ -81,7 +113,7 @@ label {
   border: 1px solid var(--primary);
   border-radius: 20px;
   padding: 10px;
-  display: inline-block; 
+  display: inline-block;
   cursor: pointer;
   width: max-content;
   margin: auto;
@@ -96,12 +128,74 @@ label {
   padding: 2rem;
   border-radius: 10px;
 
-  background-image: linear-gradient(to top, #5d90ee41, #8a6dd841 50%);
+  background-image: linear-gradient(to top, #5d90ee41, #1beefd41 50%);
   backdrop-filter: blur(0.2s);
 }
 
-.description {
-  width: 60%;
+.savedContainer {
+  max-width: 60%;
   margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.swatch {
+  position: relative;
+  width: 120px;
+  height: 80px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.swatch:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.swatchActions {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.swatch:hover .swatchActions {
+  opacity: 1;
+}
+
+
+.swatchActions button {
+  all: unset;
+  background-color: white;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.swatchActions button:hover {
+  background: #ddd;
+}
+
+
+.description {
+  max-width: 50%;
+  margin: auto;
+  margin-bottom: 100px;
   padding: 2rem;
+  background-color: #5d90ee28;
+  backdrop-filter: blur(20px);
+  text-align: justify;
+  line-height: normal;
 }

@@ -4,10 +4,10 @@
   --clockFace:  "JetBrains Mono", monospace;
 }
 
-[data-theme="dark"] {
+/* [data-theme="dark"] {
 
   
-}
+} */
 
 body {
   font-family: var(--tiktok-sans);

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5em;
-    background-image: linear-gradient(to top, #5d90ee28, #ffffff);
+    background-color: #5d90ee28;
     backdrop-filter: blur(20px);
     color: var(--primary);
 }
