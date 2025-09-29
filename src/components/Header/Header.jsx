@@ -8,7 +8,7 @@ export default function Header({ toolName }) {
 
     return (
         <header className={styles.header}>
-            <h2>{toolName}</h2>
+            <h1>{toolName}</h1>
             <div className={styles.btnGroup}>
                 <span>Love</span>
                 <button>Menu</button>

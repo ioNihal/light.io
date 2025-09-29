@@ -199,3 +199,35 @@ label {
   text-align: justify;
   line-height: normal;
 }
+
+@media screen and (max-width:768px) {
+  .controls {
+    width: 100%;
+    align-items: flex-start;
+    padding: 2em;
+  }
+
+  .row:nth-child(3) {
+    flex-direction: column;
+  }
+
+  .colorPreview {
+    width: 100px;
+  }
+
+
+  .previewBox {
+    flex-direction: column;
+  }
+
+  .savedContainer {
+    max-width: 100%;
+    padding: 1em;
+    justify-content: center;
+  }
+
+  .description {
+    max-width: 95%;
+    margin-bottom: 0px;
+  }
+}

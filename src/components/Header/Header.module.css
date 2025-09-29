@@ -9,6 +9,10 @@
     color: var(--primary);
 }
 
+.header h1 {
+    font-size: 1.5rem;
+}
+
 
 .btnGroup {
     display: flex;
@@ -28,4 +32,14 @@
 
 .btnGroup button:hover {
     opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        padding: 1em;
+    }
+
+    .header h1 {
+        font-size: 1.3rem;
+    }
 }

@@ -125,8 +125,17 @@
         width: 100%;
     }
 
-    .wrapper, .paletteWrapper {
+    .wrapper,
+    .paletteWrapper {
         width: 100%;
         height: auto;
+    }
+
+    .paletteWrapper {
+        padding: 2em 0;
+    }
+
+    .paletteWrapper li {
+        width: 100%;
     }
 }
