@@ -4,6 +4,7 @@
   gap: 2em;
   user-select: none;
   overflow-x: hidden;
+  color: var(--black);
 }
 
 .controls {
@@ -31,26 +32,25 @@ label {
 
 .countSpan {
   font-family: var(--clockFace);
-  color: black;
+  color: var(--black);
   padding: 5px 10px;
-  border-radius: 5px;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--white);
   border: 1px solid var(--primary);
   transition: all 0.3s ease;
 }
 
 .activeCount {
   background-color: var(--primary);
-  color: white;
+  color: var(--white);
 }
 
 .saveBtn {
-  background: white;
+  background: var(--white);
+  color: inherit;
   border: 1px solid var(--primary);
   height: 100%;
   padding: 6px 12px;
-  border-radius: 5px;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -65,9 +65,9 @@ label {
   width: max-content;
   top: -40px;
   left: calc(100% - 25px);
-  background-color: white;
+  background-color: var(--white);
   padding: 10px;
-  box-shadow: 0px 0px 5px rgba(128, 128, 128, 0.486);
+  box-shadow: 0px 0px 5px #8080807c;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
@@ -80,7 +80,7 @@ label {
   left: 10px;
   border-width: 7px;
   border-style: solid;
-  border-color: #ffffff transparent transparent transparent;
+  border-color: var(--white) transparent transparent transparent;
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.301));
 }
 
@@ -94,9 +94,10 @@ label {
   padding: 6px 8px;
   font-family: var(--clockFace);
   outline: none;
-  border: 1px solid;
-  transition: all 0.2s ease;
-  border-radius: 4px;
+  border: 1px solid var(--primary-border);
+  transition: all 0.3s ease;
+  background-color: var(--white);
+  color: inherit;
 }
 
 .inputBox:focus {
@@ -105,7 +106,7 @@ label {
 
 .colorPreview {
   flex: 1;
-  height: 100%;
+  height: 40px;
   border-radius: 5px;
 }
 
@@ -128,7 +129,7 @@ label {
   padding: 2rem;
   border-radius: 10px;
 
-  background-image: linear-gradient(to top, #5d90ee41, #1beefd41 50%);
+  background-image: linear-gradient(to bottom, var(--gradient-from), var(--gradient-to) 90%);
   backdrop-filter: blur(0.2s);
 }
 
@@ -151,7 +152,7 @@ label {
 
 .swatch:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
 }
 
 
@@ -162,7 +163,7 @@ label {
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay-color);
   opacity: 0;
   border-radius: inherit;
   transition: opacity 0.2s ease;
@@ -175,8 +176,8 @@ label {
 
 .swatchActions button {
   all: unset;
-  background-color: white;
-  color: black;
+  background-color: var(--white);
+  color: var(--black);
   padding: 4px 8px;
   border-radius: 5px;
   font-size: 12px;
@@ -185,7 +186,7 @@ label {
 }
 
 .swatchActions button:hover {
-  background: #ddd;
+  background: var(--white);
 }
 
 
@@ -194,7 +195,7 @@ label {
   margin: auto;
   margin-bottom: 100px;
   padding: 2rem;
-  background-color: #5d90ee28;
+  background-color: var(--gradient-from);
   backdrop-filter: blur(20px);
   text-align: justify;
   line-height: normal;

@@ -6,8 +6,9 @@
   padding: 0.8rem;
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   width: 100%;
+  color: var(--black);
 }
 
 .footer:hover {
@@ -31,7 +32,7 @@
 .link:hover,
 .themeBtn:hover {
   text-decoration: underline;
-  color: #6295f3;
+  color: var(--primary);
 }
 
 @media screen and (max-width:768px) {

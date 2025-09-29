@@ -1,13 +1,42 @@
 :root {
   --primary: #6295f3;
+  --primary-hover: rgba(98, 149, 243, 0.3);
+  --primary-border: #6295f36b;
+
+  --white: #ffffff;
+  --black: #000000;
+  --border: gray;
+  --text-dark: #383838;
+
+  --overlay-color: #00000080;
+
+  --gradient-from: #81adff3a;
+  --gradient-to: #ffffff;
+
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
   --tiktok-sans: "TikTok Sans", sans-serif;
-  --clockFace:  "JetBrains Mono", monospace;
+  --clockFace: "JetBrains Mono", monospace;
 }
 
-/* [data-theme="dark"] {
+[data-theme="dark"] {
+  --primary: #ee3131;
+  --primary-hover: rgba(200, 89, 89, 0.3);
+  --primary-border: #c859594d;
 
-  
-} */
+  --white: #181818;
+  --black: #e0e0e0;
+  --border: #d1d1d1;
+  --text-dark: #cccccc;
+
+  --overlay-color: #c9c9c980;
+
+  --gradient-from: #c859592a;
+  --gradient-to: #2a2a2a;
+
+  --shadow-sm: 0 4px 6px rgba(150, 150, 150, 0.123);
+}
+
+
 
 body {
   font-family: var(--tiktok-sans);

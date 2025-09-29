@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5em;
-    background-color: #5d90ee28;
+    background-color: var(--gradient-from);
     backdrop-filter: blur(20px);
     color: var(--primary);
 }
@@ -23,7 +23,7 @@
 .btnGroup button {
     all: unset;
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
     padding: 8px 10px;
     border-radius: 5px;
     transition: all 0.3s ease;

@@ -17,10 +17,11 @@ export const router = createBrowserRouter([
                 path: '/about',
                 element: <About />
             },
+            {
+                path: '/:toolName',
+                element: <ToolLoader />,
+            },
         ]
     },
-    {
-        path: '/:toolName',
-        element: <ToolLoader />,
-    },
+
 ])
