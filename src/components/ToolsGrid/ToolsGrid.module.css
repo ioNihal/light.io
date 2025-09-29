@@ -106,7 +106,7 @@
   width: 70%;
   height: 350px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: repeat(3, 1fr);
   gap: 2em;
 }
@@ -153,4 +153,12 @@
   font-size: 0.9rem;
   font-weight: 500;
   line-height: normal;
+}
+
+
+@media screen and (max-width:768px) {
+  .header {
+    flex-direction: column;
+    gap: 1em;
+  }
 }

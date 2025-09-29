@@ -9,5 +9,6 @@
 
 .mainContent {
   flex: 1;
-  overflow: hidden;
+  overflow: auto;
+  overflow-x: hidden;
 }
