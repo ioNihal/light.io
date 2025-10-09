@@ -1,26 +1,26 @@
 .container {
     flex: 1 1 100%;
     padding: 2rem;
-    background-color: var(--color-surface);
-    color: var(--color-text-high);
+    background-color: var(--white);
+    color: var(--black);
     border-radius: 0.5rem;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-sm);
     font-family: var(--tiktok-sans);
 }
 
 .heading {
     font-size: 2.25rem;
-    color: var(--color-primary);
+    color: var(--primary);
     margin-bottom: 1rem;
     text-align: center;
 }
 
 .subheading {
     font-size: 1.5rem;
-    color: var(--color-secondary);
+    color: var(--primary);
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
-    border-bottom: 2px solid var(--color-secondary);
+    border-bottom: 2px solid var(--primary-border);
     padding-bottom: 0.25rem;
 }
 
@@ -28,13 +28,11 @@
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 1rem;
-    color: var(--color-text-med);
 }
 
 .footer {
     margin-top: 2rem;
     text-align: center;
     font-style: italic;
-    color: var(--color-text-low);
     font-size: 0.8rem;
 }
