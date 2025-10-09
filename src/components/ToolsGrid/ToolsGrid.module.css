@@ -35,7 +35,8 @@
 }
 
 .themeBtn,
-.navBtn {
+.navBtn,
+.gitBtn {
   all: unset;
   background-color: var(--primary);
   color: var(--white);
@@ -47,13 +48,20 @@
 }
 
 .themeBtn:hover,
-.navBtn:hover {
+.navBtn:hover,
+.gitBtn:hover {
   opacity: 1;
 }
 
 .themeBtn {
   display: grid;
   place-items: center;
+}
+
+.gitBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
 }
 
 .actions {
@@ -117,7 +125,7 @@
   width: 70%;
   height: 350px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-template-rows: repeat(3, 1fr);
   gap: 2em;
   
@@ -126,7 +134,7 @@
 .card {
   display: flex;
   gap: 1em;
-  background-image: radial-gradient(circle at bottom, var(--gradient-from) 30%, var(--gradient-to) 100%);
+  background-color: var(--primaryblur);
   backdrop-filter: blur(20px);
   border-radius: 12px;
   box-shadow: var(--shadow-sm);
@@ -138,7 +146,6 @@
 
 .card:hover {
   transform: scale(1.03);
-  box-shadow: 0 2px 3px var(--primary-border);
 }
 
 .toolIcon {

@@ -49,8 +49,8 @@ export const tools = [
     },
     {
         id: 5,
-        title: "Kelvin Color Temperature Picker",
-        desc: "Slide through candlelight to daylight color temps.",
+        title: "Color Temperature",
+        desc: "Slide through to pick colors from candlelight to daylight color temps.",
         icon: MdThermostat
     },
     {

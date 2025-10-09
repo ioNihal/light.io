@@ -39,7 +39,7 @@ export default function ToolLoader() {
         case 'flash-memory-test': Component = FlashMemoryTest; break;
         case 'white-palette-generator': Component = WhitePaletteGenerator; break;
         case 'color-format-convertor': Component = ColorFormatConverter; break;
-        case 'kelvin-color-temperature-picker': Component = KelvinColorPicker; break;
+        case 'color-temperature': Component = KelvinColorPicker; break;
         case 'lumen-lux-calculator': Component = LumenLuxCalculator; break;
         case 'morse-code-flasher': Component = MorseCode; break;
         case 'neon-text-generator': Component = NeonTextGenerator; break;

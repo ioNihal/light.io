@@ -6,6 +6,7 @@ import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import { useTheme } from '../../contexts/ThemeProvider';
 import { capitalizeFirstLetter } from '../../utils/formatHelpers.js';
 import { CiDark, CiLight } from 'react-icons/ci';
+import { BsGithub } from 'react-icons/bs';
 
 export default function ToolsGrid() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -49,7 +50,7 @@ export default function ToolsGrid() {
           <h3>TooLight</h3>
           <div className={styles.btnGroup}>
             <button className={styles.themeBtn} onClick={toggle} title={`${capitalizeFirstLetter(theme)} Theme`}>{theme === "light" ? <CiLight /> : <CiDark />}</button>
-            <button className={styles.navBtn}>Github</button>
+            <button className={styles.gitBtn}><BsGithub />Github</button>
             <button className={styles.navBtn}>About</button>
             <button className={styles.navBtn}>Home</button>
           </div>
