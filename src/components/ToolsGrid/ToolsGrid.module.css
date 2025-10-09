@@ -9,8 +9,8 @@
   justify-content: center;
   gap: 3em;
   color: var(--black);
-  
-  
+
+
 }
 
 .header {
@@ -128,7 +128,7 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-template-rows: repeat(3, 1fr);
   gap: 2em;
-  
+
 }
 
 .card {
@@ -176,8 +176,33 @@
 
 
 @media screen and (max-width:768px) {
+  .container {
+    padding-top: 2em;
+    justify-content: flex-start;
+  }
+
   .header {
+    width: 90%;
     flex-direction: column;
     gap: 1em;
+  }
+
+  .searchInput,
+  .pagination {
+    width: 100%;
+  }
+
+  .searchInput {
+    padding: 10px;
+  }
+
+  .pagination>button {
+    padding: 12px;
+  }
+
+  .grid {
+    width: 90%;
+    grid-template-columns: repeat(auto-fit, 1fr);
+    grid-template-rows: auto;
   }
 }

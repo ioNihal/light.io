@@ -15,13 +15,10 @@ export default function Footer() {
           <a className={styles.link} href='/'>Home</a>
           <a className={styles.link} href='/about'>About</a>
           <a className={styles.link}>Updates</a>
-          <button className={styles.themeBtn}
-            onClick={toggle}
-            title={`${capitalizeFirstLetter(theme)} Theme`}
-            style={{
-              display: "flex",
-              alignItems: "center"
-            }}>{theme === "light" ? <CiLight /> : <CiDark />}&nbsp;Theme</button>
+          <label className={styles.themeSwitch} >
+            <input type="checkbox" checked={theme === "light"} onChange={toggle} />
+            <span className={styles.slider} />
+          </label>
           <a className={styles.link}
             style={{
               display: "flex",

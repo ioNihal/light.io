@@ -24,11 +24,11 @@
 
 .navbar {
   display: flex;
+  align-items: center;
   gap: 1.5em;
 }
 
-.link,
-.themeBtn {
+.link {
   text-decoration: none;
   all: unset;
   cursor: pointer;
@@ -36,14 +36,83 @@
   font-weight: 500;
 }
 
-.link:hover,
-.themeBtn:hover {
+.link:hover {
   color: var(--primary);
 }
 
+.themeSwitch {
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+  cursor: pointer;
+}
+
+/* Hide default checkbox */
+.themeSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Background track */
+.slider {
+  position: absolute;
+  inset: 0;
+  background-color: var(--primary);
+  border-radius: 30px;
+  transition: background-color 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0.3em;
+}
+
+/* Toggle circle */
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 50%;
+  background-color: var(--primary);
+  box-shadow: inset 8px -4px 0px 0px #fff000;
+  bottom: 15%;
+  left: 10%;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Move toggle when checked */
+.themeSwitch input:checked+.slider {
+  background-color: var(--primary);
+  justify-content: flex-end;
+  padding-right: 0.3em;
+}
+
+.themeSwitch input:checked+.slider::before {
+  transform: translateX(100%);
+  box-shadow: inset 15px -4px 0px 15px #fff000;
+}
+
+
+
+/* Optional hover effect */
+.themeSwitch:hover .slider {
+  filter: brightness(1.1);
+}
+
+
 @media screen and (max-width:768px) {
   .footer {
-    flex-direction: column;
-    align-items: center;
+    margin-top: 20px;
+    padding: 1em;
   }
+
+  .footerDiv {
+    padding: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+
 }
