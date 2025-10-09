@@ -1,8 +1,6 @@
 import { FaGithub } from 'react-icons/fa';
 import { useTheme } from '../../contexts/ThemeProvider';
-import { capitalizeFirstLetter } from '../../utils/formatHelpers';
 import styles from './Footer.module.css';
-import { CiDark, CiLight } from 'react-icons/ci';
 
 
 export default function Footer() {
