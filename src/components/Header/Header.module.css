@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5em;
-    background-color: var(--gradient-from);
+    background-color: var(--primaryblur);
     backdrop-filter: blur(20px);
     color: var(--primary);
 
@@ -49,5 +49,6 @@
 
     .header h1 {
         font-size: 1.3rem;
+        max-width: 50%;
     }
 }

@@ -1,6 +1,6 @@
 :root {
   --primary: #6295f3;
-  --primaryblur:rgba(117, 161, 255, 0.151);
+  --primaryblur: rgba(117, 161, 255, 0.151);
   --primary-hover: rgba(98, 149, 243, 0.3);
   --primary-border: #6295f36b;
 
@@ -12,17 +12,17 @@
 
   --overlay-color: #00000080;
 
-  --gradient-from: #81adff3a;
-  --gradient-to: #ffffff;
+  --shadow-sm: 0 8px 20px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0 22px 48px rgba(2, 6, 23, 0.12);
+  --shadow-glow: 0 0 30px rgba(98, 149, 243, 0.12);
 
-  --shadow-sm: 0 4px 6px rgba(255, 255, 255, 0.1);
   --tiktok-sans: "TikTok Sans", sans-serif;
   --clockFace: "JetBrains Mono", monospace;
 }
 
 [data-theme="dark"] {
   --primary: #ee3131;
-  --primaryblur:rgba(255, 117, 117, 0.151);
+  --primaryblur: rgba(255, 117, 117, 0.151);
   --primary-hover: rgba(200, 89, 89, 0.3);
   --primary-border: #c859594d;
 
@@ -33,11 +33,6 @@
   --text-dark: #cccccc;
 
   --overlay-color: #c9c9c980;
-
-  --gradient-from: #c859592a;
-  --gradient-to: #2a2a2a;
-
-   --shadow-sm: 0 4px 6px rgba(18, 18, 18, 0.1);
 }
 
 

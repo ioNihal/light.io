@@ -1,119 +1,107 @@
 .page {
-    min-height: 100vh;
-    padding: 40px;
-    padding-bottom: 100px;
-    background-color: var(--color-page-bg);
-    box-sizing: border-box;
-    font-family: var(--tiktok-sans);
-    color: var(--color-text-high);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    gap: 2rem;
+    user-select: none;
     overflow-x: hidden;
+    color: var(--black);
 }
 
-
-.backBtn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border: none;
-    background-color: var(--color-primary);
-    color: var(--color-primary-text);
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: var(--shadow-sm);
-    font-family: var(--tiktok-sans);
-}
-
-.backBtn:hover {
-    filter: brightness(0.95);
-    box-shadow: var(--shadow-lg);
-}
-
-
+/* centered card container */
 .card {
-    max-width: 1100px;
-    margin: 56px auto 0;
+    max-width: 1200px;
+    margin: 48px auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 440px;
+    /* left fluid, right preview fixed-ish */
     gap: 28px;
-    background: transparent;
+    align-items: start;
+    width: calc(100% - 48px);
 }
 
-
+/* Glassy card look for left & right panels */
 .left,
 .right {
-    background: var(--color-surface);
-    border-radius: 12px;
+    border: 2px solid var(--primary-border);
+    border-radius: 5px;
     padding: 20px;
     box-shadow: var(--shadow-sm);
 }
 
 /* Dropzone */
 .dropzone {
-    border: 2px dashed var(--color-border);
-    border-radius: 10px;
-    height: 360px;
+    border: 2px dashed var(--primary-border);
+    border-radius: 6px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 12px;
     cursor: pointer;
-    padding: 18px;
+    padding: 20px;
     text-align: center;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .dropzone:hover {
-    border-color: var(--color-primary);
+    border-color: var(--primary);
+    background-color: var(--primaryblur);
 }
 
+.dropzone.dragOver,
 .dragOver {
-    background-color: rgba(79, 70, 229, 0.03);
-    border-color: var(--color-primary);
+    background-color: var(--primaryblur);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glow);
 }
 
+/* icons & texts */
 .dropIcon {
-    font-size: 28px;
-    color: var(--color-icon);
+    font-size: 36px;
+    color: var(--primary);
 }
 
 .dropTitle {
     font-size: 16px;
-    color: var(--color-text-high);
-    font-weight: 600;
+    color: var(--primary);
+    font-weight: 700;
 }
 
 .dropSub {
     font-size: 13px;
-    color: var(--color-text-med);
+    color: var(--primary);
 }
 
-
+/* uploaded thumbnail */
 .thumb {
     max-width: 100%;
-    max-height: 240px;
-    border-radius: 8px;
+    max-height: 320px;
+    border-radius: 10px;
     object-fit: contain;
     box-shadow: var(--shadow-sm);
 }
 
-
+/* buttons */
 .browseBtn {
-    background-color: var(--color-primary);
-    color: var(--color-btn-text);
-    border: none;
+    background: var(--primaryblur);
+    color: var(--black);
+    border: 1px solid var(--primary-border);
     padding: 10px 14px;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     font-family: var(--tiktok-sans);
     box-shadow: var(--shadow-sm);
+    transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms;
+}
+
+.browseBtn:hover,
+.browseBtn:focus {
+    transform: translateY(-3px);
+    filter: brightness(1.03);
+    box-shadow: var(--shadow-glow);
+    outline: none;
 }
 
 .clearBtn {
@@ -126,47 +114,50 @@
     margin-left: 8px;
 }
 
-
+/* change row */
 .changeRow {
     display: flex;
     gap: 8px;
     align-items: center;
     justify-content: center;
     margin-top: 12px;
+    flex-wrap: wrap;
 }
 
-/* hidden input */
+/* accessibility */
 .hiddenInput {
     display: none;
 }
 
+/* select box */
 .selectBox {
     list-style: none;
     position: relative;
     cursor: pointer;
     user-select: none;
     width: 100%;
-    max-width: 320px;
-    margin-top: 6px;
-
+    max-width: 420px;
+    margin-top: 10px;
 }
 
 .selectBox>.trigger {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
-    background-color: var(--color-surface);
+    padding: 12px 14px;
+    background-color: transparent;
     border: 1px solid var(--color-border);
-    border-radius: 8px;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    border-radius: 10px;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
     color: var(--color-text-med);
     font-family: var(--tiktok-sans);
+    font-weight: 600;
 }
 
 .selectBox>.trigger:focus {
     outline: none;
     box-shadow: var(--shadow-sm);
+    border-color: var(--color-primary);
 }
 
 .selectBox>.trigger.open {
@@ -174,57 +165,60 @@
 }
 
 .triggerArrow {
-    opacity: 0.7;
+    opacity: 0.9;
     transform: scale(1.05);
     margin-left: 8px;
+    font-size: 14px;
 }
 
-
+/* options dropdown */
 .options {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 10px);
     left: 0;
     width: 100%;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.22s ease;
-    z-index: 30;
+    transition: max-height 220ms ease;
+    z-index: 60;
 }
 
 .options.open {
-    max-height: 220px;
+    max-height: 240px;
 }
 
 .options ul {
     margin: 0;
     padding: 6px 0;
     list-style: none;
-    background-color: var(--color-surface);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.34));
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: var(--shadow-sm);
 }
 
 .options ul li {
-    padding: 10px 12px;
+    padding: 10px 14px;
     cursor: pointer;
     color: var(--color-text-med);
     font-family: var(--tiktok-sans);
+    transition: background-color 120ms ease, color 120ms ease;
 }
 
 .options ul li:hover,
 .options ul li:focus {
     background-color: var(--color-accent);
     outline: none;
+    color: var(--color-text-high);
 }
 
 .optionActive {
-    background-color: rgba(79, 70, 229, 0.06);
+    background-color: rgba(79, 70, 229, 0.08);
     color: var(--color-text-high);
-    font-weight: 600;
+    font-weight: 700;
 }
 
-
+/* preview area */
 .previewTitle {
     margin: 0 0 12px 0;
     font-size: 16px;
@@ -232,17 +226,18 @@
 }
 
 .previewBox {
-    background: var(--color-surface);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.36));
     border: 1px solid var(--color-border);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 14px;
-    min-height: 360px;
+    min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
-
+/* placeholder */
 .previewPlaceholder {
     display: flex;
     flex-direction: column;
@@ -252,62 +247,96 @@
 }
 
 .placeholderIcon {
-    font-size: 36px;
+    font-size: 44px;
+    color: var(--color-icon);
 }
 
 .placeholderText {
     font-size: 14px;
 }
 
-
+/* image/canvas */
 .previewImg,
 .previewCanvas {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 10px;
     object-fit: contain;
     box-shadow: var(--shadow-sm);
-    max-height: 560px;
+    max-height: 640px;
+    display: block;
 }
 
+/* small warning text */
 .warning {
     color: rgb(73, 34, 34);
-    font-size: 0.64rem;
+    font-size: 0.74rem;
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 0.8rem;
+    background: rgba(255, 240, 240, 0.6);
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(150, 40, 40, 0.08);
 }
 
+/* responsive tweaks */
+@media (max-width: 1100px) {
+    .card {
+        grid-template-columns: 1fr 380px;
+        gap: 20px;
+    }
+
+    .selectBox {
+        max-width: 360px;
+    }
+}
 
 @media (max-width: 900px) {
-    .page {
-        padding: 1rem;
-    }
-
-    .page>h1 {
-        margin-top: 55px;
-    }
-
     .card {
         grid-template-columns: 1fr;
-        margin-top: 2rem;
         width: 100%;
+        margin-top: 1.5rem;
     }
 
-    .backBtn {
-        top: 10px;
-        left: 10px;
+    .left,
+    .right {
+        padding: 16px;
+        border-radius: 12px;
     }
 
     .dropzone {
-        height: 300px;
-    }
-
-    .previewBox {
         min-height: 260px;
     }
 
-    .pageTitle {
-        font-size: 1.2rem;
-        margin-bottom: 0;
+    .previewBox {
+        min-height: 240px;
+    }
+
+    .thumb {
+        max-height: 420px;
+    }
+
+    .previewImg,
+    .previewCanvas {
+        max-height: 560px;
+    }
+}
+
+@media (max-width: 520px) {
+    .dropTitle {
+        font-size: 15px;
+    }
+
+    .dropIcon {
+        font-size: 30px;
+    }
+
+    .browseBtn {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .selectBox {
+        max-width: 100%;
     }
 }

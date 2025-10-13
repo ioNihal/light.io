@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./ColorBlindness.module.css";
 import { applyColorBlindness } from "./filters";
-import { useNavigate } from "react-router-dom";
 import { FcAddImage } from "react-icons/fc";
 import { FaArrowTurnUp } from "react-icons/fa6";
+import Header from "../../components/Header/Header";
 
 
 
@@ -24,7 +24,6 @@ export default function ColorBlindness() {
     const canvasRef = useRef(null);
     const dropRef = useRef(null);
     const selectBoxRef = useRef(null);
-    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -116,11 +115,8 @@ export default function ColorBlindness() {
 
     return (
         <div className={styles.page}>
-            <button className={styles.backBtn} onClick={() => navigate("/")}>
-                Back
-            </button>
-
-            <h1 className={styles.pageTitle}>Color Blindness Simulator</h1>
+            <Header toolName={"Color Blindness Simulator"} />
+            
             <div className={styles.card}>
                 <div className={styles.left}>
                     <p className={styles.warning}>This function is CPU-bound! Please upload small file</p>
