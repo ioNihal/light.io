@@ -43,8 +43,8 @@
 .themeSwitch {
   position: relative;
   display: inline-block;
-  width: 3.5em;
-  height: 2em;
+  width: 2.5em;
+  height: 1.5em;
   cursor: pointer;
 }
 
@@ -65,15 +65,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 0.3em;
 }
 
 /* Toggle circle */
 .slider::before {
   content: "";
   position: absolute;
-  height: 1.4em;
-  width: 1.4em;
+  height: 1em;
+  width: 1em;
   border-radius: 50%;
   background-color: var(--primary);
   box-shadow: inset 8px -4px 0px 0px #fff000;
@@ -105,20 +104,27 @@
 @media screen and (max-width:768px) {
   .footer {
     margin-top: 20px;
-    padding: 1em;
+    padding: 0;
   }
 
   .footerDiv {
-    padding: 0;
-    padding-bottom: 0.5em;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5em;
+    padding: 1em;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 1em;
+    font-size: 0.8rem;
   }
-  
+
+  .footerDiv p {
+    opacity: 0.9;
+    font-weight: 400;
+    font-size: 0.7rem;
+  }
+
   .navbar {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    font-size: 0.9rem;
   }
 
 }
