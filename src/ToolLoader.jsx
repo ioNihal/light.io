@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "./components/Loader/Loader";
 
 
 const ScreenLight = lazy(() => import('./routes/ScreenLight/ScreenLight'));
@@ -54,12 +55,7 @@ export default function ToolLoader() {
     }
 
     return (
-        <Suspense fallback={<div style={{
-            display: 'grid',
-            placeItems: 'center',
-            flex: '1 1 100%',
-            color: 'var(--color-text-high'
-        }}>Loading...</div>}>
+        <Suspense fallback={<Loader />}>
             <Component />
         </Suspense>
     )
