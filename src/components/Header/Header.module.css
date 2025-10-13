@@ -7,6 +7,9 @@
     background-color: var(--gradient-from);
     backdrop-filter: blur(20px);
     color: var(--primary);
+
+    user-select: none;
+    -moz-user-select: none;
 }
 
 .header h1 {
@@ -23,7 +26,7 @@
 .btnGroup button {
     all: unset;
     background-color: var(--primary);
-    color: var(--white);
+    color: var(--primary-text);
     padding: 8px 10px;
     border-radius: 5px;
     transition: all 0.3s ease;
@@ -33,6 +36,11 @@
 .btnGroup button:hover {
     opacity: 0.8;
 }
+
+.likeBtn {
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 768px) {
     .header {

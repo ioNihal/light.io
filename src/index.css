@@ -4,6 +4,7 @@
   --primary-hover: rgba(98, 149, 243, 0.3);
   --primary-border: #6295f36b;
 
+  --primary-text: #ffffff;
   --white: #ffffff;
   --black: #000000;
   --border: gray;
@@ -25,6 +26,7 @@
   --primary-hover: rgba(200, 89, 89, 0.3);
   --primary-border: #c859594d;
 
+  --primary-text: #ffffff;
   --white: #181818;
   --black: #e0e0e0;
   --border: #d1d1d1;

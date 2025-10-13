@@ -6,6 +6,9 @@
   margin-top: 1.5rem;
   width: 100%;
   border-top: 2px solid var(--primary-border);
+
+   user-select: none;
+   -moz-user-select: none;
 }
 
 .footerDiv {

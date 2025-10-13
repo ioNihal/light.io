@@ -11,6 +11,9 @@
   color: var(--black);
 
   padding-top: 3rem;
+
+  user-select: none;
+  -moz-user-select: none;
 }
 
 .header {
@@ -39,10 +42,10 @@
 .gitBtn {
   all: unset;
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--primary-text);
   padding: 6px 8px;
   border-radius: 5px;
-  opacity: 0.6;
+  opacity: 0.8;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -106,7 +109,7 @@
 
 .pagination>*:hover {
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--primary-text);
 }
 
 .pagination>*:disabled {
@@ -116,7 +119,7 @@
 
 .activePage {
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--primary-text);
 }
 
 
@@ -149,7 +152,7 @@
 }
 
 .toolIcon {
-  color: var(--white);
+  color: var(--primary-text);
   background-color: var(--primary);
   height: max-content;
   padding: 8px;
