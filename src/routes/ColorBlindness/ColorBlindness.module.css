@@ -116,7 +116,7 @@
     gap: 8px;
     align-items: center;
     justify-content: center;
-    margin-top: 12px;
+    margin-top: 1em;
     flex-wrap: wrap;
 }
 
@@ -133,7 +133,7 @@
     user-select: none;
     width: 100%;
     max-width: 420px;
-    margin-top: 10px;
+    margin-top: 1rem;
 }
 
 .selectBox>.trigger {
@@ -164,7 +164,7 @@
     opacity: 0.9;
     transform: scale(1.05);
     margin-left: 8px;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 /* options dropdown */
@@ -214,7 +214,7 @@
     font-weight: 700;
 }
 
-/* preview area */
+
 .previewTitle {
     margin: 0 0 12px 0;
     font-size: 1.2rem;
@@ -238,12 +238,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 1em;
     color: var(--black);
 }
 
 .placeholderIcon {
-    font-size: 44px;
+    font-size: 2.5rem;
     color: var(--primary);
 }
 
@@ -278,7 +278,7 @@
 @media (max-width: 1100px) {
     .card {
         grid-template-columns: 1fr 380px;
-        gap: 20px;
+        gap: 1.5em;
     }
 
     .selectBox {
@@ -319,16 +319,16 @@
 
 @media (max-width: 520px) {
     .dropTitle {
-        font-size: 15px;
+        font-size: 1rem;
     }
 
     .dropIcon {
-        font-size: 30px;
+        font-size: 1.5rem;
     }
 
     .browseBtn {
         padding: 10px 12px;
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     .selectBox {
