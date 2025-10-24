@@ -3,6 +3,7 @@
   --primaryblur: rgba(117, 161, 255, 0.151);
   --primary-hover: rgba(98, 149, 243, 0.3);
   --primary-border: #6295f36b;
+  --accent: rgb(0, 88, 189);
 
   --primary-text: #ffffff;
   --white: #ffffff;
@@ -25,6 +26,7 @@
   --primaryblur: rgba(255, 117, 117, 0.151);
   --primary-hover: rgba(200, 89, 89, 0.3);
   --primary-border: #c859594d;
+  --accent: rgb(160, 1, 1);
 
   --primary-text: #ffffff;
   --white: #181818;
@@ -48,7 +50,7 @@ body {
   font-optical-sizing: none;
   line-height: 1;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) var(--color-page-bg);
+  scrollbar-color: var(--primary) var(--primaryblur);
 }
 
 *::-webkit-scrollbar-track {
