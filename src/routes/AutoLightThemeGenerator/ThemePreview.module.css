@@ -1,141 +1,120 @@
 .container {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+    background-color: var(--color-surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    max-width: 400px;
 }
 
 .wrapper {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    width: 280px;
-    user-select: none;
-}
-
-.wrapper * {
-    transition: all 0.3s ease;
+    min-height: 400px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
+    padding: 1rem;
 }
 
 .navTitle {
-    margin: 0;
     font-size: 1.1rem;
+    font-weight: 700;
 }
 
 .navBtn {
-    padding: 6px 12px;
     border: none;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .hero {
-    padding: 24px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
     text-align: center;
+    gap: 1rem;
 }
 
 .headline {
-    margin: 0 0 12px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
 }
 
 .subhead {
-    margin: 0 0 16px;
     font-size: 0.9rem;
     opacity: 0.8;
 }
 
 .cta {
-    padding: 8px 16px;
     border: none;
-    border-radius: 4px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 1rem;
     cursor: pointer;
 }
 
 .extras {
     display: flex;
-    gap: 12px;
-    padding: 16px;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
 }
 
 .card {
     flex: 1;
-    border-radius: 6px;
-    padding: 12px;
+    padding: 1rem;
+    border-radius: 8px;
     cursor: pointer;
-    transition: opacity 0.2s ease;
+    text-align: center;
+    transition: transform 0.2s;
 }
 
 .card:hover {
-    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    font-size: 0.7rem;
+    opacity: 0.8;
 }
 
 .paletteWrapper {
-    width: 280px;
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    background-color: var(--color-surface);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 0;
 }
 
 .paletteWrapper li {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.219);
-}
-
-.paletteWrapper li:hover {
-    opacity: 0.9;
-    cursor: pointer;
-    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.185);
-}
-
-.paletteWrapper svg {
-    flex-shrink: 0;
-    margin-left: 0.5rem;
-    color: var(--color-primary);
-    transition: transform 0.2s;
-}
-
-.paletteWrapper li:hover svg {
-    transform: scale(1.2);
-}
-
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .wrapper,
-    .paletteWrapper {
-        width: 100%;
-        height: auto;
-    }
-
-    .paletteWrapper {
-        padding: 2em 0;
-    }
-
-    .paletteWrapper li {
-        width: 100%;
-    }
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--clockFace);
 }

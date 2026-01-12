@@ -19,6 +19,19 @@
 
   --tiktok-sans: "TikTok Sans", sans-serif;
   --clockFace: "JetBrains Mono", monospace;
+
+  /* New Variables */
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primaryblur);
+  --color-primary-text: var(--primary-text);
+
+  --color-surface: var(--white);
+  --color-page-bg: #f8f9fa;
+
+  --color-text-med: #555555;
+  --color-text-high: var(--black);
+
+  --color-border: var(--primary-border);
 }
 
 [data-theme="dark"] {
@@ -35,12 +48,22 @@
   --text-dark: #cccccc;
 
   --overlay-color: #c9c9c980;
+
+  /* New Variables Dark Mode */
+  --color-surface: #1e1e1e;
+  --color-page-bg: #121212;
+
+  --color-text-med: #aaaaaa;
+
+  --color-border: var(--primary-border);
 }
 
 
 
 body {
   font-family: var(--tiktok-sans);
+  background-color: var(--color-page-bg);
+  color: var(--color-text-high);
 }
 
 * {
@@ -60,7 +83,7 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: var(--color-primary);
   border-radius: 4px;
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-page-bg);
 }
 
 *::-webkit-scrollbar-thumb:hover {

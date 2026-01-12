@@ -37,22 +37,12 @@ export default function ColorLightPicker() {
         }
     }, [copied])
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (!e.target.closest(`.${styles.box}`)) {
-                setIsEditing(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
+    // Removed click outside listener because it can be annoying when interacting with UI elements
 
     return (
         <div className={styles.container} style={{
             backgroundColor: `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.light}%)`
         }}>
-            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
             <div className={styles.box}>
                 <h4>HSL Color Generator</h4>
                 {isEditing ? (
@@ -90,13 +80,15 @@ export default function ColorLightPicker() {
                                 trackHeight={20}
                                 thumbSize={20} />
                         </label>
-                        <button className={styles.saveBtn} onClick={() => setIsEditing(prev => !prev)}>Save & Close</button>
+                        <button className={styles.saveBtn} onClick={() => setIsEditing(prev => !prev)}>Done</button>
                     </>
                 ) : (
                     <>
                         <p>Hue:&nbsp;{colorVals.hue}<br />Saturation:&nbsp;{colorVals.sat}%<br />Lightness:&nbsp;{colorVals.light}%</p>
-                        <button className={styles.copyBtn} onClick={handleCopy}>{copied ? 'Copied!' : 'Copy'}</button>
-                        <button className={styles.editBtn} onClick={() => setIsEditing(prev => !prev)}>Edit</button>
+                        <div className={styles.actions}>
+                             <button className={styles.copyBtn} onClick={handleCopy}>{copied ? 'Copied!' : 'Copy HSL'}</button>
+                             <button className={styles.editBtn} onClick={() => setIsEditing(prev => !prev)}>Edit</button>
+                        </div>
                     </>
                 )
                 }

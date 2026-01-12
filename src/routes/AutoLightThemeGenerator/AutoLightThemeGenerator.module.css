@@ -4,7 +4,8 @@
   gap: 2em;
   user-select: none;
   overflow-x: hidden;
-  color: var(--black);
+  color: var(--color-text-high);
+  width: 100%;
 }
 
 .controls {
@@ -13,7 +14,9 @@
   display: flex;
   flex-direction: column;
   gap: 2em;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--color-primary);
+  width: 100%;
+  max-width: 800px;
 }
 
 .row {
@@ -21,103 +24,132 @@
   justify-content: space-between;
   align-items: center;
   gap: 1em;
+  flex-wrap: wrap;
 }
 
 label {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   gap: 0.5em;
+  color: var(--color-text-high);
 }
 
 .countSpan {
   font-family: var(--clockFace);
-  color: var(--black);
+  color: var(--color-text-high);
   padding: 5px 10px;
   cursor: pointer;
-  background-color: var(--white);
-  border: 1px solid var(--primary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
   transition: all 0.3s ease;
+  border-radius: 4px;
 }
 
 .activeCount {
-  background-color: var(--primary);
-  color: var(--white);
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .saveBtn {
-  background: var(--white);
-  color: inherit;
-  border: 1px solid var(--primary);
-  height: 100%;
-  padding: 6px 12px;
+  background: var(--color-surface);
+  color: var(--color-text-high);
+  border: 1px solid var(--color-primary);
+  padding: 8px 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  border-radius: 6px;
+  font-weight: 500;
 }
 
 .saveBtn:hover {
-  transform: scale(1.05);
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.saveBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-surface);
+    color: var(--color-text-med);
 }
 
 .toolTip {
   position: absolute;
   width: max-content;
-  top: -40px;
-  left: calc(100% - 25px);
-  background-color: var(--white);
-  padding: 10px;
-  box-shadow: 0px 0px 5px #8080807c;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-surface);
+  color: var(--color-text-high);
+  padding: 8px 12px;
+  box-shadow: var(--shadow-sm);
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid var(--color-border);
 }
 
 .toolTip::after {
   content: "";
   position: absolute;
   top: 100%;
-  left: 10px;
-  border-width: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
   border-style: solid;
-  border-color: var(--white) transparent transparent transparent;
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.301));
+  border-color: var(--color-surface) transparent transparent transparent;
 }
 
 .saveBtn:hover .toolTip {
   opacity: 1;
   visibility: visible;
-
 }
 
 .inputBox {
-  padding: 6px 8px;
+  padding: 8px 10px;
   font-family: var(--clockFace);
   outline: none;
-  border: 1px solid var(--primary-border);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
   transition: all 0.3s ease;
-  background-color: var(--white);
-  color: inherit;
+  background-color: var(--color-surface);
+  color: var(--color-text-high);
+  width: 80px;
 }
 
 .inputBox:focus {
-  border: 1px solid var(--primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
 }
 
 .colorPreview {
-  flex: 1;
+  width: 40px;
   height: 40px;
-  border-radius: 5px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
 }
 
 .scrollBtn {
-  border: 1px solid var(--primary);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
   border-radius: 20px;
-  padding: 10px;
-  display: inline-block;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
   cursor: pointer;
   width: max-content;
   margin: auto;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.scrollBtn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
 }
 
 
@@ -125,20 +157,24 @@ label {
   margin: auto;
   display: flex;
   gap: 2rem;
-
   padding: 2rem;
-  border-radius: 10px;
-
+  border-radius: 12px;
   background-image: linear-gradient(to bottom, var(--gradient-from), var(--gradient-to) 90%);
-  backdrop-filter: blur(0.2s);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 1000px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .savedContainer {
-  max-width: 60%;
+  max-width: 800px;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  justify-content: center;
 }
 
 .swatch {
@@ -148,11 +184,12 @@ label {
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
 .swatch:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 
@@ -163,7 +200,7 @@ label {
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  background: var(--overlay-color);
+  background: rgba(0,0,0,0.4);
   opacity: 0;
   border-radius: inherit;
   transition: opacity 0.2s ease;
@@ -176,59 +213,60 @@ label {
 
 .swatchActions button {
   all: unset;
-  background-color: var(--white);
-  color: var(--black);
-  padding: 4px 8px;
-  border-radius: 5px;
+  background-color: white;
+  color: black;
+  padding: 6px 10px;
+  border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-weight: 600;
 }
 
 .swatchActions button:hover {
-  background: var(--white);
+  background-color: #f0f0f0;
 }
 
 
 .description {
-  max-width: 50%;
-  margin: auto;
-  margin-bottom: 100px;
+  max-width: 800px;
+  margin: 2rem auto;
   padding: 2rem;
-  background-color: var(--gradient-from);
-  backdrop-filter: blur(20px);
-  text-align: justify;
-  line-height: normal;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  line-height: 1.6;
+  color: var(--color-text-med);
 }
 
 @media screen and (max-width:768px) {
   .controls {
+    padding: 1rem;
+    align-items: center;
+  }
+
+  .row {
     width: 100%;
-    align-items: flex-start;
-    padding: 2em;
+    justify-content: space-between;
   }
 
   .row:nth-child(3) {
-    flex-direction: column;
+      flex-direction: column;
+      align-items: flex-start;
   }
-
-  .colorPreview {
-    width: 100px;
-  }
-
 
   .previewBox {
     flex-direction: column;
+    padding: 1rem;
   }
 
   .savedContainer {
-    max-width: 100%;
-    padding: 1em;
     justify-content: center;
   }
 
   .description {
-    max-width: 95%;
-    margin-bottom: 0px;
+    width: 90%;
+    padding: 1.5rem;
   }
 }
