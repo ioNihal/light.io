@@ -6,9 +6,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
-    max-height: 100vh;
-    transition: width 0.3s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    transition: transform 0.3s ease, width 0.3s ease;
+    z-index: 100;
+    position: relative;
 }
 
 .sidebar.hide {
@@ -61,7 +64,9 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
 }
 
 .navBtn {
@@ -87,6 +92,7 @@ h1 {
     text-transform: uppercase;
     font-family: var(--tiktok-sans);
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .navBtn .arrow {
@@ -99,6 +105,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 24px;
 }
 
 .navBtn.active,
@@ -106,10 +113,11 @@ h1 {
 .navBtn:focus {
     background-color: var(--color-page-bg);
     outline: none;
+    color: var(--color-text-high);
 }
 
 .navBtn.active {
-    border-left: 1px solid var(--color-primary);
+    border-left: 3px solid var(--color-primary);
     border-radius: 0px 10px 10px 0px;
 }
 
@@ -128,21 +136,21 @@ h1 {
     background-color: var(--color-page-bg);
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 0.5em;
     border-radius: 10px;
-    padding: 0 0.5em;
+    padding: 0.5em;
+    margin-left: 10px;
+    border-left: 1px solid var(--color-border);
 }
 
 .dropDownMenu.hide {
     max-height: 0;
-    opacity: 0.7;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar.hide .dropDownMenu {
-    scrollbar-width: none;
-}
-
-.sidebar.hide .dropDownMenu::-webkit-scrollbar {
     display: none;
 }
 
@@ -153,21 +161,15 @@ h1 {
     justify-content: flex-start;
     align-items: center;
     gap: 1em;
-    padding: 10px 5px;
+    padding: 8px 10px;
     border-radius: 5px;
-    font-size: 0.8em;
+    font-size: 0.9em;
     cursor: pointer;
     color: var(--color-text-med);
     transition: all 0.3s ease;
+    width: 100%;
 }
 
-.navSecondBtn:first-child {
-    margin-top: 1em;
-}
-
-.navSecondBtn:last-child {
-    margin-bottom: 1em;
-}
 
 .navSecondBtn .icon,
 .navSecondBtn .label {
@@ -192,21 +194,145 @@ h1 {
 .navSecondBtn:focus {
     outline: none;
     background-color: var(--color-surface);
+    color: var(--color-text-high);
 }
 
 .navSecondBtn.active {
     background-color: var(--color-surface);
-    border-left: 1px solid var(--color-primary);
-    border-radius: 0px 5px 5px 0px;
+    color: var(--color-primary);
+    font-weight: bold;
 }
 
 .navSecondBtn.active .icon {
     color: var(--color-primary);
 }
 
+/* Footer Section */
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.themeBtn, .githubLink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-med);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.themeBtn:hover, .githubLink:hover {
+    background-color: var(--color-page-bg);
+    color: var(--color-text-high);
+}
+
+.sidebar.hide .footer {
+    align-items: center;
+}
+
+.sidebar.hide .themeBtn, .sidebar.hide .githubLink {
+    justify-content: center;
+    padding: 0.8rem;
+}
+
+
+/* Mobile Styles */
+.mobileToggleBtn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 101;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--color-text-high);
+    box-shadow: var(--shadow-sm);
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
 @media screen and (max-width: 768px) {
-    .sidebar.hide {
-        width: 60px;
-        padding: 1.5rem 0.5rem;
+    .mobileToggleBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    .overlay.show {
+        display: block;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* When NOT hidden (i.e. showSidebar is true), we show it */
+    .sidebar:not(.hide) {
+        transform: translateX(0);
+        width: 280px;
+    }
+
+    /* When hidden (showSidebar is false), it is off-screen */
+    .sidebar.hide {
+        transform: translateX(-100%);
+        width: 280px; /* Keep width consistent for animation */
+    }
+
+    /* Reset inner elements for mobile drawer */
+    .sidebar.hide .logo,
+    .sidebar.hide .navBtn,
+    .sidebar.hide .navSecondBtn {
+        justify-content: flex-start;
+        gap: 1em;
+    }
+
+    .sidebar.hide h1,
+    .sidebar.hide .label {
+        display: block;
+        opacity: 1;
+    }
+
+    .sidebar.hide .arrow {
+        display: flex;
+    }
+
+    .sidebar.hide .dropDownMenu {
+        display: flex; /* Or whatever state it was in */
+    }
+
+    /* On mobile, when sidebar is open (not hide), we hide the mobile toggle button?
+       Actually, the toggle button is outside. We might want to hide it or keep it.
+       Better to keep it but maybe change icon? Or rely on overlay click / sidebar close button.
+    */
 }

@@ -8,7 +8,6 @@ import {
     hexToHsl,
     hslToHex,
 } from './helper';
-import { useNavigate } from 'react-router-dom';
 
 export default function ColorFormatConverter() {
     const [hex, setHex] = useState("#FF7A59");
@@ -21,9 +20,6 @@ export default function ColorFormatConverter() {
 
     const [error, setError] = useState(null);
     const [copied, setCopied] = useState(null);
-
-
-    const navigate = useNavigate();
 
     useMemo(() => {
         setRawHex(hex);
@@ -116,7 +112,6 @@ export default function ColorFormatConverter() {
 
     return (
         <div className={styles.container}>
-            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
             <div className={styles.wrapper}>
                 <header className={styles.header}>
                     <h2 className={styles.title}>Hex • RGB • HSL Converter</h2>

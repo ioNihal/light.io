@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./components/Loader/Loader";
-
+import styles from './ToolLoader.module.css';
 
 const ScreenLight = lazy(() => import('./routes/ScreenLight/ScreenLight'));
 const AmbientColorCycler = lazy(() => import('./routes/AmbientColorCycler/AmbientColorCycler'));
@@ -19,9 +19,6 @@ const MorseCode = lazy(() => import('./routes/MorseCode/MorseCode'));
 const NeonTextGenerator = lazy(() => import('./routes/NeonTextGenerator/NeonTextGenerator'));
 const SeizureRiskChecker = lazy(() => import('./routes/SeizureRiskChecker/SeizureRiskChecker'));
 const WhiteBalance = lazy(() => import('./routes/WhiteBalance/WhiteBalance'));
-
-
-
 
 
 export default function ToolLoader() {
@@ -54,9 +51,15 @@ export default function ToolLoader() {
         }}>Tool: "{toolName}" not found! <button onClick={() => navigate('/')}>Return</button></div>
     }
 
+    // Some tools might need full screen (e.g. ScreenLight), but generally we wrap them.
+    // ScreenLight changes background color, so it might need to override the wrapper or be handled differently.
+    // For now, I'll wrap everything. If ScreenLight has issues, I'll fix it in its component.
+
     return (
         <Suspense fallback={<Loader />}>
-            <Component />
+            <div className={styles.toolWrapper}>
+                <Component />
+            </div>
         </Suspense>
     )
 }
