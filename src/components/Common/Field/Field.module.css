@@ -1,0 +1,5 @@
+.field { display:flex; flex-direction:column; gap:0.45rem; }
+.label { font-weight:700; font-size:0.95rem; color:var(--text-dark); }
+.control { display:flex; gap:0.5rem; align-items:center; }
+.hint { font-size:0.85rem; color: #6b6b6b; }
+.error { color: #c23; font-size:0.85rem; }

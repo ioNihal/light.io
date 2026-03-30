@@ -1,0 +1,2 @@
+.btn { background: transparent; border: 1px solid transparent; padding: 0.45rem; border-radius: 8px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+.btn:hover { background: var(--primary-hover); }

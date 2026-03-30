@@ -1,170 +1,141 @@
-import { useEffect, useState } from 'react';
-import styles from './ContrastRatio.module.css';
-import { isValidHex, normalizeHex, wcagResults, getContrast } from './contrastHelpers';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react'
+import styles from './ContrastRatio.module.css'
+import { normalizeHex, wcagResults, getContrast } from './contrastHelpers'
+import ColorField from '../../components/Common/ColorField/ColorField'
+import Badge from '../../components/Common/Badge/Badge'
+import Button from '../../components/Common/Button/Button'
+import ToolPage from '../../components/Common/ToolPage/ToolPage'
 
 export default function ContrastRatio() {
-    const [textColor, setTextColor] = useState("#000000");
-    const [bgColor, setBgColor] = useState("#ffffff");
+  const [textColor, setTextColor] = useState('#111827')
+  const [bgColor, setBgColor] = useState('#F8FAFC')
+  const [fontIsLarge, setFontIsLarge] = useState(false)
+  const [ratio, setRatio] = useState(null)
+  const [error, setError] = useState('')
 
-    const [fontIsLarge, setFontIsLarge] = useState(false);
-
-    const [ratio, setRatio] = useState(null);
-    const [error, setError] = useState("");
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        try {
-            setError("");
-            const r = getContrast(textColor, bgColor);
-            setRatio(r);
-        } catch (e) {
-            setRatio(null);
-            setError(e.message || "Invalid Color!");
-        }
-    }, [textColor, bgColor]);
-
-
-    function onTextHexChange(e) {
-        const v = e.target.value.trim();
-        setTextColor(v.startsWith('#') ? v : `#${v}`);
+  useEffect(() => {
+    try {
+      setError('')
+      setRatio(getContrast(textColor, bgColor))
+    } catch (currentError) {
+      setRatio(null)
+      setError(currentError.message || 'Invalid color')
     }
+  }, [textColor, bgColor])
 
-    function onBgHexChange(e) {
-        const v = e.target.value.trim();
-        setBgColor(v.startsWith('#') ? v : `#${v}`);
+  const presets = [
+    { label: 'Body copy', text: '#111827', bg: '#F8FAFC' },
+    { label: 'Dark mode', text: '#F9FAFB', bg: '#111827' },
+    { label: 'Muted text', text: '#6B7280', bg: '#FFFFFF' },
+    { label: 'Warning UI', text: '#1D4ED8', bg: '#FEF3C7' },
+  ]
+
+  const displayRatio = ratio ? ratio.toFixed(2) : '--'
+  const results = ratio ? wcagResults(ratio) : null
+  const activeResult = useMemo(() => {
+    if (!results) return 'Waiting for valid colors'
+    if (fontIsLarge) {
+      return results.aaaLarge ? 'AAA large text' : results.aaLarge ? 'AA large text' : 'Fails large text'
     }
+    return results.aaaNormal ? 'AAA normal text' : results.aaNormal ? 'AA normal text' : 'Fails normal text'
+  }, [fontIsLarge, results])
 
-    const presets = [
-        { label: "Black on White", text: "#000000", bg: "#ffffff" },
-        { label: "White on Black", text: "#ffffff", bg: "#000000" },
-        { label: "Gray on White", text: "#777777", bg: "#ffffff" },
-        { label: "Blue on Yellow", text: "#0d6efd", bg: "#fff3cd" },
-    ];
+  const sidebar = (
+    <>
+      <div className={styles.metricCard}>
+        <span className={styles.metricLabel}>Contrast ratio</span>
+        <strong className={styles.metricValue}>{displayRatio}:1</strong>
+        <p>{activeResult}</p>
+      </div>
 
-    const displayRatio = ratio ? ratio.toFixed(2) : "--";
-    const results = ratio ? wcagResults(ratio) : null;
+      <div className={styles.metricCard}>
+        <span className={styles.metricLabel}>Quick guidance</span>
+        <ul className={styles.notesList}>
+          <li>AA needs 4.5:1 for normal text and 3:1 for large text.</li>
+          <li>AAA needs 7:1 for normal text and 4.5:1 for large text.</li>
+          <li>Pure black on pure white reaches the maximum 21:1 contrast.</li>
+        </ul>
+      </div>
+    </>
+  )
 
+  return (
+    <ToolPage
+      title="Contrast Ratio Checker"
+      subtitle="Audit foreground and background color pairs against WCAG requirements with an instant visual preview."
+      description="Use presets for common UI scenarios, compare accessibility thresholds, and test how your pairing behaves for normal or large text."
+      sidebar={sidebar}
+      actions={
+        <label className={styles.toggle}>
+          <input type="checkbox" checked={fontIsLarge} onChange={(e) => setFontIsLarge(e.target.checked)} />
+          <span>Large text mode</span>
+        </label>
+      }
+    >
+      <div className={styles.layout}>
+        <section className={styles.panel}>
+          <div className={styles.fields}>
+            <ColorField
+              label="Text color"
+              color={normalizeHex(textColor)}
+              hexValue={normalizeHex(textColor)}
+              onColorChange={(e) => setTextColor(e.target.value)}
+              onHexChange={(e) => setTextColor(e.target.value.startsWith('#') ? e.target.value : `#${e.target.value}`)}
+              onCopy={() => {}}
+              error={error}
+              placeholder="#111827"
+            />
 
-    // Badge Component
-    function Badge({ label, pass }) {
-        return (
-            <span role='status'
-                aria-label={`${label} ${pass ? 'Pass' : 'Fail'}`}
-                className={pass ? styles.badgePass : styles.badgeFail}>
-                {label}:&nbsp;{pass ? 'Pass' : 'Fail'}
-            </span>
-        );
-    }
+            <ColorField
+              label="Background color"
+              color={normalizeHex(bgColor)}
+              hexValue={normalizeHex(bgColor)}
+              onColorChange={(e) => setBgColor(e.target.value)}
+              onHexChange={(e) => setBgColor(e.target.value.startsWith('#') ? e.target.value : `#${e.target.value}`)}
+              onCopy={() => {}}
+              error={error}
+              placeholder="#F8FAFC"
+            />
+          </div>
 
+          <div className={styles.presetRow}>
+            {presets.map((preset) => (
+              <Button key={preset.label} variant="ghost" size="sm" onClick={() => {
+                setTextColor(preset.text)
+                setBgColor(preset.bg)
+              }}>
+                {preset.label}
+              </Button>
+            ))}
+          </div>
 
-    return (
-        <div className={styles.container}>
-            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
-            <h2 className={styles.title}>Contrast Ratio Checker</h2>
-            <p className={styles.note}>
-                Tips: white vs black yields the maximum contrast of 21:1.
-                Try it: <code>#000000</code>&nbsp;on&nbsp;<code>#ffffff</code>.
+          {error ? <p className={styles.error}>{error}</p> : null}
+        </section>
+
+        <section
+          className={styles.previewCard}
+          style={{ color: normalizeHex(textColor), backgroundColor: normalizeHex(bgColor) }}
+        >
+          <div className={styles.previewInner}>
+            <span className={styles.previewEyebrow}>Preview</span>
+            <p className={fontIsLarge ? styles.sampleLarge : styles.sample}>
+              The quick brown fox jumps over the lazy dog.
             </p>
-            <div className={styles.card}>
+            <p className={styles.previewMeta}>
+              {fontIsLarge ? 'Large text sample' : 'Normal body text sample'}
+            </p>
+          </div>
+        </section>
 
-                <div className={styles.controls}>
-                    <div className={styles.picker}>
-                        <label className={styles.label}>Text&nbsp;Color:</label>
-                        <input
-                            aria-label="Text color"
-                            type="color"
-                            value={normalizeHex(textColor)}
-                            onChange={(e) => setTextColor(e.target.value)}
-                            className={styles.colorInput} />
-
-                        <input
-                            className={styles.hexInput}
-                            value={normalizeHex(textColor)}
-                            onChange={onTextHexChange}
-                            onBlur={(e) => {
-                                if (isValidHex(e.target.value)) setTextColor(normalizeHex(e.target.value));
-                                else setError("Invalid text Hex");
-                            }} />
-                    </div>
-
-                    <div className={styles.picker}>
-                        <label className={styles.label}>Background&nbsp;color:</label>
-                        <input
-                            aria-label="Background color"
-                            type="color"
-                            value={normalizeHex(bgColor)}
-                            onChange={(e) => setBgColor(e.target.value)}
-                            className={styles.colorInput}
-                        />
-                        <input
-                            className={styles.hexInput}
-                            value={normalizeHex(bgColor)}
-                            onChange={onBgHexChange}
-                            onBlur={(e) => {
-                                if (isValidHex(e.target.value)) setBgColor(normalizeHex(e.target.value));
-                                else setError("Invalid background hex");
-                            }}
-                        />
-                    </div>
-
-                    <div className={styles.option}>
-                        <label>
-                            <input type='checkbox' checked={fontIsLarge}
-                                onChange={(e) => setFontIsLarge(e.target.checked)} />
-                            &nbsp;&nbsp;Large text (≥ 18pt / 14pt bold)
-                        </label>
-
-
-                        <div className={styles.presets}>
-                            <span className={styles.presetsLabel}>Presets:</span>
-                            {presets.map((preset) => (
-                                <button key={preset.label}
-                                    className={styles.presetBtn}
-                                    onClick={() => {
-                                        setTextColor(preset.text);
-                                        setBgColor(preset.bg);
-                                    }}
-                                    type='button'>{preset.label}</button>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                <div className={styles.previewWrapper}>
-                    <div className={styles.preview} style={{
-                        color: normalizeHex(textColor),
-                        backgroundColor: normalizeHex(bgColor)
-                    }}>
-                        <div className={styles.previewInner}>
-                            <p className={fontIsLarge ? styles.sampleLarge : styles.sample}>
-                                The quick brown fox jumps over the lazy dog
-                            </p>
-
-                        </div>
-                    </div>
-                    <div className={styles.results}>
-                        <div>
-                            <strong>Contrast Ratio:</strong> <span className={styles.ratioVal}>{displayRatio}:1</span>
-                        </div>
-
-                        {results && (
-                            <div className={styles.badges}>
-                                <Badge label="AA (normal ≥ 4.5)" pass={results.aaNormal} />
-                                <Badge label="AA (large ≥ 3)" pass={results.aaLarge} />
-                                <Badge label="AAA (normal ≥ 7)" pass={results.aaaNormal} />
-                                <Badge label="AAA (large ≥ 4.5)" pass={results.aaaLarge} />
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-            </div>
-            {error && <div className={styles.error}>Error: {error}</div>}
-
-        </div>
-    );
+        {results ? (
+          <section className={styles.results}>
+            <Badge label="AA normal" pass={results.aaNormal} />
+            <Badge label="AA large" pass={results.aaLarge} />
+            <Badge label="AAA normal" pass={results.aaaNormal} />
+            <Badge label="AAA large" pass={results.aaaLarge} />
+          </section>
+        ) : null}
+      </div>
+    </ToolPage>
+  )
 }
-
-

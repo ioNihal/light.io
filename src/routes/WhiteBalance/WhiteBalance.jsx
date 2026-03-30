@@ -1,341 +1,237 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import styles from './WhiteBalance.module.css';
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styles from './WhiteBalance.module.css'
 import {
   computeGainsFromTempAndTint,
   applyGainsToImageData,
   estimateTempAndTintFromCanvas,
   drawImageToCanvas,
-} from './helpers';
+} from './helpers'
+import ToolPage from '../../components/Common/ToolPage/ToolPage'
+import Button from '../../components/Common/Button/Button'
 
 export default function WhiteBalance() {
-  const canvasRef = useRef(null);
-  const imgRef = useRef(new Image());
-  const previewRef = useRef(null);
-  const containerRef = useRef(null);
+  const canvasRef = useRef(null)
+  const imgRef = useRef(new Image())
+  const previewRef = useRef(null)
+  const fileInputRef = useRef(null)
 
-  const [fileUrl, setFileUrl] = useState(null);
-  const [temperature, setTemperature] = useState(6500); // 2000 - 10000 K
-  const [tint, setTint] = useState(0); // -100 .. +100
-  const [strength, setStrength] = useState(1); // 0..1
-  const [showOriginal, setShowOriginal] = useState(false);
-  const [processing, setProcessing] = useState(false);
+  const [fileUrl, setFileUrl] = useState(null)
+  const [temperature, setTemperature] = useState(6500)
+  const [tint, setTint] = useState(0)
+  const [strength, setStrength] = useState(1)
+  const [showOriginal, setShowOriginal] = useState(false)
+  const [processing, setProcessing] = useState(false)
 
-  // mobile controls toggle (visible on small screens)
-  const [controlsOpen, setControlsOpen] = useState(true);
+  const applyWhiteBalanceToCanvas = useCallback((tempK, tintValue, blend = 1) => {
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-  // Apply white balance on the pixel data in the canvas
-  const applyWhiteBalanceToCanvas = useCallback(
-    (tempK, tintValue, blend = 1) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      setProcessing(true);
+    setProcessing(true)
+    requestAnimationFrame(() => {
+      const ctx = canvas.getContext('2d')
+      try {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const gains = computeGainsFromTempAndTint(tempK, tintValue)
+        applyGainsToImageData(imageData, gains, blend)
+        ctx.putImageData(imageData, 0, 0)
+      } catch (error) {
+        console.warn('Could not read canvas pixel data', error)
+      }
+      setProcessing(false)
+    })
+  }, [])
 
-      requestAnimationFrame(() => {
-        const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
-        try {
-          const imgData = ctx.getImageData(0, 0, width, height);
-          const gains = computeGainsFromTempAndTint(tempK, tintValue);
-          applyGainsToImageData(imgData, gains, blend);
-          ctx.putImageData(imgData, 0, 0);
-        } catch (err) {
-          // reading ImageData can throw if canvas is tainted — ignore gracefully
-          // (user should ensure crossOrigin or use local file)
-          console.warn('Could not read canvas pixel data', err);
-        }
-        setProcessing(false);
-      });
-    },
-    []
-  );
+  const resizeAndDraw = useCallback((img = imgRef.current) => {
+    const canvas = canvasRef.current
+    const preview = previewRef.current
+    if (!canvas || !img || !preview) return
 
-  // Handle file upload
-  function handleFile(e) {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    const url = URL.createObjectURL(f);
-    setFileUrl(url);
-    imgRef.current = new Image();
-    imgRef.current.crossOrigin = 'anonymous';
-    imgRef.current.onload = () => {
-      // draw to fit preview width
-      resizeAndDraw(imgRef.current);
-    };
-    imgRef.current.src = url;
+    const maxW = Math.max(260, Math.floor(preview.clientWidth - 32))
+    const maxH = Math.max(220, Math.floor(window.innerHeight * 0.62))
+    drawImageToCanvas(canvas, img, { maxW, maxH })
+    if (!showOriginal) applyWhiteBalanceToCanvas(temperature, tint, strength)
+  }, [applyWhiteBalanceToCanvas, showOriginal, temperature, tint, strength])
+
+  const handleFile = (file) => {
+    if (!file) return
+    const url = URL.createObjectURL(file)
+    setFileUrl(url)
+    imgRef.current = new Image()
+    imgRef.current.crossOrigin = 'anonymous'
+    imgRef.current.onload = () => resizeAndDraw(imgRef.current)
+    imgRef.current.src = url
   }
 
-  // Draw image with sizes based on preview container width/height
-  function resizeAndDraw(img = imgRef.current) {
-    const canvas = canvasRef.current;
-    const preview = previewRef.current;
-    if (!canvas || !img || !preview) return;
-
-    // compute a sensible max width/height based on preview area
-    const style = getComputedStyle(preview);
-    const paddingX = parseFloat(style.paddingLeft || 0) + parseFloat(style.paddingRight || 0);
-    const maxW = Math.max(200, Math.floor(preview.clientWidth - paddingX));
-    const maxH = Math.max(160, 900); // keep tall limit if needed
-
-    drawImageToCanvas(canvas, img, { maxW, maxH });
-    if (!showOriginal) {
-      applyWhiteBalanceToCanvas(temperature, tint, strength);
-    }
-  }
-
-  // Re-apply when temp/tint/strength change
   useEffect(() => {
-    if (!canvasRef.current) return;
-    if (fileUrl && imgRef.current?.complete) {
-      resizeAndDraw();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [temperature, tint, strength, fileUrl]);
+    if (fileUrl && imgRef.current?.complete) resizeAndDraw()
+  }, [temperature, tint, strength, fileUrl, resizeAndDraw])
 
-  // ResizeObserver to react to layout changes / orientation changes
   useEffect(() => {
-    const preview = previewRef.current;
-    if (!preview) return;
-    const ro = new ResizeObserver(() => {
-      // redraw to best fit the preview area
-      resizeAndDraw();
-    });
-    ro.observe(preview);
+    const preview = previewRef.current
+    if (!preview) return undefined
+    const observer = new ResizeObserver(() => resizeAndDraw())
+    observer.observe(preview)
+    return () => observer.disconnect()
+  }, [resizeAndDraw])
 
-    // also re-evaluate controlsOpen for initial layout (desktop -> show)
-    if (window.innerWidth >= 1024) setControlsOpen(true);
+  useEffect(() => () => {
+    if (fileUrl) URL.revokeObjectURL(fileUrl)
+  }, [fileUrl])
 
-    return () => ro.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Auto white balance (simple heuristic)
-  function autoWhiteBalance() {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    // ensure original pixels are drawn
-    drawImageToCanvas(canvas, imgRef.current);
-    const { temp: suggestedTemp, tint: suggestedTint } = estimateTempAndTintFromCanvas(canvas);
-    setTemperature(suggestedTemp);
-    setTint(suggestedTint);
+  const autoWhiteBalance = () => {
+    const canvas = canvasRef.current
+    if (!canvas || !imgRef.current) return
+    drawImageToCanvas(canvas, imgRef.current)
+    const { temp: suggestedTemp, tint: suggestedTint } = estimateTempAndTintFromCanvas(canvas)
+    setTemperature(suggestedTemp)
+    setTint(suggestedTint)
   }
 
-  function downloadCanvas() {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const link = document.createElement('a');
-    link.download = 'white-balanced.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+  const downloadCanvas = () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const link = document.createElement('a')
+    link.download = 'white-balanced.png'
+    link.href = canvas.toDataURL('image/png')
+    link.click()
   }
 
   const presets = [
-    { name: 'Tungsten (3200K)', temp: 3200, tint: 0 },
-    { name: 'Fluorescent (4000K)', temp: 4000, tint: 0 },
-    { name: 'Daylight (5600K)', temp: 5600, tint: 0 },
-    { name: 'Cloudy (7000K)', temp: 7000, tint: 0 },
-    { name: 'Shade (8000K)', temp: 8000, tint: 0 },
-  ];
+    { name: 'Tungsten', temp: 3200, tint: 0 },
+    { name: 'Fluorescent', temp: 4000, tint: 0 },
+    { name: 'Daylight', temp: 5600, tint: 0 },
+    { name: 'Cloudy', temp: 7000, tint: 0 },
+    { name: 'Shade', temp: 8000, tint: 0 },
+  ]
 
-  return (
-    <div ref={containerRef} className={styles.container}>
-      <div className={styles.headerRow}>
-        <div>
-          <h2 className={styles.header}>White Balance Visualizer</h2>
-          <p className={styles.subtitle}>Simulate camera white balance filters on your image.</p>
-        </div>
-
-        {/* mobile toggle: visible only on small screens via CSS */}
-        <button
-          type="button"
-          className={styles.mobileToggle}
-          onClick={() => setControlsOpen((s) => !s)}
-          aria-expanded={controlsOpen}
-        >
-          {controlsOpen ? 'Hide controls' : 'Show controls'}
-        </button>
+  const sidebar = (
+    <>
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Current settings</span>
+        <strong>{temperature}K</strong>
+        <p>Tint {tint >= 0 ? `+${tint}` : tint}, strength {Math.round(strength * 100)}%</p>
       </div>
 
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Suggested flow</span>
+        <ul className={styles.tipList}>
+          <li>Start with a preset that matches the lighting source.</li>
+          <li>Use Auto WB for a fast baseline, then fine tune manually.</li>
+          <li>Toggle the original on and off to check skin tones and neutrals.</li>
+        </ul>
+      </div>
+    </>
+  )
+
+  return (
+    <ToolPage
+      title="White Balance Visualizer"
+      subtitle="Simulate camera white balance adjustments directly on an uploaded image."
+      description="Upload a photo, test common lighting presets, and fine tune temperature, tint, and effect strength before exporting a corrected preview."
+      sidebar={sidebar}
+      actions={
+        <Button variant="ghost" size="sm" onClick={() => fileInputRef.current?.click()}>
+          {fileUrl ? 'Replace image' : 'Upload image'}
+        </Button>
+      }
+    >
       <div className={styles.layout}>
-        <div className={`${styles.controls} ${!controlsOpen ? styles.collapsed : ''}`}>
-          <label className={styles.label}>Upload image</label>
+        <section className={styles.controls}>
           <input
+            ref={fileInputRef}
             type="file"
             accept="image/*"
-            onChange={handleFile}
-            className={styles.fileInput}
+            className={styles.hiddenInput}
+            onChange={(e) => handleFile(e.target.files?.[0])}
           />
 
-          <div className={styles.field}>
-            <label className={styles.label}>Temperature (Kelvin):</label>
-            <div className={styles.rangeRow}>
-              <input
-                type="range"
-                min={2000}
-                max={10000}
-                value={temperature}
-                onChange={(e) => setTemperature(Number(e.target.value))}
-                className={styles.range}
-              />
-              <div className={styles.rangeValue}>{temperature}K</div>
-            </div>
+          <div className={styles.sliderGroup}>
+            <label className={styles.label}>
+              Temperature
+              <span>{temperature}K</span>
+            </label>
+            <input type="range" min={2000} max={10000} value={temperature} onChange={(e) => setTemperature(Number(e.target.value))} />
           </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Tint:</label>
-            <div className={styles.rangeRow}>
-              <input
-                type="range"
-                min={-100}
-                max={100}
-                value={tint}
-                onChange={(e) => setTint(Number(e.target.value))}
-                className={styles.range}
-              />
-              <div className={styles.rangeValue}>{tint}</div>
-            </div>
-            <div className={styles.hint}>Negative → greener · Positive → magenta</div>
+          <div className={styles.sliderGroup}>
+            <label className={styles.label}>
+              Tint
+              <span>{tint}</span>
+            </label>
+            <input type="range" min={-100} max={100} value={tint} onChange={(e) => setTint(Number(e.target.value))} />
           </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Strength:</label>
-            <div className={styles.rangeRow}>
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step={0.01}
-                value={strength}
-                onChange={(e) => setStrength(Number(e.target.value))}
-                className={styles.range}
-              />
-              <div className={styles.rangeValue}>{Math.round(strength * 100)}%</div>
-            </div>
+          <div className={styles.sliderGroup}>
+            <label className={styles.label}>
+              Strength
+              <span>{Math.round(strength * 100)}%</span>
+            </label>
+            <input type="range" min={0} max={1} step={0.01} value={strength} onChange={(e) => setStrength(Number(e.target.value))} />
           </div>
 
           <div className={styles.presets}>
-            {presets.map((p) => (
+            {presets.map((preset) => (
               <button
-                key={p.name}
+                key={preset.name}
+                className={styles.preset}
                 onClick={() => {
-                  setTemperature(p.temp);
-                  setTint(p.tint);
+                  setTemperature(preset.temp)
+                  setTint(preset.tint)
                 }}
-                className={styles.presetBtn}
-                type="button"
               >
-                {p.name}
+                {preset.name}
               </button>
             ))}
           </div>
 
-          <div className={styles.btnRow}>
-            <button
-              type="button"
+          <div className={styles.actionsRow}>
+            <Button onClick={autoWhiteBalance} disabled={!fileUrl}>Auto WB</Button>
+            <Button
+              variant="ghost"
               onClick={() => {
-                if (!imgRef.current) return;
-                drawImageToCanvas(canvasRef.current, imgRef.current);
-                autoWhiteBalance();
+                if (!fileUrl || !imgRef.current) return
+                drawImageToCanvas(canvasRef.current, imgRef.current)
+                applyWhiteBalanceToCanvas(temperature, tint, strength)
               }}
-              className={`${styles.btn} ${styles.btnPrimary}`}
+              disabled={!fileUrl}
             >
-              Auto WB
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                if (!fileUrl || !imgRef.current) return;
-                drawImageToCanvas(canvasRef.current, imgRef.current);
-                applyWhiteBalanceToCanvas(temperature, tint, strength);
-              }}
-              className={styles.btn}
-            >
-              Apply
-            </button>
-
-            <button type="button" onClick={downloadCanvas} className={styles.btn}>
-              Download
-            </button>
+              Reapply
+            </Button>
+            <Button variant="ghost" onClick={downloadCanvas} disabled={!fileUrl}>Download</Button>
           </div>
+        </section>
 
-          <div className={styles.tip}>
-            Tip: upload a photo, try presets, then tweak Temperature and Tint for the look you want.
-          </div>
-        </div>
-
-        <div className={styles.preview} ref={previewRef}>
+        <section className={styles.preview} ref={previewRef}>
           <div className={styles.previewHeader}>
-            <div className={styles.smallMuted}>Preview</div>
-            <div>
-              <label className={styles.smallMutedInline}>
-                <input
-                  type="checkbox"
-                  checked={showOriginal}
-                  onChange={(e) => {
-                    setShowOriginal(e.target.checked);
-                    // redraw original or processed immediately
-                    if (e.target.checked) drawImageToCanvas(canvasRef.current, imgRef.current);
-                    else applyWhiteBalanceToCanvas(temperature, tint, strength);
-                  }}
-                />
-                <span className={styles.showOriginalText}>Show original</span>
-              </label>
-            </div>
+            <span className={styles.previewLabel}>Preview</span>
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={showOriginal}
+                onChange={(e) => {
+                  const nextValue = e.target.checked
+                  setShowOriginal(nextValue)
+                  if (nextValue) drawImageToCanvas(canvasRef.current, imgRef.current)
+                  else applyWhiteBalanceToCanvas(temperature, tint, strength)
+                }}
+                disabled={!fileUrl}
+              />
+              <span>Show original</span>
+            </label>
           </div>
 
           <div className={styles.previewCard}>
             {!fileUrl ? (
-              <div className={styles.smallMuted}>No image selected — upload to preview.</div>
+              <div className={styles.placeholder}>Upload an image to start previewing.</div>
             ) : (
-              <div className={styles.canvasWrapper}>
-                <canvas ref={canvasRef} className={styles.canvasEl} />
-                <div className={styles.status}>{processing ? 'Processing...' : 'Ready'}</div>
+              <div className={styles.canvasWrap}>
+                <canvas ref={canvasRef} className={styles.canvas} />
+                <div className={styles.status}>{processing ? 'Processing image...' : 'Ready to export'}</div>
               </div>
             )}
           </div>
-
-          <div className={styles.smallMuted} style={{ marginTop: 12 }}>
-            You can also drag the file into the browser's file input or replace the canvas image by uploading another file.
-          </div>
-        </div>
+        </section>
       </div>
-
-      <EffectForOriginalToggle
-        showOriginal={showOriginal}
-        fileUrl={fileUrl}
-        imgRef={imgRef}
-        canvasRef={canvasRef}
-        temperature={temperature}
-        tint={tint}
-        strength={strength}
-        applyWhiteBalanceToCanvas={applyWhiteBalanceToCanvas}
-      />
-    </div>
-  );
-}
-
-function EffectForOriginalToggle({
-  showOriginal,
-  fileUrl,
-  imgRef,
-  canvasRef,
-  temperature,
-  tint,
-  strength,
-  applyWhiteBalanceToCanvas,
-}) {
-  useEffect(() => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
-    if (!fileUrl || !imgRef.current) return;
-
-    if (showOriginal) {
-      drawImageToCanvas(canvas, imgRef.current);
-    } else {
-      applyWhiteBalanceToCanvas(temperature, tint, strength);
-    }
-  }, [showOriginal, fileUrl, imgRef, canvasRef, temperature, tint, strength, applyWhiteBalanceToCanvas]);
-
-  return null;
+    </ToolPage>
+  )
 }

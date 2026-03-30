@@ -3,6 +3,7 @@ import App from './App'
 import ToolsGrid from "./components/ToolsGrid/ToolsGrid";
 import ToolLoader from "./ToolLoader";
 import About from "./routes/About/About";
+import Updates from "./routes/Updates/Updates";
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
             {
                 path: '/about',
                 element: <About />
+            },
+            {
+                path: '/updates',
+                element: <Updates />
             },
             {
                 path: '/:toolName',

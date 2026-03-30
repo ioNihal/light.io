@@ -1,83 +1,85 @@
-.container {
-    flex: 1 1 auto;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 1rem;
-    transition: background-color 0.3s ease;
-    position: relative;
-    background-color: var(--color-surface);
-    color: var(--color-text-high);
+.layout {
+  display: grid;
+  gap: 20px;
 }
 
-.backBtn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border: none;
-    font-size: 1rem;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--color-primary-text);
-    background-color: var(--color-primary);
-    font-family: var(--tiktok-sans);
-    font-weight: 500;
+.stage,
+.panel {
+  border-radius: 24px;
+  border: 1px solid var(--primary-border);
+  background: var(--panel-bg);
+  box-shadow: var(--shadow-sm);
 }
 
-.backBtn:hover,
-.backBtn:focus {
-    background-color: var(--color-primary);
-    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+.stage {
+  padding: 20px;
 }
 
-
-.box {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    font-family: var(--tiktok-sans);
-    background-color: var(--color-surface);
-    padding: 1rem;
-    border-radius: 10px;
-    opacity: 0.5;
-    transition: all 0.3s ease;
+.preview {
+  min-height: 320px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
 }
 
-.box:hover {
-    opacity: 1;
+.previewBadge {
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: var(--panel-overlay);
+  color: var(--surface-contrast);
+  font-family: var(--clockFace);
 }
 
-.box p {
-    line-height: normal;
+.panel {
+  padding: 24px;
 }
 
-
-.label {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1em;
+.controls {
+  display: grid;
+  gap: 18px;
 }
 
-.saveBtn,
-.editBtn,
-.copyBtn {
-    border: none;
-    padding: 8px 12px;
-    background-color: var(--color-primary);
-    color: var(--color-primary-text);
-    border-radius: 5px;
-    cursor: pointer;
+.control {
+  display: grid;
+  gap: 10px;
+  color: var(--text-dark);
 }
 
-.saveBtn:hover,
-.editBtn:hover {
-    background-color: var(--color-primary);
-    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+.control span,
+.metaLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
 }
 
-.copyBtn {
-    background-color: var(--color-secondary);
+.metaValue {
+  color: var(--text-dark);
+}
+
+.summary {
+  display: grid;
+  gap: 16px;
+  color: var(--text-dark);
+}
+
+.summary p {
+  font-family: var(--clockFace);
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 720px) {
+  .panel,
+  .stage {
+    padding: 18px;
+  }
+
+  .preview {
+    min-height: 240px;
+  }
 }

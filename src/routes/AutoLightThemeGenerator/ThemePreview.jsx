@@ -95,7 +95,7 @@ export default function ThemePreview({ label, palette, onCopyToken, copiedToken,
                 <li style={{
                     background: accent,
                     color: onAccent
-                }}>{capitalize(palette[2]?.label)}:&nbsp;{accent.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'accentLight' : 'accentDark'}` ? <FaCheck style={{ color: onAccent }} size={16} /> :
+                        }}>{capitalize(palette[1]?.label)}:&nbsp;{accent.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'accentLight' : 'accentDark'}` ? <FaCheck style={{ color: onAccent }} size={16} /> :
                     <BiCopy style={{ color: onAccent }} size={16} onClick={() => onCopyToken(palette[1]?.label, accent, `${type === 'light' ? 'accentLight' : 'accentDark'}`)} />}
                 </li>
                 {extra1.color && (
@@ -104,7 +104,7 @@ export default function ThemePreview({ label, palette, onCopyToken, copiedToken,
                             background: extra1.color,
                             color: extra1.onColor
                         }}>{capitalize(palette[3]?.label)}:&nbsp;{extra1?.color?.toUpperCase()}&nbsp;{copiedToken === `${type === 'light' ? 'extra1Light' : 'extra1Dark'}` ? <FaCheck style={{ color: extra1.onColor }} size={16} /> :
-                            <BiCopy style={{ color: extra1.onColor }} size={16} onClick={() => onCopyToken(palette[3]?.label, extra1.onColor, `${type === 'light' ? 'extra1Light' : 'extra1Dark'}`)} />}
+                            <BiCopy style={{ color: extra1.onColor }} size={16} onClick={() => onCopyToken(palette[3]?.label, extra1.color, `${type === 'light' ? 'extra1Light' : 'extra1Dark'}`)} />}
                         </li>
                     </>
                 )}

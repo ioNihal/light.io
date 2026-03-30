@@ -1,66 +1,66 @@
 import styles from './ToolsGrid.module.css'
 import { tools } from '../../data/tools'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
-import { useTheme } from '../../contexts/ThemeProvider';
-import { capitalizeFirstLetter } from '../../utils/formatHelpers.js';
-import { CiDark, CiLight } from 'react-icons/ci';
-import { BsGithub } from 'react-icons/bs';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr'
+import { useTheme } from '../../contexts/ThemeProvider'
+import { capitalizeFirstLetter } from '../../utils/formatHelpers.js'
+import { CiDark, CiLight } from 'react-icons/ci'
+import { BsGithub } from 'react-icons/bs'
+import Card from '../Common/Card/Card'
+import Button from '../Common/Button/Button'
+import Input from '../Common/Input/Input'
+import { CgDanger } from 'react-icons/cg'
+import { LuTriangleAlert } from 'react-icons/lu'
 
 export default function ToolsGrid() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(0)
+  const [searchTerm, setSearchTerm] = useState('')
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { theme, toggle } = useTheme()
 
-  const { theme, toggle } = useTheme();
+  const itemsPerPage = 9
+  const startIdx = currentPage * itemsPerPage
 
-  const itemsPerPage = 9;
-  const startIdx = currentPage * itemsPerPage;
+  const filteredTools = [...tools]
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .filter((tool) => tool.title.toLowerCase().includes(searchTerm.toLowerCase()) || tool.desc.toLowerCase().includes(searchTerm.toLowerCase()))
 
-  const goPrev = () => {
-    setCurrentPage((p) => Math.max(p - 1, 0));
-  };
+  const totalPages = Math.ceil(tools.length / itemsPerPage)
+  const pageItems = filteredTools.slice(startIdx, startIdx + itemsPerPage)
 
-  const goNext = () => {
-    setCurrentPage((p) => Math.min(p + 1, totalPages - 1));
-  };
-
-  const jumpTo = (page) => {
-    setCurrentPage(Math.min(Math.max(page, 0), totalPages - 1));
-  };
-
-  const handleSearchTerm = (e) => {
-    setSearchTerm(e.target.value);
-    setCurrentPage(0);
-  }
-
-  const filteredTools = [...tools].sort((a, b) => a.title.localeCompare(b.title)).filter(tool => (tool.title.toLowerCase().includes(searchTerm.toLowerCase()) || tool.desc.toLowerCase().includes(searchTerm.toLowerCase())))
-
-  const totalPages = Math.ceil(tools.length / itemsPerPage);
-  const pageItems = filteredTools.slice(startIdx, startIdx + itemsPerPage);
-
-
+  const goPrev = () => setCurrentPage((page) => Math.max(page - 1, 0))
+  const goNext = () => setCurrentPage((page) => Math.min(page + 1, totalPages - 1))
+  const jumpTo = (page) => setCurrentPage(Math.min(Math.max(page, 0), totalPages - 1))
 
   return (
     <div className={styles.container}>
       <section className={styles.header}>
         <div className={styles.left}>
-          <h3>TooLight</h3>
+          <h3>TooLight <span style={
+            {
+              color: 'orange',
+              fontSize: '0.8rem',
+              fontFamily: "monospace",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem"
+            }
+          }><LuTriangleAlert /> Work in Progress</span></h3>
           <div className={styles.btnGroup}>
-            <button className={styles.themeBtn} onClick={toggle} title={`${capitalizeFirstLetter(theme)} Theme`}>{theme === "light" ? <CiLight /> : <CiDark />}</button>
-            <button className={styles.gitBtn}><BsGithub />Github</button>
-            <button className={styles.navBtn}>About</button>
-            <button className={styles.navBtn}>Home</button>
+            <Button variant="ghost" size="sm" onClick={toggle} title={`${capitalizeFirstLetter(theme)} Theme`}>
+              <span className={styles.icon}>{theme === 'light' ? <CiLight /> : <CiDark />}</span>
+            </Button>
+            <Button variant="ghost" size="sm"><BsGithub />&nbsp;Github</Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/updates')}>Updates</Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/about')}>About</Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/')}>Home</Button>
           </div>
         </div>
+
         <div className={styles.actions}>
-          <input type="text"
-            className={styles.searchInput}
-            placeholder="Search projects..."
-            value={searchTerm}
-            onChange={handleSearchTerm} />
+          <Input placeholder="Search projects..." value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(0) }} />
           <div className={styles.pagination}>
             <button onClick={goPrev} disabled={currentPage === 0}>
               <GrFormPrevious />
@@ -80,15 +80,16 @@ export default function ToolsGrid() {
           </div>
         </div>
       </section>
+
       <div className={styles.grid}>
-        {pageItems.map((tool, i) => (
-          <div className={styles.card} key={startIdx + i} onClick={() => navigate(`/${tool.title.split(" ").join("-").toLowerCase()}`)}>
-            <i className={styles.toolIcon}><tool.icon /></i>
-            <div className={styles.cardInfo}>
-              <div className={styles.title}>{tool.title}</div>
-              <div className={styles.desc}>{tool.desc}</div>
-            </div>
-          </div>
+        {pageItems.map((tool, index) => (
+          <Card
+            key={startIdx + index}
+            icon={tool.icon}
+            title={tool.title}
+            desc={tool.desc}
+            onClick={() => navigate(`/${tool.title.split(' ').join('-').toLowerCase()}`)}
+          />
         ))}
       </div>
     </div>

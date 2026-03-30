@@ -1,375 +1,125 @@
-.container {
-    flex: 1 1 100%;
-    font-family: var(--tiktok-sans);
-    color: var(--color-text-high);
-    background-color: var(--color-page-bg);
-    padding: 2rem;
-
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
+.layout {
+  display: grid;
+  gap: var(--section-gap);
 }
 
-
-.backBtn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border: none;
-    font-size: 1rem;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--color-primary-text);
-    background-color: var(--color-primary);
-    font-family: var(--tiktok-sans);
-    font-weight: 500;
+.panel,
+.previewCard,
+.results,
+.metricCard {
+  border-radius: 24px;
+  border: 1px solid var(--primary-border);
+  background: var(--panel-bg);
+  box-shadow: var(--shadow-sm);
 }
 
-.backBtn:hover,
-.backBtn:focus {
-    background-color: var(--color-primary);
-    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+.panel {
+  padding: var(--panel-pad);
+  display: grid;
+  gap: var(--section-gap);
 }
 
-.title {
-    margin-top: 2rem;
-    font-size: 1.3rem;
-    text-align: center;
+.fields {
+  display: grid;
+  gap: var(--group-gap);
 }
 
-.card {
-    background-color: var(--color-surface);
-    padding: 1rem;
-    border-radius: 10px;
-    display: flex;
-    gap: 1em;
+.presetRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--stack-gap);
 }
 
-.controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2em;
-    align-items: end;
-}
-
-.picker {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.label {
-    min-width: 100px;
-    font-size: 0.9rem;
-}
-
-.colorInput {
-    width: 44px;
-    height: 34px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: border 0.3s ease;
-    border: 1px solid var(--color-border);
-    outline: none;
-}
-
-.hexInput {
-    width: 120px;
-    padding: 6px 8px;
-    border-radius: 6px;
-    transition: border 0.3s ease;
-    border: 1px solid var(--color-border);
-    outline: none;
-    background-color: var(--color-surface);
-    color: inherit;
-}
-
-.hexInput:focus,
-.colorInput:focus {
-    border-color: var(--color-primary);
-}
-
-.option {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    justify-content: space-between;
-}
-
-.option label {
-    display: flex;
-    align-items: center;
-}
-
-.presets {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6em;
-}
-
-.presetsLabel {
-    font-size: 1.2rem;
-}
-
-.presetBtn {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-family: inherit;
-    color: inherit;
-    transition: border-color 0.3s ease;
-}
-
-.presetBtn:hover {
-    border-color: var(--color-primary);
-}
-
-.previewWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
-
-.preview {
-    flex: 1 1 auto;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: var(--shadow-sm);
+.previewCard {
+  min-height: 260px;
+  padding: 26px;
 }
 
 .previewInner {
-    background-color: transparent;
-    border-radius: 6px;
-    padding: 1rem;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.previewEyebrow,
+.metricLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.82;
 }
 
 .sample {
-    font-size: 1rem;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.5;
 }
 
 .sampleLarge {
-    font-size: 1.3rem;
-    font-weight: 700;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.previewMeta {
+  font-size: 0.9rem;
+  opacity: 0.76;
 }
 
 .results {
-    display: flex;
-    gap: 1em;
-    flex-wrap: wrap;
-    align-items: center;
+  padding: var(--panel-pad-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--stack-gap);
 }
 
-.ratioVal {
-    font-family: var(--clockFace);
+.metricCard {
+  padding: var(--panel-pad-sm);
+  display: grid;
+  gap: var(--stack-gap);
 }
 
-.badges {
-    display: flex;
-    gap: 0.7em;
-    flex-wrap: wrap;
-    font-family: var(--clockFace);
+.metricValue {
+  font-size: 2rem;
+  color: var(--text-dark);
 }
 
-.badgePass {
-    background-color: rgba(16, 83, 185, 0.12);
-    color: #065f46;
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    border: 1px solid rgba(16, 185, 129, 0.18);
-
+.notesList {
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  line-height: 1.45;
 }
 
-.badgeFail {
-    background: rgba(239, 68, 68, 0.08);
-    color: #991b1b;
-    padding: 6px 8px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    border: 1px solid rgba(239, 68, 68, 0.12);
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--primary-border);
+  background: var(--panel-soft);
+  color: var(--text-dark);
 }
 
 .error {
-    color: #991b1b;
-    text-align: center;
-    font-family: var(--clockFace);
+  color: #b42318;
+  font-size: 0.92rem;
 }
 
-.note {
-    font-family: var(--clockFace);
-    font-size: 0.7rem;
-    color: rgb(91, 141, 235);
-    opacity: 0.8;
-    line-height: normal;
-    text-align: center;
-}
+@media (max-width: 720px) {
+  .panel,
+  .previewCard {
+    padding: var(--panel-pad-sm);
+  }
 
+  .results {
+    padding: calc(var(--panel-pad-sm) - 4px);
+  }
 
-
-@media (max-width: 768px) {
-    .container {
-        padding: 0;
-        gap: 1rem;
-    }
-
-    .title {
-        margin-top: 60px;
-        font-size: 1.15rem;
-    }
-
-    .note {
-        width: 90%;
-        margin: auto;
-        font-size: 0.6rem;
-    }
-
-
-    .card {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-
-    .controls {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .label {
-        min-width: 90px;
-        font-size: 0.95rem;
-    }
-
-    .hexInput {
-        min-width: 0;
-        flex: 1 1 auto;
-    }
-
-    .option {
-        margin-top: 1rem;
-    }
-
-    .presets {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .presetBtn {
-        flex: 1 1 calc(50% - 0.5rem);
-        min-width: 0;
-        padding: 10px;
-    }
-
-    .preview {
-        padding: 0.75rem;
-        min-height: 200px;
-    }
-
-    .sample {
-        font-size: 0.95rem;
-    }
-
-    .sampleLarge {
-        font-size: 1.1rem;
-    }
-
-    .results {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.6rem;
-    }
-
-    .badges {
-        gap: 0.5rem;
-        font-size: 0.5rem;
-        flex-wrap: wrap;
-
-        margin-bottom: 80px;
-    }
-}
-
-
-@media (max-width: 420px) {
-
-    .title {
-        font-size: 1.05rem;
-    }
-
-    .controls {
-        gap: 0.75rem;
-    }
-
-    .card {
-        height: 100%;
-        width: 100%;
-    }
-
-
-    .picker {
-        gap: 6px;
-    }
-
-    .colorInput {
-        width: 40px;
-        height: 36px;
-    }
-
-    .hexInput {
-        padding: 8px;
-        font-size: 0.95rem;
-    }
-
-    .presetBtn {
-        padding: 10px;
-        font-size: 0.95rem;
-    }
-
-    .previewInner {
-        padding: 0.75rem;
-    }
-
-    .sample {
-        font-size: 0.95rem;
-        line-height: 1.25;
-    }
-
-    .sampleLarge {
-        font-size: 1.05rem;
-    }
-
-
-    .presets {
-        flex-direction: column;
-    }
-
-    .presetBtn {
-        width: 100%;
-    }
-}
-
-
-.presetBtn,
-.badgePass,
-.badgeFail,
-.presetBtn {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
-    touch-action: manipulation;
-}
-
-
-@media (max-width: 640px) {
-    .results {
-        gap: 0.5rem;
-    }
-
-    .badges {
-        gap: 0.4rem;
-    }
+  .toggle {
+    width: 100%;
+    justify-content: center;
+  }
 }

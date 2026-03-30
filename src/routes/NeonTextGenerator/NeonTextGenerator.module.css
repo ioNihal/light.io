@@ -1,290 +1,147 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    width: 100%;
-    background-color: var(--color-page-bg);
-    font-family: var(--tiktok-sans);
-    color: var(--color-text-high);
-    user-select: none;
-    position: relative;
-    overflow-x: hidden;
+.layout {
+  display: grid;
+  gap: var(--layout-gap);
 }
 
-.backBtn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border: none;
-    font-size: 1rem;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--color-primary-text);
-    background-color: var(--color-primary);
-    font-weight: 500;
+.panel,
+.previewPanel,
+.sideCard {
+  border-radius: 24px;
+  border: 1px solid var(--primary-border);
+  box-shadow: var(--shadow-sm);
 }
 
-.backBtn:hover,
-.backBtn:focus {
-    background-color: color-mix(in srgb, var(--color-primary) 90%, black);
+.panel {
+  background: var(--panel-bg);
+  padding: var(--panel-pad);
+  display: grid;
+  gap: var(--section-gap);
 }
 
-.wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
+.input,
+.select,
+.colorPicker {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-surface) 92%, var(--color-page-bg));
+  color: var(--text-dark);
 }
 
-
-.header {
-    text-align: center;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--group-gap);
 }
 
-.title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0;
+.controlBlock {
+  display: grid;
+  gap: var(--stack-gap);
 }
 
-.subtitle {
-    opacity: 0.9;
-    font-size: 0.9rem;
-    margin: 6px 0 0;
+.label,
+.sideLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
 }
 
-.innerWrapper {
-    display: flex;
+.value {
+  color: color-mix(in srgb, var(--text-dark) 72%, white 28%);
 }
-
-.controls {
-    border-radius: 10px 0px 0px 10px;
-    flex: 1;
-    background-color: var(--color-surface);
-    padding: 1.5em;
-
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
-
-
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3em;
-
-    width: 100%;
-}
-
-.field input,
-.field select {
-    padding: 8px 6px;
-    outline-width: 0;
-    background-color: var(--color-surface);
-    color: inherit;
-    border-width: 1px;
-    border-radius: 5px;
-    border-color: var(--color-border);
-    transition: border 0.3s ease;
-}
-
-.field input:focus {
-    border-color: var(--color-primary);
-}
-
-.rowfield {
-    width: 100%;
-    display: flex;
-    gap: 1em;
-}
-
-.rowfield input {
-    width: 100%;
-}
-
 
 .colorGrid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, auto-fit);
-    gap: 1em;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--stack-gap);
 }
 
 .colorSwatch {
-    border: 1px solid var(--color-border);
-    padding: 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: border 0.3s ease;
+  border: 1px solid var(--primary-border);
+  border-radius: 12px;
+  min-height: 44px;
+  cursor: pointer;
 }
 
-.colorSwatch:hover {
-    border-color: var(--color-primary);
-}
-
-.field input[type="color"] {
-    border: 1px solid var(--color-border);
-    padding: 10px;
-    width: 100%;
-    height: 50px;
-    cursor: pointer;
-    transition: border 0.3s ease;
-}
-
-.field input[type="color"]:focus {
-    border-color: var(--color-primary);
-}
-
-.generateBtn,
-.copyBtn {
-    padding: 10px 12px;
-    background-color: var(--color-primary);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: var(--color-primary-text);
-    border-radius: 6px;
-}
-
-.generateBtn:hover,
-.copyBtn:hover {
-    opacity: 0.9;
-}
-
-.right {
-    border-radius: 0px 10px 10px 0px;
-    flex: 1;
-    background-color: #161515;
-    color: white;
-    display: flex;
-    flex-direction: column;
-}
-
-.previewSection {
-    flex: 1;
-    display: grid;
-    place-items: center;
+.previewPanel {
+  background: #161515;
+  color: white;
+  overflow: hidden;
 }
 
 .previewContainer {
-    padding: 2rem;
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  padding: var(--panel-pad);
+}
+
+.neonText {
+  text-align: center;
+  line-height: 1.2;
+  word-break: break-word;
 }
 
 .codeSection {
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    padding: 1rem;
+  display: grid;
+  gap: var(--stack-gap);
+  padding: var(--panel-pad-sm) var(--panel-pad) var(--panel-pad);
 }
 
-.copyBtn {
-    margin-top: 1em;
+.codeHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--stack-gap);
+  align-items: center;
 }
 
 .codeBlock {
-    background-color: #000000;
-    padding: 1em;
-    border-radius: 10px;
+  overflow-x: auto;
+  background: #000;
+  border-radius: 18px;
+  padding: var(--panel-pad-sm);
 }
 
-
+.sideCard {
+  background: var(--panel-bg);
+  padding: var(--panel-pad-sm);
+  display: grid;
+  gap: var(--stack-gap);
+  color: var(--text-dark);
+}
 
 .pulse {
-    animation: pulse 1.5s ease-in-out infinite alternate;
+  animation: pulse 1.5s ease-in-out infinite alternate;
 }
 
 .flicker {
-    animation: flicker 1.5s ease-in-out infinite alternate;
+  animation: flicker 1.5s ease-in-out infinite alternate;
 }
 
-/* Animation keyframes */
 @keyframes pulse {
-    from {
-        text-shadow:
-            0 0 5px currentColor,
-            0 0 10px currentColor,
-            0 0 20px currentColor,
-            0 0 40px currentColor;
-    }
-
-    to {
-        text-shadow:
-            0 0 10px currentColor,
-            0 0 20px currentColor,
-            0 0 40px currentColor,
-            0 0 80px currentColor,
-            0 0 120px currentColor;
-    }
+  from { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor; }
+  to { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor, 0 0 80px currentColor, 0 0 120px currentColor; }
 }
 
 @keyframes flicker {
-
-    0%,
-    18%,
-    22%,
-    25%,
-    53%,
-    57%,
-    100% {
-        text-shadow:
-            0 0 5px currentColor,
-            0 0 10px currentColor,
-            0 0 20px currentColor,
-            0 0 40px currentColor;
-    }
-
-    20%,
-    24%,
-    55% {
-        text-shadow: none;
-    }
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor; }
+  20%, 24%, 55% { text-shadow: none; }
 }
 
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 0;
-    }
+@media (max-width: 820px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    .backBtn {
-        position: relative;
-        top: auto;
-        left: auto;
-        margin: 10px;
-        display: inline-block;
-    }
+  .colorGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 
-    .header {
-        text-align: left;
-        padding: 1em;
-    }
-
-    .wrapper {
-        padding: 0;
-        gap: 1.25rem;
-    }
-
-
-    .innerWrapper {
-        flex-direction: column;
-        flex: 1;
-    }
-
-    .controls {
-        border-radius: 10px 10px 0px 0px;
-    }
-    .right {
-        border-radius: 0px 0px 10px 10px;
-    }
-
-
-    .codeBlock {
-        overflow-x: auto;
-    }
+  .panel,
+  .previewContainer,
+  .codeSection {
+    padding: var(--panel-pad-sm);
+  }
 }

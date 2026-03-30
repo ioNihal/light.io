@@ -1,234 +1,140 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  user-select: none;
-  overflow-x: hidden;
-  color: var(--black);
+.layout {
+  display: grid;
+  gap: 20px;
 }
 
-.controls {
-  margin: auto;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  border-bottom: 2px solid var(--primary);
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1em;
-}
-
-label {
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-}
-
-.countSpan {
-  font-family: var(--clockFace);
-  color: var(--black);
-  padding: 5px 10px;
-  cursor: pointer;
-  background-color: var(--white);
-  border: 1px solid var(--primary);
-  transition: all 0.3s ease;
-}
-
-.activeCount {
-  background-color: var(--primary);
-  color: var(--white);
-}
-
-.saveBtn {
-  background: var(--white);
-  color: inherit;
-  border: 1px solid var(--primary);
-  height: 100%;
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.saveBtn:hover {
-  transform: scale(1.05);
-}
-
-.toolTip {
-  position: absolute;
-  width: max-content;
-  top: -40px;
-  left: calc(100% - 25px);
-  background-color: var(--white);
-  padding: 10px;
-  box-shadow: 0px 0px 5px #8080807c;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-.toolTip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 10px;
-  border-width: 7px;
-  border-style: solid;
-  border-color: var(--white) transparent transparent transparent;
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.301));
-}
-
-.saveBtn:hover .toolTip {
-  opacity: 1;
-  visibility: visible;
-
-}
-
-.inputBox {
-  padding: 6px 8px;
-  font-family: var(--clockFace);
-  outline: none;
+.controls,
+.sideCard {
+  border-radius: 24px;
   border: 1px solid var(--primary-border);
-  transition: all 0.3s ease;
-  background-color: var(--white);
-  color: inherit;
-}
-
-.inputBox:focus {
-  border: 1px solid var(--primary);
-}
-
-.colorPreview {
-  flex: 1;
-  height: 40px;
-  border-radius: 5px;
-}
-
-.scrollBtn {
-  border: 1px solid var(--primary);
-  border-radius: 20px;
-  padding: 10px;
-  display: inline-block;
-  cursor: pointer;
-  width: max-content;
-  margin: auto;
-}
-
-
-.previewBox {
-  margin: auto;
-  display: flex;
-  gap: 2rem;
-
-  padding: 2rem;
-  border-radius: 10px;
-
-  background-image: linear-gradient(to bottom, var(--gradient-from), var(--gradient-to) 90%);
-  backdrop-filter: blur(0.2s);
-}
-
-.savedContainer {
-  max-width: 60%;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-}
-
-.swatch {
-  position: relative;
-  width: 120px;
-  height: 80px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.swatch:hover {
-  transform: scale(1.05);
+  background: var(--panel-bg);
   box-shadow: var(--shadow-sm);
 }
 
+.controls {
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+}
 
-.swatchActions {
-  position: absolute;
-  inset: 0;
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.segment {
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--primary-border);
+  background: var(--panel-soft);
+  cursor: pointer;
+}
+
+.segmentActive {
+  background: var(--primary);
+  color: var(--primary-text);
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.controlActions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  background: var(--overlay-color);
-  opacity: 0;
-  border-radius: inherit;
-  transition: opacity 0.2s ease;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.swatch:hover .swatchActions {
-  opacity: 1;
+.heroSwatch,
+.colorSwatch,
+.savedSwatch {
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
-
-.swatchActions button {
-  all: unset;
-  background-color: var(--white);
-  color: var(--black);
-  padding: 4px 8px;
-  border-radius: 5px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.heroSwatch {
+  width: 100%;
+  max-width: 260px;
+  height: 92px;
 }
 
-.swatchActions button:hover {
-  background: var(--white);
+.previews {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
 }
 
-
-.description {
-  max-width: 50%;
-  margin: auto;
-  margin-bottom: 100px;
-  padding: 2rem;
-  background-color: var(--gradient-from);
-  backdrop-filter: blur(20px);
-  text-align: justify;
-  line-height: normal;
+.sideCard {
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+  color: var(--text-dark);
 }
 
-@media screen and (max-width:768px) {
-  .controls {
-    width: 100%;
-    align-items: flex-start;
-    padding: 2em;
+.sideLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.colorSwatch {
+  width: 52px;
+  height: 52px;
+}
+
+.savedGrid {
+  display: grid;
+  gap: 10px;
+}
+
+.savedItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--panel-soft));
+}
+
+.savedSwatch {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.savedActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.empty {
+  color: color-mix(in srgb, var(--text-dark) 70%, white 30%);
+}
+
+@media (max-width: 900px) {
+  .fieldGrid,
+  .previews {
+    grid-template-columns: 1fr;
   }
 
-  .row:nth-child(3) {
+  .controlActions {
     flex-direction: column;
+    align-items: stretch;
   }
 
-  .colorPreview {
-    width: 100px;
-  }
-
-
-  .previewBox {
-    flex-direction: column;
-  }
-
-  .savedContainer {
-    max-width: 100%;
-    padding: 1em;
-    justify-content: center;
-  }
-
-  .description {
-    max-width: 95%;
-    margin-bottom: 0px;
+  .heroSwatch {
+    max-width: none;
   }
 }

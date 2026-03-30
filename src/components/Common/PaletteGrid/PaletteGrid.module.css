@@ -1,0 +1,5 @@
+.grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:12px; }
+.tile { position:relative; border:none; height:80px; border-radius:8px; cursor:pointer; padding:8px; display:flex; align-items:flex-end; justify-content:flex-start; color:var(--black); text-align:left; }
+.tile .info { background: rgba(255,255,255,0.6); padding:4px 8px; border-radius:6px; font-weight:700; }
+.tile .copied { position:absolute; top:8px; right:8px; background: rgba(0,0,0,0.6); color:#fff; padding:4px 6px; border-radius:6px; font-size:0.8rem; }
+.tile .hint { position:absolute; bottom:8px; right:8px; font-size:0.75rem; opacity:0.9; }

@@ -1,0 +1,11 @@
+.wrapper { display:flex; flex-direction:column; gap:0.35rem; }
+.label { font-size:0.85rem; color:var(--text-dark); }
+.input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--primary-border, rgba(98,149,243,0.2));
+  background: transparent;
+  color: var(--text-dark);
+  outline: none;
+}
+.input:focus { box-shadow: 0 0 0 4px var(--primaryblur); }

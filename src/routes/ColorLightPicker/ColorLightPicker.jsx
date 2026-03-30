@@ -1,106 +1,81 @@
-import { useEffect, useState } from 'react';
-import styles from './ColorLightPicker.module.css';
-import RangeSlider from '../../components/RangeSlider/RangeSlider';
-import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react'
+import styles from './ColorLightPicker.module.css'
+import RangeSlider from '../../components/RangeSlider/RangeSlider'
+import ToolPage from '../../components/Common/ToolPage/ToolPage'
+import CopyButton from '../../components/Common/CopyButton/CopyButton'
+import Button from '../../components/Common/Button/Button'
 
 export default function ColorLightPicker() {
-    const [colorVals, setColorVals] = useState({ hue: 180, sat: 100, light: 50 });
-    const [isEditing, setIsEditing] = useState(true);
-    const [copied, setCopied] = useState(false);
+  const [colorVals, setColorVals] = useState({ hue: 180, sat: 100, light: 50 })
+  const [isEditing, setIsEditing] = useState(true)
 
-    const navigate = useNavigate();
+  const hslValue = `hsl(${colorVals.hue}, ${colorVals.sat}%, ${colorVals.light}%)`
 
+  const setValue = (key, value) => {
+    setColorVals((prev) => ({ ...prev, [key]: Number(value) }))
+  }
 
-    const handleSlider = (key, e) => {
-        setColorVals(prev => ({ ...prev, [key]: Number(e.target.value) }))
-    }
+  return (
+    <ToolPage
+      title="Color Light Picker"
+      subtitle="Dial in a full-screen HSL color for mood checks, light-box use, or quick color testing."
+      description="Adjust hue, saturation, and lightness, then collapse the editor for a cleaner full-color preview. The controls are designed to stay usable on touch devices too."
+      meta={
+        <>
+          <span className={styles.metaLabel}>Current color</span>
+          <strong className={styles.metaValue}>{hslValue}</strong>
+        </>
+      }
+      actions={
+        <Button variant="ghost" size="sm" onClick={() => setIsEditing((prev) => !prev)}>
+          {isEditing ? 'Focus preview' : 'Edit color'}
+        </Button>
+      }
+    >
+      <div className={styles.layout}>
+        <section className={styles.stage}>
+          <div className={styles.preview} style={{ backgroundColor: hslValue }}>
+            <div className={styles.previewBadge}>{hslValue}</div>
+          </div>
+        </section>
 
+        <section className={styles.panel}>
+          {isEditing ? (
+            <div className={styles.controls}>
+              <label className={styles.control}>
+                <span>Hue</span>
+                <strong>{colorVals.hue} deg</strong>
+                <RangeSlider min={0} max={360} value={colorVals.hue} onChange={(e) => setValue('hue', e.target.value)} trackHeight={20} thumbSize={20} />
+              </label>
 
-    const handleCopy = async () => {
-        const textToCopy = `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.light}%)`;
+              <label className={styles.control}>
+                <span>Saturation</span>
+                <strong>{colorVals.sat}%</strong>
+                <RangeSlider min={0} max={100} value={colorVals.sat} onChange={(e) => setValue('sat', e.target.value)} trackHeight={20} thumbSize={20} />
+              </label>
 
-        try {
-            await navigator.clipboard.writeText(textToCopy)
-            setCopied(true);
-        } catch (err) {
-            console.error('Failed to copy: ', err);
-        }
-    }
+              <label className={styles.control}>
+                <span>Lightness</span>
+                <strong>{colorVals.light}%</strong>
+                <RangeSlider min={0} max={100} value={colorVals.light} onChange={(e) => setValue('light', e.target.value)} trackHeight={20} thumbSize={20} />
+              </label>
 
-    useEffect(() => {
-        if (copied) {
-            const timeout = setTimeout(() => {
-                setCopied(false);
-            }, 3000);
-            return () => clearTimeout(timeout);
-        }
-    }, [copied])
-
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (!e.target.closest(`.${styles.box}`)) {
-                setIsEditing(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-
-    return (
-        <div className={styles.container} style={{
-            backgroundColor: `hsl(${colorVals.hue},${colorVals.sat}%,${colorVals.light}%)`
-        }}>
-            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
-            <div className={styles.box}>
-                <h4>HSL Color Generator</h4>
-                {isEditing ? (
-                    <>
-                        <label className={styles.label} htmlFor="hue">
-                            Hue:&nbsp;{colorVals.hue} deg
-                            <RangeSlider
-                                label='hue'
-                                id='hue'
-                                min={0} max={360}
-                                value={colorVals.hue}
-                                onChange={(e) => handleSlider('hue', e)}
-                                trackHeight={20}
-                                thumbSize={20} />
-                        </label>
-                        <label className={styles.label} htmlFor="sat">
-                            Saturation:&nbsp;{colorVals.sat}%
-                            <RangeSlider
-                                label='sat'
-                                id='sat'
-                                min={0} max={100}
-                                value={colorVals.sat}
-                                onChange={(e) => handleSlider('sat', e)}
-                                trackHeight={20}
-                                thumbSize={20} />
-                        </label>
-                        <label className={styles.label} htmlFor="light">
-                            Lightness:&nbsp;{colorVals.light}%
-                            <RangeSlider
-                                label='light'
-                                id='light'
-                                min={0} max={100}
-                                value={colorVals.light}
-                                onChange={(e) => handleSlider('light', e)}
-                                trackHeight={20}
-                                thumbSize={20} />
-                        </label>
-                        <button className={styles.saveBtn} onClick={() => setIsEditing(prev => !prev)}>Save & Close</button>
-                    </>
-                ) : (
-                    <>
-                        <p>Hue:&nbsp;{colorVals.hue}<br />Saturation:&nbsp;{colorVals.sat}%<br />Lightness:&nbsp;{colorVals.light}%</p>
-                        <button className={styles.copyBtn} onClick={handleCopy}>{copied ? 'Copied!' : 'Copy'}</button>
-                        <button className={styles.editBtn} onClick={() => setIsEditing(prev => !prev)}>Edit</button>
-                    </>
-                )
-                }
-            </div >
-        </div >
-    )
+              <div className={styles.actionRow}>
+                <CopyButton text={hslValue} />
+                <Button onClick={() => setIsEditing(false)}>Hide controls</Button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.summary}>
+              <p>{hslValue}</p>
+              <div className={styles.actionRow}>
+                <CopyButton text={hslValue} />
+                <Button onClick={() => setIsEditing(true)}>Edit again</Button>
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
+    </ToolPage>
+  )
 }

@@ -1,192 +1,171 @@
-import { useEffect, useMemo, useState } from 'react';
-import styles from './ColorFormatConverter.module.css';
-import {
-    hexToRgb,
-    rgbToHex,
-    rgbToHsl,
-    hslToRgb,
-    hexToHsl,
-    hslToHex,
-} from './helper';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import styles from './ColorFormatConverter.module.css'
+import { rgbToHex, rgbToHsl, hslToRgb, hexToRgb as parseHex } from './helper'
+import Field from '../../components/Common/Field/Field'
+import CopyButton from '../../components/Common/CopyButton/CopyButton'
+import Button from '../../components/Common/Button/Button'
+import ToolPage from '../../components/Common/ToolPage/ToolPage'
 
 export default function ColorFormatConverter() {
-    const [hex, setHex] = useState("#FF7A59");
-    const [rgb, setRgb] = useState({ r: 255, g: 122, b: 89 });
-    const [hsl, setHsl] = useState({ h: 13, s: 100, l: 67 });
+  const [hex, setHex] = useState('#FF7A59')
+  const [rgb, setRgb] = useState({ r: 255, g: 122, b: 89 })
+  const [hsl, setHsl] = useState({ h: 13, s: 100, l: 67 })
+  const [rawHex, setRawHex] = useState('#FF7A59')
+  const [rawRgb, setRawRgb] = useState('255, 122, 89')
+  const [rawHsl, setRawHsl] = useState('13, 100%, 67%')
+  const [error, setError] = useState(null)
 
-    const [rawHex, setRawHex] = useState(hex);
-    const [rawRgb, setRawRgb] = useState(`${rgb.r}, ${rgb.g}, ${rgb.b}`);
-    const [rawHsl, setRawHsl] = useState(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`);
+  useEffect(() => {
+    setRawHex(hex)
+    setRawRgb(`${rgb.r}, ${rgb.g}, ${rgb.b}`)
+    setRawHsl(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`)
+  }, [hex, rgb, hsl])
 
-    const [error, setError] = useState(null);
-    const [copied, setCopied] = useState(null);
-
-
-    const navigate = useNavigate();
-
-    useMemo(() => {
-        setRawHex(hex);
-        setRawRgb(`${rgb.r}, ${rgb.g}, ${rgb.b}`);
-        setRawHsl(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`);
-
-        setError(null)
-    }, [hex, rgb, hsl]);
-
-    const commitHex = (value) => {
-        const v = value.trim();
-        const maybeRgb = hexToRgb(v);
-        if (!maybeRgb) {
-            setError("Invalid Hex format! (use #RGB or #RRGGBB)");
-            // setRawHex(hex);
-            return;
-        }
-
-        setError(null);
-        setHex(v.toUpperCase());
-        setRgb(maybeRgb);
-        setHsl(rgbToHsl(maybeRgb.r, maybeRgb.g, maybeRgb.b));
-    };
-
-    const commitRgb = (value) => {
-        // accept "r,g,b" or "r g b"
-        const parts = value.split(/[, ]+/).map(s => s.replace("%", "").trim()).filter(Boolean);
-        if (parts.length !== 3) {
-            setError("RGB must have three numbers: R G B or R,G,B (0-255).");
-            // setRawRgb(`${rgb.r}, ${rgb.g}, ${rgb.b}`);
-            return;
-        }
-        const r = parseInt(parts[0], 10);
-        const g = parseInt(parts[1], 10);
-        const b = parseInt(parts[2], 10);
-        if ([r, g, b].some(v => Number.isNaN(v) || v < 0 || v > 255)) {
-            setError("RGB values must be integers between 0 and 255.");
-            // setRawRgb(`${rgb.r}, ${rgb.g}, ${rgb.b}`);
-            return;
-        }
-        setError(null);
-        setRgb({ r, g, b });
-        setHex(rgbToHex(r, g, b));
-        setHsl(rgbToHsl(r, g, b));
-    };
-
-    const commitHsl = (value) => {
-        // accept "h,s%,l%" or "h s l"
-        const parts = value.replaceAll("%", "").split(/[, ]+/).map(s => s.trim()).filter(Boolean);
-        if (parts.length !== 3) {
-            setError("HSL requires three values: H S L (H 0-360, S 0-100, L 0-100).");
-            // setRawHsl(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`);
-            return;
-        }
-        const h = parseFloat(parts[0]);
-        const s = parseFloat(parts[1]);
-        const l = parseFloat(parts[2]);
-        if (
-            Number.isNaN(h) || h < 0 || h > 360 ||
-            Number.isNaN(s) || s < 0 || s > 100 ||
-            Number.isNaN(l) || l < 0 || l > 100
-        ) {
-            setError("H must be 0-360, S/L must be 0-100.");
-            // setRawHsl(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`);
-            return;
-        }
-        setError(null);
-        setHsl({ h: Math.round(h), s: Math.round(s), l: Math.round(l) });
-        const rgbObj = hslToRgb(h, s, l);
-        setRgb(rgbObj);
-        setHex(rgbToHex(rgbObj.r, rgbObj.g, rgbObj.b));
-    };
-
-    const copy = async (text) => {
-        try {
-            await navigator.clipboard.writeText(text);
-            setCopied(text);
-        } catch (e) {
-            console.error(`Something went wrong! ${e.message || e}`);
-        }
+  const commitHex = (value) => {
+    const parsed = parseHex(value.trim())
+    if (!parsed) {
+      setError('Use #RGB or #RRGGBB for HEX input.')
+      return
     }
 
-    useEffect(() => {
-        const id = setTimeout(() => {
-            setCopied(null);
-        }, 3000)
+    const normalizedHex = rgbToHex(parsed.r, parsed.g, parsed.b)
+    setHex(normalizedHex)
+    setRgb(parsed)
+    setHsl(rgbToHsl(parsed.r, parsed.g, parsed.b))
+    setError(null)
+  }
 
-        return () => clearTimeout(id);
-    }, [copied])
+  const commitRgb = (value) => {
+    const parts = value.split(/[, ]+/).map((part) => part.replace('%', '').trim()).filter(Boolean)
+    if (parts.length !== 3) {
+      setError('RGB needs three integers like 255, 122, 89.')
+      return
+    }
 
-    return (
-        <div className={styles.container}>
-            <button className={styles.backBtn} onClick={() => navigate('/')}>Back</button>
-            <div className={styles.wrapper}>
-                <header className={styles.header}>
-                    <h2 className={styles.title}>Hex • RGB • HSL Converter</h2>
-                    <p className={styles.subtitle}>Converts color formats between RGB, Hex, HSL</p>
-                </header>
-                {error && <p className={styles.error}>{error}</p>}
+    const [r, g, b] = parts.map((part) => parseInt(part, 10))
+    if ([r, g, b].some((item) => Number.isNaN(item) || item < 0 || item > 255)) {
+      setError('Each RGB value must stay between 0 and 255.')
+      return
+    }
 
-                <div className={styles.row}>
-                    <div className={styles.field}>
-                        <label className={styles.label}>HEX</label>
-                        <input
-                            className={styles.input}
-                            value={rawHex}
-                            onChange={(e) => setRawHex(e.target.value)}
-                            onBlur={(e) => commitHex(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && commitHex(e.target.value)}
-                        />
-                        <div className={styles.rowSmall}>
-                            <button className={styles.btn} onClick={() => commitHex(rawHex)}>Apply</button>
-                            <button className={styles.btn} onClick={() => { setRawHex(hex); copy(hex); }}>{copied === hex ? 'Copied' : 'Copy'}</button>
-                        </div>
-                    </div>
+    setRgb({ r, g, b })
+    setHex(rgbToHex(r, g, b))
+    setHsl(rgbToHsl(r, g, b))
+    setError(null)
+  }
 
-                    <div className={styles.preview} style={{ backgroundColor: hex }}>
-                        <div className={styles.previewInner}>{hex}</div>
-                    </div>
-                </div>
+  const commitHsl = (value) => {
+    const parts = value.replaceAll('%', '').split(/[, ]+/).map((part) => part.trim()).filter(Boolean)
+    if (parts.length !== 3) {
+      setError('HSL needs three values like 13, 100, 67.')
+      return
+    }
 
-                <div className={`${styles.row} ${styles.rowSecond}`}>
-                    <div className={styles.field}>
-                        <label className={styles.label}>RGB</label>
-                        <input
-                            className={styles.input}
-                            value={rawRgb}
-                            onChange={(e) => setRawRgb(e.target.value)}
-                            onBlur={(e) => commitRgb(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && commitRgb(e.target.value)}
-                        />
-                        <div className={styles.rowSmall}>
-                            <button className={styles.btn} onClick={() => commitRgb(rawRgb)}>Apply</button>
-                            <button className={styles.btn} onClick={() => { setRawRgb(`${rgb.r}, ${rgb.g}, ${rgb.b}`); copy(`${rgb.r}, ${rgb.g}, ${rgb.b}`); }}>{copied === `${rgb.r}, ${rgb.g}, ${rgb.b}` ? 'Copied' : 'Copy'}</button>
-                        </div>
-                    </div>
+    const h = Number(parts[0])
+    const s = Number(parts[1])
+    const l = Number(parts[2])
 
-                    <div className={styles.field}>
-                        <label className={styles.label}>HSL</label>
-                        <input
-                            className={styles.input}
-                            value={rawHsl}
-                            onChange={(e) => setRawHsl(e.target.value)}
-                            onBlur={(e) => commitHsl(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && commitHsl(e.target.value)}
-                        />
-                        <div className={styles.rowSmall}>
-                            <button className={styles.btn} onClick={() => commitHsl(rawHsl)}>Apply</button>
-                            <button className={styles.btn} onClick={() => { setRawHsl(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`); copy(`${hsl.h}, ${hsl.s}%, ${hsl.l}%`); }}>{copied === `${hsl.h}, ${hsl.s}%, ${hsl.l}%` ? 'Copied' : 'Copy'}</button>
-                        </div>
-                    </div>
-                </div>
+    if (
+      Number.isNaN(h) || h < 0 || h > 360 ||
+      Number.isNaN(s) || s < 0 || s > 100 ||
+      Number.isNaN(l) || l < 0 || l > 100
+    ) {
+      setError('Hue must be 0-360 and saturation/lightness must be 0-100.')
+      return
+    }
 
+    const nextRgb = hslToRgb(h, s, l)
+    setHsl({ h: Math.round(h), s: Math.round(s), l: Math.round(l) })
+    setRgb(nextRgb)
+    setHex(rgbToHex(nextRgb.r, nextRgb.g, nextRgb.b))
+    setError(null)
+  }
 
-                <div className={styles.footerNote}>
-                    Type values and press <strong>Enter</strong> or click <em>Apply</em>. Inputs accept:
-                    <ul>
-                        <li>HEX: <code>#RRGGBB</code> or <code>#RGB</code></li>
-                        <li>RGB: <code>R, G, B</code> (0–255)</li>
-                        <li>HSL: <code>H, S, L</code> (H 0–360, S/L 0–100)</li>
-                    </ul>
-                </div>
+  const sidebar = (
+    <>
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Current swatch</span>
+        <div className={styles.swatch} style={{ backgroundColor: hex }} />
+        <code className={styles.code}>{hex}</code>
+      </div>
+
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Accepted formats</span>
+        <ul className={styles.ruleList}>
+          <li>HEX: `#RGB` or `#RRGGBB`</li>
+          <li>RGB: `R, G, B` between 0 and 255</li>
+          <li>HSL: `H, S, L` with hue up to 360</li>
+        </ul>
+      </div>
+    </>
+  )
+
+  return (
+    <ToolPage
+      title="Color Format Converter"
+      subtitle="Convert between HEX, RGB, and HSL while keeping one live color preview in sync."
+      description="Edit any format, press Enter or blur the field, and the other formats update instantly. Handy for UI audits, handoff notes, and CSS-ready values."
+      sidebar={sidebar}
+    >
+      <div className={styles.panel}>
+        {error ? <p className={styles.error}>{error}</p> : null}
+
+        <div className={styles.row}>
+          <div className={styles.fieldCard}>
+            <Field label="HEX" error={error?.includes('HEX') ? error : null}>
+              <input
+                className={styles.input}
+                value={rawHex}
+                onChange={(e) => setRawHex(e.target.value)}
+                onBlur={(e) => commitHex(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && commitHex(e.target.value)}
+              />
+            </Field>
+            <div className={styles.actions}>
+              <Button onClick={() => commitHex(rawHex)}>Apply</Button>
+              <CopyButton text={hex} />
             </div>
+          </div>
+
+          <div className={styles.preview} style={{ backgroundColor: hex }}>
+            <div className={styles.previewBadge}>{hex}</div>
+          </div>
         </div>
-    )
+
+        <div className={styles.row}>
+          <div className={styles.fieldCard}>
+            <Field label="RGB" error={error?.includes('RGB') ? error : null}>
+              <input
+                className={styles.input}
+                value={rawRgb}
+                onChange={(e) => setRawRgb(e.target.value)}
+                onBlur={(e) => commitRgb(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && commitRgb(e.target.value)}
+              />
+            </Field>
+            <div className={styles.actions}>
+              <Button onClick={() => commitRgb(rawRgb)}>Apply</Button>
+              <CopyButton text={`${rgb.r}, ${rgb.g}, ${rgb.b}`} />
+            </div>
+          </div>
+
+          <div className={styles.fieldCard}>
+            <Field label="HSL" error={error?.includes('Hue') || error?.includes('HSL') ? error : null}>
+              <input
+                className={styles.input}
+                value={rawHsl}
+                onChange={(e) => setRawHsl(e.target.value)}
+                onBlur={(e) => commitHsl(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && commitHsl(e.target.value)}
+              />
+            </Field>
+            <div className={styles.actions}>
+              <Button onClick={() => commitHsl(rawHsl)}>Apply</Button>
+              <CopyButton text={`${hsl.h}, ${hsl.s}%, ${hsl.l}%`} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </ToolPage>
+  )
 }

@@ -19,6 +19,29 @@
 
   --tiktok-sans: "TikTok Sans", sans-serif;
   --clockFace: "JetBrains Mono", monospace;
+
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-primary-light: #97b9ff;
+  --color-page-bg: #f6f9ff;
+  --color-surface: rgba(255, 255, 255, 0.92);
+  --color-text-high: var(--text-dark);
+  --color-border: rgba(98, 149, 243, 0.18);
+  --color-secondary: #7ac9ff;
+  --gradient-from: rgba(98, 149, 243, 0.16);
+  --gradient-to: rgba(255, 255, 255, 0.82);
+  --panel-bg: rgba(255, 255, 255, 0.88);
+  --panel-soft: rgba(255, 255, 255, 0.78);
+  --panel-strong: rgba(255, 255, 255, 0.96);
+  --panel-overlay: rgba(255, 255, 255, 0.72);
+  --hero-tint: rgba(98, 149, 243, 0.08);
+  --surface-contrast: #243041;
+  --layout-gap: 20px;
+  --section-gap: 18px;
+  --group-gap: 16px;
+  --stack-gap: 12px;
+  --panel-pad: 24px;
+  --panel-pad-sm: 18px;
 }
 
 [data-theme="dark"] {
@@ -35,12 +58,31 @@
   --text-dark: #cccccc;
 
   --overlay-color: #c9c9c980;
+
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-primary-light: #ff8484;
+  --color-page-bg: #0f1116;
+  --color-surface: rgba(24, 24, 24, 0.9);
+  --color-text-high: var(--black);
+  --color-border: rgba(255, 255, 255, 0.14);
+  --color-secondary: #ff7f7f;
+  --gradient-from: rgba(255, 99, 99, 0.16);
+  --gradient-to: rgba(24, 24, 24, 0.84);
+  --panel-bg: rgba(24, 24, 24, 0.88);
+  --panel-soft: rgba(24, 24, 24, 0.78);
+  --panel-strong: rgba(30, 30, 30, 0.96);
+  --panel-overlay: rgba(18, 18, 18, 0.76);
+  --hero-tint: rgba(238, 49, 49, 0.12);
+  --surface-contrast: #f3f4f6;
 }
 
 
 
 body {
   font-family: var(--tiktok-sans);
+  background: var(--color-page-bg);
+  color: var(--color-text-high);
 }
 
 * {

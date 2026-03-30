@@ -2,7 +2,7 @@ import styles from './Sidebar.module.css';
 
 import { tools } from '../../data/tools';
 import { GoSidebarExpand } from 'react-icons/go';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { HiOutlineHome } from 'react-icons/hi';
 import { BiLibrary } from 'react-icons/bi';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -49,7 +49,7 @@ export default function Sidebar() {
                     }}><IoIosArrowDown /></i>
                 </button>
                 <div className={`${styles.dropDownMenu} ${!showDropdown ? styles.hide : ''}`}>
-                    {sorted.map(({ id, title, icon: Icon }) => (
+                    {sorted.map(({ id, title, icon }) => (
                         <button
                             className={`${styles.navSecondBtn} ${activeButton === id.toString() ? styles.active : ''}`}
                             key={id}
@@ -59,7 +59,7 @@ export default function Sidebar() {
                             }}
                             title={title}>
                             <i className={styles.icon}>
-                                <Icon />
+                                {icon && icon({})}
                             </i>
                             <span className={styles.label}>{title}</span>
                         </button>

@@ -1,183 +1,173 @@
-import { useNavigate } from 'react-router-dom';
-import styles from './FlashClock.module.css';
-import { useEffect, useRef, useState } from 'react';
-import { CiBellOff, CiBellOn } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom'
+import styles from './FlashClock.module.css'
+import { useEffect, useRef, useState } from 'react'
+import Button from '../../components/Common/Button/Button'
+import NumberField from '../../components/Common/NumberField/NumberField'
+import ToolPage from '../../components/Common/ToolPage/ToolPage'
+import { CiBellOff, CiBellOn } from 'react-icons/ci'
 
 function beep(audioCtx, duration = 200, frequency = 440, volume = 1) {
-
   try {
-    const ctx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = ctx.createOscillator();
-    const gainNode = ctx.createGain();
+    const ctx = audioCtx || new (window.AudioContext || window.webkitAudioContext)()
+    const oscillator = ctx.createOscillator()
+    const gainNode = ctx.createGain()
 
-    oscillator.connect(gainNode);
-    gainNode.connect(ctx.destination);
+    oscillator.connect(gainNode)
+    gainNode.connect(ctx.destination)
+    gainNode.gain.value = volume
+    oscillator.frequency.value = frequency
+    oscillator.type = 'square'
+    oscillator.start()
 
-    gainNode.gain.value = volume;
-    oscillator.frequency.value = frequency;
-    oscillator.type = "square";
-
-    oscillator.start();
     setTimeout(() => {
       try {
-        oscillator.stop();
-        oscillator.disconnect();
-        gainNode.disconnect();
-      } catch (_) { }
-    }, duration);
-  } catch (err) {
-
-    console.warn('beep error', err);
+        oscillator.stop()
+        oscillator.disconnect()
+        gainNode.disconnect()
+      } catch {
+        // oscillator may already be stopped
+      }
+    }, duration)
+  } catch (error) {
+    console.warn('beep error', error)
   }
 }
 
 export default function FlashClock() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [time, setTime] = useState(new Date().toLocaleTimeString())
+  const [flashInterval, setFlashInterval] = useState(5)
+  const [flashEnabled, setFlashEnabled] = useState(true)
+  const [alarm, setAlarm] = useState(null)
+  const [isAlarm, setIsAlarm] = useState(false)
+  const [flashPulse, setFlashPulse] = useState(false)
+  const [resetLabel, setResetLabel] = useState('Reset')
 
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
-  const [flashInterval, setFlashInterval] = useState(5);
-  const [flashEnabled, setFlashEnabled] = useState(true);
-
-  const [alarm, setAlarm] = useState(null);
-  const [isAlarm, setIsAlarm] = useState(false);
-
-  const [flashPulse, setFlashPulse] = useState(false);
-  const audioRef = useRef(null);
-  const lastIntervalMinuteRef = useRef(null);
-  const flashPulseTimeoutRef = useRef(null);
-
-  const [resetLabel, setResetLabel] = useState('Reset');
-  const resetTimeoutRef = useRef(null);
-
+  const audioRef = useRef(null)
+  const lastIntervalMinuteRef = useRef(null)
+  const flashPulseTimeoutRef = useRef(null)
+  const resetTimeoutRef = useRef(null)
 
   function ensureAudioCtx() {
     if (!audioRef.current && typeof window !== 'undefined') {
-      audioRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      audioRef.current = new (window.AudioContext || window.webkitAudioContext)()
     }
-    return audioRef.current;
+    return audioRef.current
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-      const now = new Date();
-      const nowHHMM = now.toTimeString().slice(0, 5);
-
+      setTime(new Date().toLocaleTimeString())
+      const now = new Date()
+      const nowHHMM = now.toTimeString().slice(0, 5)
 
       if (isAlarm && alarm && nowHHMM === alarm) {
-        console.log(`Alarm: ${alarm}, Now: ${nowHHMM}`);
-        const ctx = ensureAudioCtx();
-        beep(ctx, 180, 880, 0.8);
-
-        setFlashPulse(true);
-        if (flashPulseTimeoutRef.current) clearTimeout(flashPulseTimeoutRef.current);
-        flashPulseTimeoutRef.current = setTimeout(() => setFlashPulse(false), 400);
+        beep(ensureAudioCtx(), 180, 880, 0.8)
+        setFlashPulse(true)
+        if (flashPulseTimeoutRef.current) clearTimeout(flashPulseTimeoutRef.current)
+        flashPulseTimeoutRef.current = setTimeout(() => setFlashPulse(false), 400)
       }
-
 
       if (flashEnabled) {
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
-        const every = Math.max(1, Number(flashInterval) || 1);
+        const minutes = now.getMinutes()
+        const seconds = now.getSeconds()
+        const every = Math.max(1, Number(flashInterval) || 1)
 
-        if (seconds === 0 && minutes % every === 0) {
-          if (lastIntervalMinuteRef.current !== minutes) {
-            lastIntervalMinuteRef.current = minutes;
-            const ctx = ensureAudioCtx();
-            beep(ctx, 220, 660, 0.9);
-
-
-            setFlashPulse(true);
-            if (flashPulseTimeoutRef.current) clearTimeout(flashPulseTimeoutRef.current);
-            flashPulseTimeoutRef.current = setTimeout(() => setFlashPulse(false), 350);
-          }
+        if (seconds === 0 && minutes % every === 0 && lastIntervalMinuteRef.current !== minutes) {
+          lastIntervalMinuteRef.current = minutes
+          beep(ensureAudioCtx(), 220, 660, 0.9)
+          setFlashPulse(true)
+          if (flashPulseTimeoutRef.current) clearTimeout(flashPulseTimeoutRef.current)
+          flashPulseTimeoutRef.current = setTimeout(() => setFlashPulse(false), 350)
         }
       }
-    }, 1000);
+    }, 1000)
 
     return () => {
-      clearInterval(interval);
-      if (flashPulseTimeoutRef.current) clearTimeout(flashPulseTimeoutRef.current);
-    };
-  }, [alarm, isAlarm, flashEnabled, flashInterval]);
-
-  const handleAlarmSet = (e) => setAlarm(e.target.value);
+      clearInterval(interval)
+      if (flashPulseTimeoutRef.current) clearTimeout(flashPulseTimeoutRef.current)
+    }
+  }, [alarm, isAlarm, flashEnabled, flashInterval])
 
   const handleResetClick = () => {
+    setFlashInterval(5)
+    setFlashEnabled(false)
+    setAlarm(null)
+    setIsAlarm(false)
 
-    setFlashInterval(5);
-    setFlashEnabled(false);
-    setAlarm(null);
-    setIsAlarm(false);
-
-
-    if (resetTimeoutRef.current) {
-      clearTimeout(resetTimeoutRef.current);
-    }
-    setResetLabel('Reseted!');
+    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current)
+    setResetLabel('Reset!')
     resetTimeoutRef.current = setTimeout(() => {
-      setResetLabel('Reset');
-      resetTimeoutRef.current = null;
-    }, 2000);
-  };
+      setResetLabel('Reset')
+      resetTimeoutRef.current = null
+    }, 2000)
+  }
+
+  const sidebar = (
+    <>
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Clock status</span>
+        <strong>{flashEnabled ? `Flashing every ${flashInterval} min` : 'Flashing paused'}</strong>
+        <p>{isAlarm && alarm ? `Alarm armed for ${alarm}` : 'No alarm armed'}</p>
+      </div>
+
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Use cases</span>
+        <ul className={styles.tipList}>
+          <li>Study timers and focus reminders</li>
+          <li>Visual alerts where audio should stay subtle</li>
+          <li>Desk clocks with periodic attention nudges</li>
+        </ul>
+      </div>
+    </>
+  )
 
   return (
-    <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate('/')}>BACK</button>
+    <ToolPage
+      title="Flash Clock"
+      subtitle="A digital clock with interval flash alerts and an optional time alarm."
+      description="Designed as a lightweight visual alert tool: set a recurring flash interval, add a time alarm, and keep the controls accessible across desktop and mobile."
+      sidebar={sidebar}
+      actions={
+        <Button variant="ghost" size="sm" onClick={() => navigate('/')}>
+          Back To Tools
+        </Button>
+      }
+    >
+      <div className={styles.layout}>
+        <section className={`${styles.clockCard} ${flashPulse ? styles.flash : ''}`}>
+          <span className={styles.kicker}>Current time</span>
+          <div className={styles.time}>{time}</div>
+          <p className={styles.subtitle}>Visual interval reminders with optional alarm arming.</p>
+        </section>
 
-      <div className={`${styles.card} ${flashPulse ? styles.flash : ''}`}
-      style={{
-        opacity: flashPulse ? 0.1 : 1
-      }}>
-        <h1 className={styles.title}>DIGITAL CLOCK</h1>
-        <p className={styles.subtitle}>with Flash Alerts</p>
+        <section className={styles.controls}>
+          <div className={styles.fieldGrid}>
+            <div className={styles.field}>
+              <label className={styles.label}>Flash interval (minutes)</label>
+              <NumberField value={flashInterval} onChange={(e) => setFlashInterval(Math.max(1, Number(e.target.value || 1)))} min={1} max={60} />
+            </div>
 
-        <div className={styles.time}>{time}</div>
+            <div className={styles.field}>
+              <label className={styles.label}>Alarm time</label>
+              <input type="time" defaultValue="08:30" onChange={(e) => setAlarm(e.target.value)} className={styles.timeInput} />
+            </div>
+          </div>
 
-        <div className={styles.setting}>
-          <label>
-            <span>{flashEnabled ? 'Flashing every' : "Flash every"}</span>
-            {flashEnabled ? flashInterval : (
-              <input
-                type="number"
-                value={flashInterval}
-                min={1}
-                max={60}
-                onChange={(e) => setFlashInterval(Math.max(1, Number(e.target.value || 1)))}
-              />
-            )}
-          </label>
-          <span>minutes</span>
-        </div>
+          <div className={styles.toggleRow}>
+            <Button onClick={() => setFlashEnabled((prev) => !prev)}>
+              {flashEnabled ? 'Pause flashes' : 'Start flashes'}
+            </Button>
 
-        <div className={styles.setting}>
-          <label>
-            <span>Set alarm for</span>
-            <input type="time" defaultValue="08:30" onChange={handleAlarmSet} />
-          </label>
-          <span className={styles.icon} onClick={() => setIsAlarm(prev => !prev)}>
-            {isAlarm ? <CiBellOn size={24} /> : <CiBellOff size={24} />}
-          </span>
-        </div>
+            <button className={styles.iconButton} onClick={() => setIsAlarm((prev) => !prev)} aria-label="Toggle alarm">
+              {isAlarm ? <CiBellOn size={22} /> : <CiBellOff size={22} />}
+              <span>{isAlarm ? 'Alarm on' : 'Alarm off'}</span>
+            </button>
 
-        <div className={styles.buttons}>
-          <button
-            className={styles.primary}
-            onClick={() => setFlashEnabled(prev => !prev)}
-            style={{
-              backgroundColor: flashEnabled ? 'purple' : ''
-            }}
-          >
-            {flashEnabled ? 'Stop' : 'Start'} Flash
-          </button>
-          <button
-            className={styles.secondary}
-            onClick={handleResetClick}
-          >
-            {resetLabel}
-          </button>
-        </div>
+            <Button variant="ghost" onClick={handleResetClick}>{resetLabel}</Button>
+          </div>
+        </section>
       </div>
-    </div>
-  );
+    </ToolPage>
+  )
 }

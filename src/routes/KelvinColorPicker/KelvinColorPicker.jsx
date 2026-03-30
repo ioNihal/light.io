@@ -1,237 +1,176 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import styles from './KelvinColorPicker.module.css';
-import { useNavigate } from 'react-router-dom';
-import { kelvinToHex, kelvinToRgb } from './helpers.js';
-import RangeSlider from '../../components/RangeSlider/RangeSlider.jsx';
+import { useEffect, useMemo, useState } from 'react'
+import styles from './KelvinColorPicker.module.css'
+import { kelvinToHex, kelvinToRgb } from './helpers.js'
+import RangeSlider from '../../components/RangeSlider/RangeSlider.jsx'
+import Button from '../../components/Common/Button/Button'
+import NumberField from '../../components/Common/NumberField/NumberField'
+import CopyButton from '../../components/Common/CopyButton/CopyButton'
+import ToolPage from '../../components/Common/ToolPage/ToolPage'
 
-const MIN_K = 1000;
-const MAX_K = 10000;
-const STEP = 100;
-const INITIAL = 2700;
+const MIN_K = 1000
+const MAX_K = 10000
+const STEP = 100
+const INITIAL = 2700
 
 export default function KelvinColorPicker() {
-    const [kelvin, setKelvin] = useState(INITIAL);
-    const [rawKelvin, setRawKelvin] = useState(String(INITIAL));
-    const [copied, setCopied] = useState(null);
-    const [error, setError] = useState(null);
-    const copyTimeoutRef = useRef(null);
-    const navigate = useNavigate();
+  const [kelvin, setKelvin] = useState(INITIAL)
+  const [rawKelvin, setRawKelvin] = useState(String(INITIAL))
+  const [error, setError] = useState(null)
 
+  const hex = useMemo(() => kelvinToHex(kelvin), [kelvin])
+  const rgb = useMemo(() => kelvinToRgb(kelvin), [kelvin])
 
-    const hex = useMemo(() => kelvinToHex(kelvin), [kelvin]);
-    const rgb = useMemo(() => kelvinToRgb(kelvin), [kelvin]);
+  const previewSteps = useMemo(() => {
+    const points = 6
+    const span = 1200
+    const start = Math.max(MIN_K, kelvin - span / 2)
+    const end = Math.min(MAX_K, kelvin + span / 2)
+    const steps = []
+    for (let i = 0; i < points; i += 1) {
+      const currentKelvin = Math.round(start + (i / (points - 1)) * (end - start))
+      steps.push({ k: currentKelvin, hex: kelvinToHex(currentKelvin) })
+    }
+    return steps
+  }, [kelvin])
 
-    // preview steps
-    const previewSteps = useMemo(() => {
-        const points = 6;
-        const span = 1200;
-        const start = Math.max(MIN_K, kelvin - span / 2);
-        const end = Math.min(MAX_K, kelvin + span / 2);
-        const out = [];
-        for (let i = 0; i < points; i++) {
-            const t = Math.round(start + (i / (points - 1)) * (end - start));
-            out.push({ k: t, hex: kelvinToHex(t) });
-        }
-        return out;
-    }, [kelvin]);
+  useEffect(() => {
+    setRawKelvin(String(kelvin))
+  }, [kelvin])
 
-    useEffect(() => {
-        if (copied == null) return;
-        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-        copyTimeoutRef.current = setTimeout(() => setCopied(null), 2000);
-        return () => clearTimeout(copyTimeoutRef.current);
-    }, [copied]);
+  const commitRawKelvin = (valueStr) => {
+    const trimmed = String(valueStr || '').trim()
+    if (trimmed === '') {
+      setRawKelvin(String(kelvin))
+      setError(null)
+      return
+    }
 
+    const value = Number(trimmed)
+    if (Number.isNaN(value)) {
+      setError('Please enter a numeric Kelvin value.')
+      return
+    }
 
-    useEffect(() => {
-        setRawKelvin(String(kelvin));
-    }, [kelvin]);
+    if (value < MIN_K || value > MAX_K) {
+      setError(`Kelvin must be between ${MIN_K} and ${MAX_K}.`)
+      return
+    }
 
-    const handleCopy = async (text) => {
-        try {
-            await navigator.clipboard.writeText(text);
-            setCopied(text);
-        } catch {
-            console.error('Failed to copy!');
-        }
-    };
+    const rounded = Math.round(value / STEP) * STEP
+    const clamped = Math.max(MIN_K, Math.min(MAX_K, rounded))
+    setKelvin(clamped)
+    setRawKelvin(String(clamped))
+    setError(null)
+  }
 
-    const commitRawKelvin = (valueStr) => {
-        const trimmed = String(valueStr || "").trim();
+  const presets = [
+    { label: 'Candlelight', k: 1900 },
+    { label: 'Warm incandescent', k: 2700 },
+    { label: 'Soft white', k: 3000 },
+    { label: 'Daylight', k: 5500 },
+    { label: 'Noon sun', k: 6500 },
+  ]
 
-        // If user left the field empty — revert to the current Kelvin (no error)
-        if (trimmed === "") {
-            setRawKelvin(String(kelvin));
-            setError(null);
-            return;
-        }
+  const sidebar = (
+    <>
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Current temperature</span>
+        <strong>{kelvin} K</strong>
+        <p>{hex} and RGB {rgb.r}, {rgb.g}, {rgb.b}</p>
+      </div>
 
-        // Try to parse a number
-        const v = Number(trimmed);
-        if (Number.isNaN(v)) {
-            setError("Please enter a numeric Kelvin value.");
-            return;
-        }
+      <div className={styles.sideCard}>
+        <span className={styles.sideLabel}>Temperature guide</span>
+        <ul className={styles.tipList}>
+          <li>Lower Kelvin values feel warmer and more orange.</li>
+          <li>Mid-range values feel neutral and usable for indoor UI examples.</li>
+          <li>Higher Kelvin values shift cooler and more blue.</li>
+        </ul>
+      </div>
+    </>
+  )
 
-        // Check range
-        if (v < MIN_K || v > MAX_K) {
-            setError(`Kelvin must be between ${MIN_K} and ${MAX_K}.`);
-            return;
-        }
+  return (
+    <ToolPage
+      title="Kelvin Color Temperature Picker"
+      subtitle="Explore light colors from candle warmth through daylight and cool blue-white tones."
+      description="Slide or type a Kelvin value, inspect the resulting swatch, and copy the matching HEX or RGB value. The page now follows the same responsive layout and dark-mode styling as the rest of the tools."
+      sidebar={sidebar}
+    >
+      <div className={styles.layout}>
+        <section className={styles.panel}>
+          {error ? <p className={styles.error}>{error}</p> : null}
 
-        // Round to nearest STEP and clamp strictly (defensive)
-        const rounded = Math.round(v / STEP) * STEP;
-        const clamped = Math.max(MIN_K, Math.min(MAX_K, rounded));
+          <div className={styles.controlBlock}>
+            <label className={styles.label}>
+              Temperature
+              <span className={styles.kLabel}>{kelvin} K</span>
+            </label>
 
-        // Commit
-        setKelvin(clamped);
-        setRawKelvin(String(clamped));
-        setError(null);
-    };
+            <RangeSlider
+              className={styles.slider}
+              type="range"
+              min={MIN_K}
+              max={MAX_K}
+              step={STEP}
+              value={kelvin}
+              trackHeight={30}
+              thumbSize={30}
+              onChange={(e) => setKelvin(Number(e.target.value))}
+              aria-label="Kelvin temperature slider"
+            />
 
+            <NumberField
+              label="Exact Kelvin value"
+              value={rawKelvin}
+              onChange={(e) => setRawKelvin(e.target.value)}
+              onBlur={(e) => commitRawKelvin(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && commitRawKelvin(e.target.value)}
+              min={MIN_K}
+              max={MAX_K}
+              step={STEP}
+              placeholder={String(INITIAL)}
+              error={error}
+            />
+          </div>
 
-    const presets = [
-        { label: "Candlelight", k: 1900 },
-        { label: "Warm (Incandescent)", k: 2700 },
-        { label: "Soft White", k: 3000 },
-        { label: "Daylight", k: 5500 },
-        { label: "Noon Sun", k: 6500 },
-    ];
+          <div className={styles.presets}>
+            {presets.map((preset) => (
+              <Button key={preset.k} variant={kelvin === preset.k ? 'primary' : 'ghost'} size="sm" onClick={() => setKelvin(preset.k)}>
+                {preset.label}
+              </Button>
+            ))}
+          </div>
+        </section>
 
-    return (
-        <div className={styles.container}>
-            <button className={styles.backBtn} onClick={() => navigate("/")}>
-                Back
-            </button>
+        <section className={styles.previewArea}>
+          <div className={styles.previewSwatch} style={{ backgroundColor: hex }} aria-hidden="true">
+            <div className={styles.previewBadge}>{kelvin}K</div>
+          </div>
 
-            <div className={styles.wrapper}>
-                <header className={styles.header}>
-                    <h2 className={styles.title}>Kelvin Color Temperature Picker</h2>
-                    <p className={styles.subtitle}>
-                        Slide through candlelight to daylight color temperatures.
-                    </p>
-                </header>
-                {error && <p className={styles.error}>{error}</p>}
-                <section className={styles.controls}>
-                    <div className={styles.sliderRow}>
-                        <label className={styles.label}>
-                            Temperature: <span className={styles.kLabel}>{kelvin} K</span>
-                        </label>
-
-                        <RangeSlider
-                            className={styles.slider}
-                            type="range"
-                            min={MIN_K}
-                            max={MAX_K}
-                            step={STEP}
-                            value={kelvin}
-                            trackHeight={30}
-                            thumbSize={30}
-                            onChange={(e) => {
-                                const v = Number(e.target.value);
-                                if (!Number.isNaN(v)) {
-                                    setKelvin(Math.round(v));
-                                }
-                            }}
-                            aria-label="Kelvin temperature slider"
-                        />
-
-                        <div className={styles.rawInputRow}>
-                            <input
-                                className={styles.numberInput}
-                                type="text"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                value={rawKelvin}
-                                onChange={(e) => setRawKelvin(e.target.value)}
-                                onBlur={(e) => commitRawKelvin(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        commitRawKelvin(e.currentTarget.value);
-                                        e.currentTarget.blur();
-                                    } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                                        e.preventDefault();
-                                        const delta = e.key === "ArrowUp" ? STEP : -STEP;
-                                        const current = Number(rawKelvin) || kelvin;
-                                        const next = Math.round((current + delta) / STEP) * STEP;
-                                        setRawKelvin(String(Math.max(MIN_K, Math.min(MAX_K, next))));
-                                    }
-                                }}
-                                onWheel={(e) => {
-                                    if (document.activeElement === e.currentTarget) {
-                                        e.currentTarget.blur();
-                                    }
-                                }}
-                                aria-label="Kelvin numeric input"
-                            />
-                        </div>
-                    </div>
-
-                    <div className={styles.presets}>
-                        {presets.map((p) => (
-                            <button
-                                className={styles.presetBtn}
-                                key={p.k}
-                                onClick={() => setKelvin(p.k)}
-                                aria-label={`Set ${p.label} ${p.k} Kelvin`}
-                            >
-                                {p.label}
-                            </button>
-                        ))}
-                    </div>
-                </section>
-
-                <section className={styles.previewArea}>
-                    <div
-                        className={styles.previewSwatch}
-                        style={{ backgroundColor: hex }}
-                        aria-hidden="true"
-                    />
-
-                    <div className={styles.info}>
-                        <div className={styles.infoRow}>
-                            <span className={styles.infoLabel}>HEX</span>
-                            <code className={styles.code}>{hex}</code>
-                            <button
-                                className={styles.smallBtn}
-                                onClick={() => handleCopy(hex)}
-                                aria-label={`Copy hex ${hex}`}
-                            >
-                                {copied === hex ? "Copied" : "Copy"}
-                            </button>
-                        </div>
-
-                        <div className={styles.infoRow}>
-                            <span className={styles.infoLabel}>RGB</span>
-                            <code className={styles.code}>{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</code>
-                            <button
-                                className={styles.smallBtn}
-                                onClick={() => handleCopy(`${rgb.r}, ${rgb.g}, ${rgb.b}`)}
-                                aria-label={`Copy rgb ${rgb.r}, ${rgb.g}, ${rgb.b}`}
-                            >
-                                {copied === `${rgb.r}, ${rgb.g}, ${rgb.b}` ? "Copied" : "Copy"}
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <section className={styles.gradientPreview}>
-                    {previewSteps.map((p) => (
-                        <div
-                            className={styles.previewStep}
-                            key={p.k}
-                            style={{ backgroundColor: p.hex }}
-                            title={`${p.k} K`}
-                        >
-                            <div className={styles.stepLabel}>{p.k}K</div>
-                        </div>
-                    ))}
-                </section>
-
-                <footer className={styles.note}>
-                    Tip: lower Kelvin → warmer (orange), higher Kelvin → cooler / bluish.
-                </footer>
+          <div className={styles.info}>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>HEX</span>
+              <code className={styles.code}>{hex}</code>
+              <CopyButton text={hex} className={styles.smallBtn} />
             </div>
-        </div>
-    );
+
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>RGB</span>
+              <code className={styles.code}>{`${rgb.r}, ${rgb.g}, ${rgb.b}`}</code>
+              <CopyButton text={`${rgb.r}, ${rgb.g}, ${rgb.b}`} className={styles.smallBtn} />
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.gradientPreview}>
+          {previewSteps.map((step) => (
+            <div key={step.k} className={styles.previewStep} style={{ backgroundColor: step.hex }} title={`${step.k} K`}>
+              <div className={styles.stepLabel}>{step.k}K</div>
+            </div>
+          ))}
+        </section>
+      </div>
+    </ToolPage>
+  )
 }

@@ -1,0 +1,17 @@
+.card {
+  display:flex;
+  gap:1rem;
+  padding:1.05rem 1.15rem;
+  background: linear-gradient(180deg, rgba(98,149,243,0.06), rgba(255,255,255,0.02));
+  border-radius: 12px;
+  border: 1px solid var(--primary-border);
+  box-shadow: var(--shadow-sm);
+  align-items:center;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .12s ease;
+}
+.card:active { transform: translateY(1px); }
+.iconArea{ width:44px; height:44px; border-radius:9px; display:flex; align-items:center; justify-content:center; background:var(--primary); color:var(--primary-text); }
+.info { display:flex; flex-direction:column; }
+.title { font-weight:700; font-size:1rem; color:var(--text-dark); }
+.desc { font-size:0.9rem; color: #6a6a6a; margin-top:6px; }
